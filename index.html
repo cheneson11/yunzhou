@@ -214,17 +214,17 @@
     <div class="card">
         <label for="lmp">原始末次月经第一天（孕0周+0天）</label>
         <input type="date" id="lmp" value="">
-        <div class="text-secondary" id="effectiveLmpDisplay">有效末次月经：未纠正</div>
+        <div class="text-secondary" id="effectiveLmpDisplay">有效末次月经：未校准</div>
     </div>
 
-    <!-- 孕周纠正（折叠面板） -->
+    <!-- 孕周校准（折叠面板） -->
     <div class="card correction-card">
         <div class="correction-header">
-            <span class="correction-title">❤孕周纠正❤</span>
+            <span class="correction-title">❤孕周校准❤</span>
             <button class="link-button" onclick="toggleCorrectionDetails()">调整</button>
         </div>
         <div class="correction-status" id="correctionStatus">
-            状态：<span class="badge">未纠正</span>
+            状态：<span class="badge">未校准</span>
         </div>
 
         <div class="correction-details" id="correctionDetails">
@@ -247,14 +247,14 @@
             <div class="divider"></div>
 
             <div class="mb-8">
-                <label for="manualCorrection">手动输入纠正天数（可正负）</label>
+                <label for="manualCorrection">手动输入校准天数（可正负）</label>
                 <div class="row">
                     <input type="number" id="manualCorrection" step="1" placeholder="如 +3 或 -2">
                     <button onclick="applyManualCorrection()" style="flex:0 0 auto;">应用</button>
                 </div>
             </div>
 
-            <button onclick="clearCorrection()" class="warning" style="margin-top:8px;">清除纠正</button>
+            <button onclick="clearCorrection()" class="warning" style="margin-top:8px;">清除校准</button>
         </div>
     </div>
 
@@ -358,7 +358,7 @@
         }
 
         function getLunarDate(date) {
-            var baseDate = new Date(1900, 0, 31); // 1900年1月31日对应农历1900年正月初一
+            var baseDate = new Date(1900, 0, 31);
             var offset = Math.floor((date - baseDate) / 86400000);
             var year = 1900;
             var daysInYear = 0;
@@ -518,7 +518,7 @@
                 return;
             }
             if (correctionDays === 0) {
-                el.textContent = '有效末次月经：未纠正（与原始相同）';
+                el.textContent = '有效末次月经：未校准（与原始相同）';
             } else {
                 const eff = getEffectiveLmp();
                 const sign = correctionDays > 0 ? '+' : '';
@@ -529,10 +529,10 @@
         function updateCorrectionStatus() {
             const el = document.getElementById('correctionStatus');
             if (correctionDays === 0) {
-                el.innerHTML = '状态：<span class="badge">未纠正</span>';
+                el.innerHTML = '状态：<span class="badge">未校准</span>';
             } else {
                 const sign = correctionDays > 0 ? '+' : '';
-                el.innerHTML = `状态：<span class="badge">已纠正 ${sign}${correctionDays}天</span>`;
+                el.innerHTML = `状态：<span class="badge">已校准 ${sign}${correctionDays}天</span>`;
             }
         }
 
@@ -542,7 +542,7 @@
             details.classList.toggle('show');
         }
 
-        // ==================== 纠正功能 ====================
+        // ==================== 校准功能 ====================
         function calcCorrectionFromUS() {
             const originalLmp = getOriginalLmp();
             if (!originalLmp) {
@@ -565,13 +565,13 @@
             correctionDays = calculatedCorrection;
             document.getElementById('manualCorrection').value = correctionDays;
             updateAll();
-            alert(`根据B超信息计算，纠正天数为 ${correctionDays > 0 ? '+' : ''}${correctionDays} 天，已自动应用。`);
+            alert(`根据B超信息计算，校准天数为 ${correctionDays > 0 ? '+' : ''}${correctionDays} 天，已自动应用。`);
         }
 
         function applyManualCorrection() {
             const val = parseInt(document.getElementById('manualCorrection').value, 10);
             if (isNaN(val)) {
-                alert('请输入有效的整数纠正天数');
+                alert('请输入有效的整数校准天数');
                 return;
             }
             correctionDays = val;
@@ -585,7 +585,7 @@
             document.getElementById('usWeeks').value = '';
             document.getElementById('usDays').value = '';
             updateAll();
-            alert('已清除纠正，恢复原始末次月经。');
+            alert('已清除校准，恢复原始末次月经。');
         }
 
         // ==================== 月历渲染（含农历） ====================
@@ -612,13 +612,11 @@
                 if (isToday) cell.classList.add('today');
                 if (isSelected) cell.classList.add('selected');
 
-                // 公历数字
                 const solarSpan = document.createElement('span');
                 solarSpan.className = 'solar-day';
                 solarSpan.textContent = cellDate.getDate();
                 cell.appendChild(solarSpan);
 
-                // 农历显示
                 const lunarSpan = document.createElement('span');
                 lunarSpan.className = 'lunar-day';
                 lunarSpan.textContent = getLunarDayText(cellDate);
@@ -697,7 +695,7 @@
             const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
             const diff = daysBetween(lmp, todayMidnight);
             if (diff < 0) {
-                box.textContent = '有效末次月经晚于今天，请检查设置或纠正';
+                box.textContent = '有效末次月经晚于今天，请检查设置或校准';
                 box.className = 'result-box error';
                 return;
             }
