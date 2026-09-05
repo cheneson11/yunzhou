@@ -217,7 +217,34 @@
         <div class="text-secondary" id="effectiveLmpDisplay">有效末次月经：未校准</div>
     </div>
 
-    <!-- 孕周校准（折叠面板） -->
+    <!-- 今日孕周速览（已移至此处） -->
+    <div class="card center-text">
+        <div style="font-size:15px; font-weight:600; margin-bottom:6px;">今日孕周</div>
+        <div id="todaySummary" class="result-box" style="margin-top:0;">请设置末次月经日期</div>
+    </div>
+
+    <!-- 台历卡片 -->
+    <div class="card">
+        <div class="calendar-header">
+            <div class="calendar-title" id="calendarTitle">2026年9月</div>
+            <div class="calendar-nav">
+                <button onclick="changeMonth(-1)" aria-label="上个月">‹</button>
+                <button onclick="goToToday()">今天</button>
+                <button onclick="changeMonth(1)" aria-label="下个月">›</button>
+            </div>
+        </div>
+        <div class="weekday-row">
+            <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+
+        <div id="selectedResult" class="result-box" style="display:none;">
+            <div id="selectedResultText"></div>
+            <div class="sub" id="selectedResultExtra"></div>
+        </div>
+    </div>
+
+    <!-- 孕周校准（折叠面板）（已移至台历之后） -->
     <div class="card correction-card">
         <div class="correction-header">
             <span class="correction-title">❤孕周校准❤</span>
@@ -256,33 +283,6 @@
 
             <button onclick="clearCorrection()" class="warning" style="margin-top:8px;">清除校准</button>
         </div>
-    </div>
-
-    <!-- 台历卡片 -->
-    <div class="card">
-        <div class="calendar-header">
-            <div class="calendar-title" id="calendarTitle">2026年9月</div>
-            <div class="calendar-nav">
-                <button onclick="changeMonth(-1)" aria-label="上个月">‹</button>
-                <button onclick="goToToday()">今天</button>
-                <button onclick="changeMonth(1)" aria-label="下个月">›</button>
-            </div>
-        </div>
-        <div class="weekday-row">
-            <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
-        </div>
-        <div class="calendar-grid" id="calendarGrid"></div>
-
-        <div id="selectedResult" class="result-box" style="display:none;">
-            <div id="selectedResultText"></div>
-            <div class="sub" id="selectedResultExtra"></div>
-        </div>
-    </div>
-
-    <!-- 今日孕周速览 -->
-    <div class="card center-text">
-        <div style="font-size:15px; font-weight:600; margin-bottom:6px;">今日孕周</div>
-        <div id="todaySummary" class="result-box" style="margin-top:0;">请设置末次月经日期</div>
     </div>
 
     <!-- 反推日期入口 -->
