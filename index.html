@@ -339,7 +339,7 @@
             transform: scale(0.96);
         }
 
-        /* 孕月背景色：10 个孕月分别配色（仅当前月份显示） */
+        /* 孕月背景色：10 个孕月分别配色 */
         .day-cell.pm-1  { background: var(--pm-bg-1);  }
         .day-cell.pm-2  { background: var(--pm-bg-2);  }
         .day-cell.pm-3  { background: var(--pm-bg-3);  }
@@ -793,7 +793,7 @@
 
         <div class="calendar-grid" id="calendarGrid"></div>
 
-        <!-- 图例：第1行基础信息，第2/3行孕月 -->
+        <!-- 图例 -->
         <div class="calendar-legend">
             <div class="legend-row">
                 <div class="legend-item">
@@ -1217,15 +1217,24 @@ function updateDataSourceStatus(isOnline) {
 
 
 /* =========================================================
-   孕月计算
+   孕月计算（已修复 bug）
    ========================================================= */
 
+/**
+ * 计算某日期属于第几个孕月（1~10）
+ * 1个孕月 = 4周 = 28天
+ * 返回 null 表示：
+ *   - 日期早于 LMP
+ *   - 或日期已超过 10 个孕月（即 diff >= 280 天，超过预产期）
+ */
 function getPregnancyMonth(date, lmp) {
     var diff = daysBetween(lmp, date);
     if (diff < 0) return null;
-    var pm = Math.floor(diff / 28) + 1;
-    if (pm > 10) return 10;
-    return pm;
+
+    /* 关键修复：超过 10 个孕月（280 天 = 40 周 = 预产期）后不再显示孕月 */
+    if (diff >= 280) return null;
+
+    return Math.floor(diff / 28) + 1;
 }
 
 function getPregnancyMonthRange(pm, lmp) {
@@ -1237,6 +1246,8 @@ function getPregnancyMonthRange(pm, lmp) {
 function isPregnancyMonthStart(date, lmp) {
     var diff = daysBetween(lmp, date);
     if (diff < 0) return false;
+    /* 超过预产期后也不再标记为孕月起始 */
+    if (diff >= 280) return false;
     return diff % 28 === 0;
 }
 
@@ -1538,9 +1549,8 @@ function renderPregnancyMonthSubtitle() {
     const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const todayDiff = daysBetween(lmp, todayMidnight);
     let currentPm = null;
-    if (todayDiff >= 0) {
+    if (todayDiff >= 0 && todayDiff < 280) {
         currentPm = Math.floor(todayDiff / 28) + 1;
-        if (currentPm > 10) currentPm = 10;
     }
 
     const items = [];
@@ -1563,7 +1573,7 @@ function renderPregnancyMonthSubtitle() {
     }
 
     if (items.length === 0) {
-        el.textContent = '本月无孕月信息';
+        el.textContent = '本月已超出孕期范围';
         return;
     }
 
@@ -1735,7 +1745,6 @@ function renderCalendar() {
         if (lmp) {
             pm = getPregnancyMonth(cellDate, lmp);
             if (pm && pm >= 1 && pm <= 10) {
-                /* 每个孕月独立类名：pm-1 ~ pm-10 */
                 cell.classList.add('pm-' + pm);
 
                 isPmStart = isPregnancyMonthStart(cellDate, lmp);
@@ -1882,6 +1891,8 @@ function updateSelectedResult(dateStr) {
     if (pm) {
         const range = getPregnancyMonthRange(pm, lmp);
         pmText = `孕月：孕${pm}月（${formatDate(range.start)} ~ ${formatDate(range.end)}）`;
+    } else if (info.totalDays >= 280) {
+        pmText = '孕月：已超出孕期（>孕10月）';
     }
 
     let holidayText = '';
@@ -1986,6 +1997,8 @@ function calcWeekToDate() {
 
     let extraText = '';
     if (pm) extraText += `<br>孕月：孕${pm}月`;
+    else if (totalDays >= 280) extraText += `<br>孕月：已超出孕期（>孕10月）`;
+
     if (holidayInfo) {
         extraText += holidayInfo.isOffDay
             ? `<br>节假日：${holidayInfo.name}`
