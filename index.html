@@ -45,18 +45,17 @@
             --solar-term-color: #2e7d32;
 
             /* 10 个孕月独立配色（相邻色相差异大） */
-            --pm-bg-1:  #ffcdd2;  /* 浅红 */
-            --pm-bg-2:  #bbdefb;  /* 浅蓝 */
-            --pm-bg-3:  #fff9c4;  /* 浅黄 */
-            --pm-bg-4:  #d1c4e9;  /* 浅紫 */
-            --pm-bg-5:  #c8e6c9;  /* 浅绿 */
-            --pm-bg-6:  #ffe0b2;  /* 浅橙 */
-            --pm-bg-7:  #b2dfdb;  /* 浅青 */
-            --pm-bg-8:  #f8bbd0;  /* 浅粉 */
-            --pm-bg-9:  #dcedc8;  /* 浅黄绿 */
-            --pm-bg-10: #c5cae9;  /* 浅蓝紫 */
+            --pm-bg-1:  #ffcdd2;
+            --pm-bg-2:  #bbdefb;
+            --pm-bg-3:  #fff9c4;
+            --pm-bg-4:  #d1c4e9;
+            --pm-bg-5:  #c8e6c9;
+            --pm-bg-6:  #ffe0b2;
+            --pm-bg-7:  #b2dfdb;
+            --pm-bg-8:  #f8bbd0;
+            --pm-bg-9:  #dcedc8;
+            --pm-bg-10: #c5cae9;
 
-            /* 对应的深色（用于图例小圆点/边框） */
             --pm-dot-1:  #ef5350;
             --pm-dot-2:  #42a5f5;
             --pm-dot-3:  #fdd835;
@@ -68,7 +67,6 @@
             --pm-dot-9:  #9ccc65;
             --pm-dot-10: #5c6bc0;
 
-            /* 孕月起始角标颜色 */
             --pm-badge-bg: #2e7d32;
         }
 
@@ -289,7 +287,6 @@
             top: -1px;
         }
 
-        /* 字幕小圆点：10个孕月分别配色 */
         .pm-stage-dot.pm-dot-1  { background: var(--pm-bg-1);  border: 1px solid var(--pm-dot-1);  }
         .pm-stage-dot.pm-dot-2  { background: var(--pm-bg-2);  border: 1px solid var(--pm-dot-2);  }
         .pm-stage-dot.pm-dot-3  { background: var(--pm-bg-3);  border: 1px solid var(--pm-dot-3);  }
@@ -339,7 +336,6 @@
             transform: scale(0.96);
         }
 
-        /* 孕月背景色：10 个孕月分别配色 */
         .day-cell.pm-1  { background: var(--pm-bg-1);  }
         .day-cell.pm-2  { background: var(--pm-bg-2);  }
         .day-cell.pm-3  { background: var(--pm-bg-3);  }
@@ -351,12 +347,10 @@
         .day-cell.pm-9  { background: var(--pm-bg-9);  }
         .day-cell.pm-10 { background: var(--pm-bg-10); }
 
-        /* 非当前月份的日期：强制灰底，不显示孕月背景 */
         .day-cell.other-month {
             background: #f8f9fa !important;
         }
 
-        /* 节假日背景优先于孕月（当前月份内） */
         .day-cell.is-holiday {
             background: var(--holiday-bg) !important;
             border-color: var(--holiday-border);
@@ -375,7 +369,6 @@
             font-weight: 700;
         }
 
-        /* 选中状态最高优先级 */
         .day-cell.selected {
             background: var(--primary) !important;
             color: white;
@@ -400,7 +393,6 @@
             color: #adb5bd;
         }
 
-        /* 孕月起始角标 */
         .day-cell.has-pm-start::after {
             content: attr(data-pm-num);
             position: absolute;
@@ -436,7 +428,6 @@
         .day-cell.selected .lunar-day { opacity: 0.9; }
         .day-cell.other-month .lunar-day { opacity: 0.5; }
 
-        /* 标签 */
         .holiday-tag,
         .solar-term-tag {
             font-size: 10px;
@@ -659,7 +650,6 @@
             border: 1px solid var(--workday-border);
         }
 
-        /* 孕月图例小方块 */
         .legend-dot.pm-1  { background: var(--pm-bg-1);  border: 1px solid var(--pm-dot-1);  }
         .legend-dot.pm-2  { background: var(--pm-bg-2);  border: 1px solid var(--pm-dot-2);  }
         .legend-dot.pm-3  { background: var(--pm-bg-3);  border: 1px solid var(--pm-dot-3);  }
@@ -1217,23 +1207,13 @@ function updateDataSourceStatus(isOnline) {
 
 
 /* =========================================================
-   孕月计算（已修复 bug）
+   孕月计算
    ========================================================= */
 
-/**
- * 计算某日期属于第几个孕月（1~10）
- * 1个孕月 = 4周 = 28天
- * 返回 null 表示：
- *   - 日期早于 LMP
- *   - 或日期已超过 10 个孕月（即 diff >= 280 天，超过预产期）
- */
 function getPregnancyMonth(date, lmp) {
     var diff = daysBetween(lmp, date);
     if (diff < 0) return null;
-
-    /* 关键修复：超过 10 个孕月（280 天 = 40 周 = 预产期）后不再显示孕月 */
     if (diff >= 280) return null;
-
     return Math.floor(diff / 28) + 1;
 }
 
@@ -1246,7 +1226,6 @@ function getPregnancyMonthRange(pm, lmp) {
 function isPregnancyMonthStart(date, lmp) {
     var diff = daysBetween(lmp, date);
     if (diff < 0) return false;
-    /* 超过预产期后也不再标记为孕月起始 */
     if (diff >= 280) return false;
     return diff % 28 === 0;
 }
@@ -1817,10 +1796,25 @@ function changeMonth(delta) {
     renderPregnancyMonthSubtitle();
 }
 
+
+/* =========================================================
+   跳转到今天（并收起详情）
+   ========================================================= */
+
 function goToToday() {
     refreshTodayIfNeeded();
+
     currentYear = today.getFullYear();
     currentMonth = today.getMonth();
+
+    /* 新增：点击"今天"时收起日期详情 */
+    selectedDateStr = null;
+    const resultBox = document.getElementById('selectedResult');
+    if (resultBox) {
+        resultBox.classList.add('hidden');
+        resultBox.classList.remove('error');
+    }
+
     renderCalendar();
     renderPregnancyMonthSubtitle();
 }
