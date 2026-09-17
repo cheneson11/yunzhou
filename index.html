@@ -34,7 +34,6 @@
             --error-bg: #f8d7da;
             --error-text: #842029;
 
-            /* 节假日相关颜色（已互换：放假=蓝，调班=红） */
             --holiday-bg: #e3f2fd;
             --holiday-text: #1565c0;
             --holiday-border: #bbdefb;
@@ -42,42 +41,51 @@
             --workday-bg: #ffe0e0;
             --workday-text: #c0392b;
             --workday-border: #f5c6cb;
+
+            --solar-term-color: #2e7d32;
+
+            /* 10 个孕月独立配色（相邻色相差异大） */
+            --pm-bg-1:  #ffcdd2;  /* 浅红 */
+            --pm-bg-2:  #bbdefb;  /* 浅蓝 */
+            --pm-bg-3:  #fff9c4;  /* 浅黄 */
+            --pm-bg-4:  #d1c4e9;  /* 浅紫 */
+            --pm-bg-5:  #c8e6c9;  /* 浅绿 */
+            --pm-bg-6:  #ffe0b2;  /* 浅橙 */
+            --pm-bg-7:  #b2dfdb;  /* 浅青 */
+            --pm-bg-8:  #f8bbd0;  /* 浅粉 */
+            --pm-bg-9:  #dcedc8;  /* 浅黄绿 */
+            --pm-bg-10: #c5cae9;  /* 浅蓝紫 */
+
+            /* 对应的深色（用于图例小圆点/边框） */
+            --pm-dot-1:  #ef5350;
+            --pm-dot-2:  #42a5f5;
+            --pm-dot-3:  #fdd835;
+            --pm-dot-4:  #ab47bc;
+            --pm-dot-5:  #66bb6a;
+            --pm-dot-6:  #ffa726;
+            --pm-dot-7:  #26a69a;
+            --pm-dot-8:  #ec407a;
+            --pm-dot-9:  #9ccc65;
+            --pm-dot-10: #5c6bc0;
+
+            /* 孕月起始角标颜色 */
+            --pm-badge-bg: #2e7d32;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family:
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                Roboto,
-                "PingFang SC",
-                "Microsoft YaHei",
-                sans-serif;
-
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
             background: var(--bg);
             color: var(--text);
-
             padding: 16px;
             padding-bottom: 40px;
-
             max-width: 480px;
             margin: 0 auto;
         }
 
-        h1 {
-            font-size: 24px;
-            margin-bottom: 4px;
-        }
-
-        h2 {
-            font-size: 17px;
-        }
+        h1 { font-size: 24px; margin-bottom: 4px; }
+        h2 { font-size: 17px; }
 
         .subtitle {
             font-size: 13px;
@@ -90,7 +98,6 @@
             border-radius: 18px;
             padding: 16px;
             margin-bottom: 16px;
-
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
         }
 
@@ -105,17 +112,12 @@
         input[type="number"] {
             width: 100%;
             padding: 10px 12px;
-
             font-size: 16px;
-
             border: 1px solid var(--border);
             border-radius: 10px;
-
             margin-bottom: 8px;
-
             -webkit-appearance: none;
             appearance: none;
-
             background: white;
             color: var(--text);
         }
@@ -126,35 +128,19 @@
             box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.12);
         }
 
-        .row {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .row > div {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .row label {
-            margin-bottom: 4px;
-        }
+        .row { display: flex; gap: 8px; align-items: center; }
+        .row > div { flex: 1; min-width: 0; }
+        .row label { margin-bottom: 4px; }
 
         button {
             padding: 10px 14px;
-
             background: var(--accent);
             color: white;
-
             font-size: 15px;
             font-weight: 600;
-
             border: none;
             border-radius: 10px;
-
             cursor: pointer;
-
             transition: background 0.2s, transform 0.1s;
         }
 
@@ -163,37 +149,14 @@
             transform: scale(0.98);
         }
 
-        button.secondary {
-            background: var(--text-secondary);
-        }
-
-        button.secondary:active {
-            background: #5a6268;
-        }
-
-        button.warning {
-            background: #dc3545;
-        }
-
-        button.warning:active {
-            background: #b02a37;
-        }
-
-        button.outline {
-            background: white;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        button.outline:active {
-            background: var(--primary-light);
-        }
+        button.secondary { background: var(--text-secondary); }
+        button.secondary:active { background: #5a6268; }
+        button.warning { background: #dc3545; }
+        button.warning:active { background: #b02a37; }
 
         /* ==================== 顶部孕期概览 ==================== */
 
-        .pregnancy-summary {
-            text-align: center;
-        }
+        .pregnancy-summary { text-align: center; }
 
         .summary-title {
             font-size: 15px;
@@ -224,7 +187,6 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
-
             margin-top: 14px;
         }
 
@@ -245,13 +207,8 @@
             font-weight: 700;
         }
 
-        .summary-value.primary {
-            color: var(--primary);
-        }
-
-        .summary-value.accent {
-            color: var(--accent);
-        }
+        .summary-value.primary { color: var(--primary); }
+        .summary-value.accent { color: var(--accent); }
 
         /* ==================== 末次月经 ==================== */
 
@@ -261,9 +218,7 @@
             line-height: 1.6;
         }
 
-        .effective-lmp strong {
-            color: var(--text);
-        }
+        .effective-lmp strong { color: var(--text); }
 
         /* ==================== 日历 ==================== */
 
@@ -271,7 +226,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            margin-bottom: 6px;
         }
 
         .calendar-title {
@@ -279,20 +234,14 @@
             font-weight: 700;
         }
 
-        .calendar-nav {
-            display: flex;
-            gap: 6px;
-        }
+        .calendar-nav { display: flex; gap: 6px; }
 
         .calendar-nav button {
             background: white;
             color: var(--primary);
-
             border: 1px solid var(--primary);
-
             padding: 6px 10px;
             border-radius: 8px;
-
             font-size: 15px;
         }
 
@@ -300,17 +249,65 @@
             background: var(--primary-light);
         }
 
+        /* 孕月内嵌字幕 */
+        .calendar-pm-subtitle {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+            padding: 6px 10px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            line-height: 1.6;
+            min-height: 0;
+            word-break: break-word;
+        }
+
+        .calendar-pm-subtitle .pm-item {
+            display: inline-block;
+            margin-right: 8px;
+            white-space: nowrap;
+        }
+
+        .calendar-pm-subtitle .pm-item.current {
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+
+        .calendar-pm-subtitle .pm-item.month-related {
+            color: #212529;
+            font-weight: 600;
+        }
+
+        .calendar-pm-subtitle .pm-stage-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 3px;
+            vertical-align: middle;
+            position: relative;
+            top: -1px;
+        }
+
+        /* 字幕小圆点：10个孕月分别配色 */
+        .pm-stage-dot.pm-dot-1  { background: var(--pm-bg-1);  border: 1px solid var(--pm-dot-1);  }
+        .pm-stage-dot.pm-dot-2  { background: var(--pm-bg-2);  border: 1px solid var(--pm-dot-2);  }
+        .pm-stage-dot.pm-dot-3  { background: var(--pm-bg-3);  border: 1px solid var(--pm-dot-3);  }
+        .pm-stage-dot.pm-dot-4  { background: var(--pm-bg-4);  border: 1px solid var(--pm-dot-4);  }
+        .pm-stage-dot.pm-dot-5  { background: var(--pm-bg-5);  border: 1px solid var(--pm-dot-5);  }
+        .pm-stage-dot.pm-dot-6  { background: var(--pm-bg-6);  border: 1px solid var(--pm-dot-6);  }
+        .pm-stage-dot.pm-dot-7  { background: var(--pm-bg-7);  border: 1px solid var(--pm-dot-7);  }
+        .pm-stage-dot.pm-dot-8  { background: var(--pm-bg-8);  border: 1px solid var(--pm-dot-8);  }
+        .pm-stage-dot.pm-dot-9  { background: var(--pm-bg-9);  border: 1px solid var(--pm-dot-9);  }
+        .pm-stage-dot.pm-dot-10 { background: var(--pm-bg-10); border: 1px solid var(--pm-dot-10); }
+
         .weekday-row {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-
             text-align: center;
-
             font-weight: 600;
             font-size: 13px;
-
             color: var(--text-secondary);
-
             margin-bottom: 6px;
         }
 
@@ -322,37 +319,72 @@
 
         .day-cell {
             aspect-ratio: 1 / 1;
-
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-
             border-radius: 12px;
-
             font-size: 15px;
-
             cursor: pointer;
-
             background: white;
             border: 1px solid transparent;
-
             transition: all 0.15s;
-
             position: relative;
+            overflow: hidden;
             user-select: none;
-
             -webkit-tap-highlight-color: transparent;
         }
 
         .day-cell:active {
-            background: var(--primary-light);
             transform: scale(0.96);
         }
 
+        /* 孕月背景色：10 个孕月分别配色（仅当前月份显示） */
+        .day-cell.pm-1  { background: var(--pm-bg-1);  }
+        .day-cell.pm-2  { background: var(--pm-bg-2);  }
+        .day-cell.pm-3  { background: var(--pm-bg-3);  }
+        .day-cell.pm-4  { background: var(--pm-bg-4);  }
+        .day-cell.pm-5  { background: var(--pm-bg-5);  }
+        .day-cell.pm-6  { background: var(--pm-bg-6);  }
+        .day-cell.pm-7  { background: var(--pm-bg-7);  }
+        .day-cell.pm-8  { background: var(--pm-bg-8);  }
+        .day-cell.pm-9  { background: var(--pm-bg-9);  }
+        .day-cell.pm-10 { background: var(--pm-bg-10); }
+
+        /* 非当前月份的日期：强制灰底，不显示孕月背景 */
         .day-cell.other-month {
-            color: #adb5bd;
-            background: #f8f9fa;
+            background: #f8f9fa !important;
+        }
+
+        /* 节假日背景优先于孕月（当前月份内） */
+        .day-cell.is-holiday {
+            background: var(--holiday-bg) !important;
+            border-color: var(--holiday-border);
+        }
+        .day-cell.is-holiday .solar-day {
+            color: var(--holiday-text);
+            font-weight: 700;
+        }
+
+        .day-cell.is-workday {
+            background: var(--workday-bg) !important;
+            border-color: var(--workday-border);
+        }
+        .day-cell.is-workday .solar-day {
+            color: var(--workday-text);
+            font-weight: 700;
+        }
+
+        /* 选中状态最高优先级 */
+        .day-cell.selected {
+            background: var(--primary) !important;
+            color: white;
+            font-weight: 700;
+        }
+
+        .day-cell.selected.other-month {
+            background: var(--primary-light) !important;
+            color: var(--primary);
         }
 
         .day-cell.today {
@@ -360,15 +392,33 @@
             font-weight: 700;
         }
 
-        .day-cell.selected {
-            background: var(--primary);
-            color: white;
-            font-weight: 700;
+        .day-cell.other-month {
+            color: #adb5bd;
         }
 
-        .day-cell.selected.other-month {
-            background: var(--primary-light);
-            color: var(--primary);
+        .day-cell.other-month .solar-day {
+            color: #adb5bd;
+        }
+
+        /* 孕月起始角标 */
+        .day-cell.has-pm-start::after {
+            content: attr(data-pm-num);
+            position: absolute;
+            top: 1px;
+            right: 1px;
+            width: 13px;
+            height: 13px;
+            background: var(--pm-badge-bg);
+            color: white;
+            border-radius: 50%;
+            font-size: 8px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            z-index: 2;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.15);
         }
 
         .solar-day {
@@ -383,38 +433,12 @@
             margin-top: 1px;
         }
 
-        .day-cell.selected .lunar-day {
-            opacity: 0.9;
-        }
+        .day-cell.selected .lunar-day { opacity: 0.9; }
+        .day-cell.other-month .lunar-day { opacity: 0.5; }
 
-        .day-cell.other-month .lunar-day {
-            opacity: 0.5;
-        }
-
-        /* ==================== 节假日样式（颜色已互换）==================== */
-
-        .day-cell.is-holiday {
-            background: var(--holiday-bg);
-            border-color: var(--holiday-border);
-        }
-
-        .day-cell.is-holiday .solar-day {
-            color: var(--holiday-text);
-            font-weight: 700;
-        }
-
-        .day-cell.is-workday {
-            background: var(--workday-bg);
-            border-color: var(--workday-border);
-        }
-
-        .day-cell.is-workday .solar-day {
-            color: var(--workday-text);
-            font-weight: 700;
-        }
-
-        /* 标签通用样式：无背景，仅文字颜色 */
-        .holiday-tag {
+        /* 标签 */
+        .holiday-tag,
+        .solar-term-tag {
             font-size: 10px;
             font-weight: 600;
             line-height: 1.1;
@@ -426,32 +450,25 @@
             letter-spacing: -0.3px;
         }
 
-        /* 放假标签：蓝色文字，无背景 */
-        .holiday-tag.rest {
-            color: #0d47a1;
-        }
+        .holiday-tag.rest { color: #0d47a1; }
+        .holiday-tag.work { color: #b71c1c; }
+        .solar-term-tag { color: var(--solar-term-color); }
 
-        /* 调班标签：红色文字，无背景 */
-        .holiday-tag.work {
-            color: #b71c1c;
-        }
-
-        /* 选中日期时，标签文字变白以便在深色背景上清晰可见 */
         .day-cell.selected .holiday-tag,
         .day-cell.selected .holiday-tag.rest,
-        .day-cell.selected .holiday-tag.work {
+        .day-cell.selected .holiday-tag.work,
+        .day-cell.selected .solar-term-tag {
             color: #ffffff;
         }
 
-        .day-cell.other-month .holiday-tag {
+        .day-cell.other-month .holiday-tag,
+        .day-cell.other-month .solar-term-tag {
             opacity: 0.6;
         }
 
         /* ==================== 日期查询结果 ==================== */
 
-        .selected-result {
-            margin-top: 14px;
-        }
+        .selected-result { margin-top: 14px; }
 
         .selected-date-title {
             font-size: 17px;
@@ -472,19 +489,15 @@
             line-height: 1.7;
         }
 
-        /* ==================== 通用结果框 ==================== */
+        /* ==================== 结果框 ==================== */
 
         .result-box {
             margin-top: 12px;
             padding: 12px 14px;
-
             background: var(--info-bg);
-
             border-radius: 10px;
-
             font-size: 16px;
             line-height: 1.5;
-
             word-break: break-word;
         }
 
@@ -529,111 +542,60 @@
             font-size: 15px;
         }
 
-        .correction-status {
-            font-size: 14px;
-        }
+        .correction-status { font-size: 14px; }
 
         .badge {
             display: inline-block;
-
             padding: 2px 8px;
-
             border-radius: 6px;
-
             background: #ffc107;
             color: #212529;
-
             font-weight: 600;
             font-size: 13px;
         }
 
         .correction-details {
             display: none;
-
             border-top: 1px dashed #b8a66a;
-
             padding-top: 12px;
             margin-top: 4px;
         }
 
-        .correction-details.show {
-            display: block;
-        }
+        .correction-details.show { display: block; }
 
         .link-button {
             background: none;
             border: none;
-
             color: var(--accent);
-
             font-weight: 600;
             font-size: 14px;
-
             cursor: pointer;
             padding: 0;
-        }
-
-        .link-button:active {
-            opacity: 0.7;
         }
 
         .correction-explain {
             font-size: 12px;
             line-height: 1.6;
             color: #6c5a16;
-
             margin-bottom: 12px;
         }
 
-        .correction-preview {
-            display: none;
-            margin-top: 10px;
-        }
+        .correction-preview { display: none; margin-top: 10px; }
+        .correction-preview.show { display: block; }
 
-        .correction-preview.show {
-            display: block;
-        }
-
-        .preview-title {
-            font-weight: 700;
-            margin-bottom: 6px;
-        }
-
-        .preview-line {
-            font-size: 13px;
-            line-height: 1.7;
-        }
+        .preview-title { font-weight: 700; margin-bottom: 6px; }
 
         .preview-highlight {
             font-weight: 700;
             color: var(--primary-dark);
         }
 
-        .button-row {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-        }
-
-        .button-row button {
-            flex: 1;
-        }
-
-        /* ==================== 反推 ==================== */
-
-        .reverse-description {
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 10px;
-        }
+        .button-row { display: flex; gap: 8px; margin-top: 10px; }
+        .button-row button { flex: 1; }
 
         /* ==================== 其他 ==================== */
 
-        .highlight {
-            color: var(--primary);
-            font-weight: 700;
-        }
+        .highlight { color: var(--primary); font-weight: 700; }
 
         .divider {
             height: 1px;
@@ -641,17 +603,9 @@
             margin: 16px 0;
         }
 
-        .center-text {
-            text-align: center;
-        }
-
-        .mt-8 {
-            margin-top: 8px;
-        }
-
-        .mb-8 {
-            margin-bottom: 8px;
-        }
+        .center-text { text-align: center; }
+        .mt-8 { margin-top: 8px; }
+        .mb-8 { margin-bottom: 8px; }
 
         .text-secondary {
             color: var(--text-secondary);
@@ -665,30 +619,34 @@
             margin-top: 12px;
         }
 
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display: none !important; }
 
-        /* 日历图例（颜色已互换） */
+        /* 日历图例 */
         .calendar-legend {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
             margin-top: 10px;
             font-size: 11px;
             color: var(--text-secondary);
         }
 
+        .legend-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+
         .legend-item {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 3px;
         }
 
         .legend-dot {
             width: 10px;
             height: 10px;
             border-radius: 3px;
+            flex-shrink: 0;
         }
 
         .legend-dot.holiday {
@@ -701,7 +659,24 @@
             border: 1px solid var(--workday-border);
         }
 
-        /* 数据源状态 */
+        /* 孕月图例小方块 */
+        .legend-dot.pm-1  { background: var(--pm-bg-1);  border: 1px solid var(--pm-dot-1);  }
+        .legend-dot.pm-2  { background: var(--pm-bg-2);  border: 1px solid var(--pm-dot-2);  }
+        .legend-dot.pm-3  { background: var(--pm-bg-3);  border: 1px solid var(--pm-dot-3);  }
+        .legend-dot.pm-4  { background: var(--pm-bg-4);  border: 1px solid var(--pm-dot-4);  }
+        .legend-dot.pm-5  { background: var(--pm-bg-5);  border: 1px solid var(--pm-dot-5);  }
+        .legend-dot.pm-6  { background: var(--pm-bg-6);  border: 1px solid var(--pm-dot-6);  }
+        .legend-dot.pm-7  { background: var(--pm-bg-7);  border: 1px solid var(--pm-dot-7);  }
+        .legend-dot.pm-8  { background: var(--pm-bg-8);  border: 1px solid var(--pm-dot-8);  }
+        .legend-dot.pm-9  { background: var(--pm-bg-9);  border: 1px solid var(--pm-dot-9);  }
+        .legend-dot.pm-10 { background: var(--pm-bg-10); border: 1px solid var(--pm-dot-10); }
+
+        .legend-text {
+            color: var(--solar-term-color);
+            font-weight: 600;
+            font-size: 11px;
+        }
+
         .data-source-status {
             font-size: 11px;
             color: var(--text-secondary);
@@ -709,33 +684,31 @@
             margin-top: 6px;
         }
 
-        .data-source-status .online {
-            color: #0f5132;
-        }
-
-        .data-source-status .offline {
-            color: #842029;
-        }
+        .data-source-status .online { color: #0f5132; }
+        .data-source-status .offline { color: #842029; }
 
         @media (max-width: 360px) {
-            body {
-                padding: 10px;
-            }
-
-            .card {
-                padding: 13px;
-            }
-
-            .day-cell {
-                border-radius: 9px;
-            }
+            body { padding: 10px; }
+            .card { padding: 13px; }
+            .day-cell { border-radius: 9px; }
 
             .calendar-nav button {
                 padding: 5px 8px;
             }
 
-            .holiday-tag {
+            .holiday-tag,
+            .solar-term-tag {
                 font-size: 9px;
+            }
+
+            .day-cell.has-pm-start::after {
+                width: 11px;
+                height: 11px;
+                font-size: 7px;
+            }
+
+            .calendar-pm-subtitle {
+                font-size: 10px;
             }
         }
     </style>
@@ -746,16 +719,15 @@
     <h1>📅 孕期台历</h1>
 
     <div class="subtitle">
-        </div>
+        根据末次月经计算孕周，并在台历中查看任意日期
+    </div>
 
 
     <!-- ==================== 今日孕周总览 ==================== -->
 
     <div class="card pregnancy-summary">
 
-        <div class="summary-title">
-            今日孕周
-        </div>
+        <div class="summary-title">今日孕周</div>
 
         <div id="todayWeek" class="week-big empty">
             请先设置末次月经日期
@@ -764,27 +736,14 @@
         <div id="todayDate" class="summary-date"></div>
 
         <div class="summary-grid">
-
             <div class="summary-item">
-                <div class="summary-label">
-                    预产期
-                </div>
-
-                <div id="dueDateSummary" class="summary-value primary">
-                    —
-                </div>
+                <div class="summary-label">预产期</div>
+                <div id="dueDateSummary" class="summary-value primary">—</div>
             </div>
-
             <div class="summary-item">
-                <div class="summary-label">
-                    距预产期
-                </div>
-
-                <div id="daysRemainingSummary" class="summary-value accent">
-                    —
-                </div>
+                <div class="summary-label">距预产期</div>
+                <div id="daysRemainingSummary" class="summary-value accent">—</div>
             </div>
-
         </div>
 
     </div>
@@ -793,23 +752,14 @@
     <!-- ==================== 末次月经 ==================== -->
 
     <div class="card">
-
-        <label for="lmp">
-            原始末次月经第一天
-        </label>
-
+        <label for="lmp">原始末次月经第一天</label>
         <input type="date" id="lmp">
-
-        <div class="text-secondary">
-            按孕0周+0天计算
-        </div>
-
+        <div class="text-secondary">按孕0周+0天计算</div>
         <div id="effectiveLmpDisplay"
              class="effective-lmp"
              style="margin-top:6px;">
             请先设置末次月经日期
         </div>
-
     </div>
 
 
@@ -818,35 +768,18 @@
     <div class="card">
 
         <div class="calendar-header">
-
-            <div class="calendar-title"
-                 id="calendarTitle">
-                —
-            </div>
-
+            <div class="calendar-title" id="calendarTitle">—</div>
             <div class="calendar-nav">
-
-                <button
-                    onclick="changeMonth(-1)"
-                    aria-label="上个月">
-                    ‹
-                </button>
-
-                <button
-                    onclick="goToToday()">
-                    今天
-                </button>
-
-                <button
-                    onclick="changeMonth(1)"
-                    aria-label="下个月">
-                    ›
-                </button>
-
+                <button onclick="changeMonth(-1)" aria-label="上个月">‹</button>
+                <button onclick="goToToday()">今天</button>
+                <button onclick="changeMonth(1)" aria-label="下个月">›</button>
             </div>
-
         </div>
 
+        <!-- 孕月内嵌字幕 -->
+        <div class="calendar-pm-subtitle" id="calendarPmSubtitle">
+            请先设置末次月经日期
+        </div>
 
         <div class="weekday-row">
             <span>日</span>
@@ -858,47 +791,48 @@
             <span>六</span>
         </div>
 
+        <div class="calendar-grid" id="calendarGrid"></div>
 
-        <div class="calendar-grid"
-             id="calendarGrid">
-        </div>
-
-
-        <!-- 日历图例 -->
+        <!-- 图例：第1行基础信息，第2/3行孕月 -->
         <div class="calendar-legend">
-            <div class="legend-item">
-                <div class="legend-dot holiday"></div>
-                <span>放假</span>
+            <div class="legend-row">
+                <div class="legend-item">
+                    <div class="legend-dot holiday"></div>
+                    <span>放假</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot workday"></div>
+                    <span>调班</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-text">节气</span>
+                </div>
             </div>
-            <div class="legend-item">
-                <div class="legend-dot workday"></div>
-                <span>调班</span>
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-dot pm-1"></div><span>孕1月</span></div>
+                <div class="legend-item"><div class="legend-dot pm-2"></div><span>孕2月</span></div>
+                <div class="legend-item"><div class="legend-dot pm-3"></div><span>孕3月</span></div>
+                <div class="legend-item"><div class="legend-dot pm-4"></div><span>孕4月</span></div>
+                <div class="legend-item"><div class="legend-dot pm-5"></div><span>孕5月</span></div>
+            </div>
+            <div class="legend-row">
+                <div class="legend-item"><div class="legend-dot pm-6"></div><span>孕6月</span></div>
+                <div class="legend-item"><div class="legend-dot pm-7"></div><span>孕7月</span></div>
+                <div class="legend-item"><div class="legend-dot pm-8"></div><span>孕8月</span></div>
+                <div class="legend-item"><div class="legend-dot pm-9"></div><span>孕9月</span></div>
+                <div class="legend-item"><div class="legend-dot pm-10"></div><span>孕10月</span></div>
             </div>
         </div>
 
-        <!-- 数据源状态 -->
         <div id="dataSourceStatus" class="data-source-status">
             节假日数据加载中...
         </div>
 
-
         <!-- 日期点击结果 -->
-
-        <div id="selectedResult"
-             class="result-box selected-result hidden">
-
-            <div id="selectedDateTitle"
-                 class="selected-date-title">
-            </div>
-
-            <div id="selectedWeek"
-                 class="selected-week">
-            </div>
-
-            <div id="selectedInfo"
-                 class="selected-info">
-            </div>
-
+        <div id="selectedResult" class="result-box selected-result hidden">
+            <div id="selectedDateTitle" class="selected-date-title"></div>
+            <div id="selectedWeek" class="selected-week"></div>
+            <div id="selectedInfo" class="selected-info"></div>
         </div>
 
     </div>
@@ -909,161 +843,60 @@
     <div class="card correction-card">
 
         <div class="correction-header">
-
-            <span class="correction-title">
-                孕周校准
-            </span>
-
-            <button
-                class="link-button"
-                onclick="toggleCorrectionDetails()">
-                调整
-            </button>
-
+            <span class="correction-title">孕周校准</span>
+            <button class="link-button" onclick="toggleCorrectionDetails()">调整</button>
         </div>
 
-
-        <div class="correction-status"
-             id="correctionStatus">
-            状态：
-            <span class="badge">
-                未校准
-            </span>
+        <div class="correction-status" id="correctionStatus">
+            状态：<span class="badge">未校准</span>
         </div>
 
-
-        <div class="correction-details"
-             id="correctionDetails">
+        <div class="correction-details" id="correctionDetails">
 
             <div class="correction-explain">
-
                 如果医生根据B超重新确定了孕周，
                 可以在这里输入B超日期和当时的孕周。
                 系统会计算需要调整的天数，
                 <strong>确认后才会正式应用</strong>。
-
             </div>
 
-
-            <!-- B超校准 -->
-
             <div class="mb-8">
-
-                <label>
-                    B超日期 & 孕周
-                </label>
-
+                <label>B超日期 & 孕周</label>
                 <div class="row">
-
-                    <div>
-                        <input
-                            type="date"
-                            id="usDate">
-                    </div>
-
-                    <div>
-                        <input
-                            type="number"
-                            id="usWeeks"
-                            min="0"
-                            step="1"
-                            placeholder="周">
-                    </div>
-
-                    <div>
-                        <input
-                            type="number"
-                            id="usDays"
-                            min="0"
-                            max="6"
-                            step="1"
-                            placeholder="天">
-                    </div>
-
+                    <div><input type="date" id="usDate"></div>
+                    <div><input type="number" id="usWeeks" min="0" step="1" placeholder="周"></div>
+                    <div><input type="number" id="usDays" min="0" max="6" step="1" placeholder="天"></div>
                 </div>
-
-
-                <button
-                    onclick="previewCorrectionFromUS()"
-                    class="secondary"
-                    style="margin-top:6px;">
+                <button onclick="previewCorrectionFromUS()" class="secondary" style="margin-top:6px;">
                     计算校准结果
                 </button>
 
-
-                <!-- 校准预览 -->
-
-                <div id="correctionPreview"
-                     class="result-box correction-preview">
-
-                    <div class="preview-title">
-                        校准结果预览
-                    </div>
-
-                    <div id="previewText">
-                    </div>
-
+                <div id="correctionPreview" class="result-box correction-preview">
+                    <div class="preview-title">校准结果预览</div>
+                    <div id="previewText"></div>
                     <div class="button-row">
-
-                        <button
-                            class="secondary"
-                            onclick="cancelCorrectionPreview()">
-                            取消
-                        </button>
-
-                        <button
-                            onclick="applyPreviewCorrection()">
-                            应用校准
-                        </button>
-
+                        <button class="secondary" onclick="cancelCorrectionPreview()">取消</button>
+                        <button onclick="applyPreviewCorrection()">应用校准</button>
                     </div>
-
                 </div>
-
             </div>
-
 
             <div class="divider"></div>
 
-
-            <!-- 手动校准 -->
-
             <div class="mb-8">
-
-                <label for="manualCorrection">
-                    手动调整孕周基准
-                </label>
-
+                <label for="manualCorrection">手动调整孕周基准</label>
                 <div class="row">
-
-                    <input
-                        type="number"
-                        id="manualCorrection"
-                        step="1"
-                        placeholder="例如 +3 或 -2">
-
-                    <button
-                        onclick="applyManualCorrection()"
-                        style="flex:0 0 auto;">
-                        应用
-                    </button>
-
+                    <input type="number" id="manualCorrection" step="1" placeholder="例如 +3 或 -2">
+                    <button onclick="applyManualCorrection()" style="flex:0 0 auto;">应用</button>
                 </div>
-
                 <div class="text-secondary">
                     正数：末次月经日期向后调整；负数：向前调整
                 </div>
-
             </div>
 
-
-            <button
-                onclick="clearCorrection()"
-                class="warning"
-                style="margin-top:8px;">
+            <button onclick="clearCorrection()" class="warning" style="margin-top:8px;">
                 清除校准
             </button>
-
 
             <div class="notice">
                 校准只用于调整本工具的孕周计算基准。
@@ -1079,63 +912,26 @@
 
     <div class="card">
 
-        <h2 style="margin-bottom:6px;">
-            🔍 查某孕周是哪一天
-        </h2>
+        <h2 style="margin-bottom:6px;">🔍 查某孕周是哪一天</h2>
 
-        <div class="reverse-description">
-            输入孕周，例如“12周+3天”，
-            查询对应的日期。
+        <div class="reverse-description" style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;">
+            输入孕周，例如“12周+3天”，查询对应的日期。
         </div>
-
 
         <div class="row">
-
             <div>
-
-                <label for="weeksInput">
-                    孕周数
-                </label>
-
-                <input
-                    type="number"
-                    id="weeksInput"
-                    min="0"
-                    step="1"
-                    placeholder="如 12">
-
+                <label for="weeksInput">孕周数</label>
+                <input type="number" id="weeksInput" min="0" step="1" placeholder="如 12">
             </div>
-
-
             <div>
-
-                <label for="daysInput">
-                    天数（0~6）
-                </label>
-
-                <input
-                    type="number"
-                    id="daysInput"
-                    min="0"
-                    max="6"
-                    step="1"
-                    placeholder="如 3">
-
+                <label for="daysInput">天数（0~6）</label>
+                <input type="number" id="daysInput" min="0" max="6" step="1" placeholder="如 3">
             </div>
-
         </div>
 
+        <button onclick="calcWeekToDate()" style="width:100%;">计算日期</button>
 
-        <button
-            onclick="calcWeekToDate()"
-            style="width:100%;">
-            计算日期
-        </button>
-
-
-        <div id="reverseResult"
-             class="result-box hidden">
-        </div>
+        <div id="reverseResult" class="result-box hidden"></div>
 
     </div>
 
@@ -1143,16 +939,8 @@
     <!-- ==================== 重置 ==================== -->
 
     <div class="center-text mt-8">
-
-        <button
-            onclick="resetAll()"
-            class="secondary"
-            style="width:auto;">
-            重置所有设置
-        </button>
-
+        <button onclick="resetAll()" class="secondary" style="width:auto;">重置所有设置</button>
     </div>
-
 
     <div class="notice center-text">
         本工具仅用于日期与孕周计算参考，不替代医生的诊断和产检建议。
@@ -1202,8 +990,7 @@ var lunarInfo = [
     0x0d150,0x0f252,0x0d520
 ];
 
-var lunarMonthNames =
-    ['正','二','三','四','五','六','七','八','九','十','冬','腊'];
+var lunarMonthNames = ['正','二','三','四','五','六','七','八','九','十','冬','腊'];
 
 var lunarDayNames = [
     '初一','初二','初三','初四','初五','初六','初七','初八','初九','初十',
@@ -1211,73 +998,38 @@ var lunarDayNames = [
     '廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'
 ];
 
-
 function lYearDays(y) {
-
     var sum = 348;
-
-    for (var i = 0x8000; i > 0x8; i >>= 1) {
-        sum += (lunarInfo[y - 1900] & i) ? 1 : 0;
-    }
-
+    for (var i = 0x8000; i > 0x8; i >>= 1) sum += (lunarInfo[y - 1900] & i) ? 1 : 0;
     return sum + leapDays(y);
 }
 
-
-function leapMonth(y) {
-    return lunarInfo[y - 1900] & 0xf;
-}
-
+function leapMonth(y) { return lunarInfo[y - 1900] & 0xf; }
 
 function leapDays(y) {
-
-    if (leapMonth(y)) {
-        return (lunarInfo[y - 1900] & 0x10000)
-            ? 30
-            : 29;
-    }
-
+    if (leapMonth(y)) return (lunarInfo[y - 1900] & 0x10000) ? 30 : 29;
     return 0;
 }
 
-
 function monthDays(y, m) {
-    return (lunarInfo[y - 1900] & (0x10000 >> m))
-        ? 30
-        : 29;
+    return (lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29;
 }
 
-
 function getLunarDate(date) {
-
     var baseDate = new Date(1900, 0, 31);
-
-    var offset = Math.floor(
-        (date - baseDate) / 86400000
-    );
-
+    var offset = Math.floor((date - baseDate) / 86400000);
     var year = 1900;
     var daysInYear = 0;
 
     while (year < 2101 && offset > 0) {
-
         daysInYear = lYearDays(year);
-
-        if (offset < daysInYear) {
-            break;
-        }
-
+        if (offset < daysInYear) break;
         offset -= daysInYear;
         year++;
     }
 
     if (year >= 2101) {
-        return {
-            lunarYear: year,
-            lunarMonth: 0,
-            lunarDay: 0,
-            isLeap: false
-        };
+        return { lunarYear: year, lunarMonth: 0, lunarDay: 0, isLeap: false };
     }
 
     var leap = leapMonth(year);
@@ -1285,70 +1037,84 @@ function getLunarDate(date) {
     var month = 1;
 
     while (month <= 12) {
-
         var mDays;
-
-        if (
-            leap > 0 &&
-            month === leap + 1 &&
-            !isLeap
-        ) {
-
+        if (leap > 0 && month === leap + 1 && !isLeap) {
             isLeap = true;
             mDays = leapDays(year);
-
         } else {
-
-            if (isLeap && month === leap + 1) {
-                isLeap = false;
-            }
-
+            if (isLeap && month === leap + 1) isLeap = false;
             mDays = monthDays(year, month);
         }
-
-        if (offset < mDays) {
-            break;
-        }
-
+        if (offset < mDays) break;
         offset -= mDays;
         month++;
     }
 
-    return {
-        lunarYear: year,
-        lunarMonth: month,
-        lunarDay: offset + 1,
-        isLeap: isLeap
-    };
+    return { lunarYear: year, lunarMonth: month, lunarDay: offset + 1, isLeap: isLeap };
 }
 
-
 function getLunarDayText(date) {
-
     var lunar = getLunarDate(date);
-
-    if (lunar.lunarMonth === 0) {
-        return '';
-    }
-
+    if (lunar.lunarMonth === 0) return '';
     if (lunar.lunarDay === 1) {
-
-        var monthName =
-            lunarMonthNames[lunar.lunarMonth - 1] + '月';
-
-        if (lunar.isLeap) {
-            monthName = '闰' + monthName;
-        }
-
+        var monthName = lunarMonthNames[lunar.lunarMonth - 1] + '月';
+        if (lunar.isLeap) monthName = '闰' + monthName;
         return monthName;
     }
-
     return lunarDayNames[lunar.lunarDay - 1];
 }
 
 
 /* =========================================================
-   节假日数据 — 联网自动获取
+   二十四节气
+   ========================================================= */
+
+var SOLAR_TERMS = [
+    '小寒','大寒','立春','雨水','惊蛰','春分',
+    '清明','谷雨','立夏','小满','芒种','夏至',
+    '小暑','大暑','立秋','处暑','白露','秋分',
+    '寒露','霜降','立冬','小雪','大雪','冬至'
+];
+
+var sTermInfo = [
+    0, 21208, 42467, 63836, 85337, 107014,
+    128867, 150921, 173149, 195551, 218072, 240693,
+    263343, 285989, 308563, 331033, 353350, 375494,
+    397447, 419210, 440795, 462224, 483532, 504758
+];
+
+var solarTermCache = {};
+
+function getSolarTermDay(year, n) {
+    var regressionMs = 31556925974.7;
+    var baseTime = Date.UTC(1900, 0, 6, 2, 5);
+    var offsetMs = regressionMs * (year - 1900) + sTermInfo[n] * 60000;
+    var date = new Date(baseTime + offsetMs);
+    return date.getUTCDate();
+}
+
+function buildSolarTermMap(year) {
+    var map = {};
+    for (var i = 0; i < 24; i++) {
+        var month = Math.floor(i / 2) + 1;
+        var day = getSolarTermDay(year, i);
+        var dateStr = year + '-' +
+            String(month).padStart(2, '0') + '-' +
+            String(day).padStart(2, '0');
+        map[dateStr] = SOLAR_TERMS[i];
+    }
+    return map;
+}
+
+function getSolarTermInfo(dateStr) {
+    var year = parseInt(dateStr.substring(0, 4), 10);
+    if (!solarTermCache[year]) solarTermCache[year] = buildSolarTermMap(year);
+    return solarTermCache[year][dateStr] || null;
+}
+
+
+/* =========================================================
+   节假日数据
    ========================================================= */
 
 var holidayCache = {};
@@ -1360,54 +1126,31 @@ var HOLIDAY_CDN_URLS = [
     'https://raw.githubusercontent.com/NateScarlet/holiday-cn/master/'
 ];
 
-
 function fetchHolidayData(year) {
-
-    if (holidayCache[year]) {
-        return Promise.resolve(holidayCache[year]);
-    }
+    if (holidayCache[year]) return Promise.resolve(holidayCache[year]);
 
     var urlIndex = 0;
 
     function tryNext() {
-
         if (urlIndex >= HOLIDAY_CDN_URLS.length) {
-            return Promise.reject(
-                new Error('所有CDN源均不可用')
-            );
+            return Promise.reject(new Error('所有CDN源均不可用'));
         }
-
-        var baseUrl =
-            HOLIDAY_CDN_URLS[urlIndex];
-
+        var baseUrl = HOLIDAY_CDN_URLS[urlIndex];
         var url = baseUrl + year + '.json';
-
         urlIndex++;
 
         return fetch(url)
             .then(function(response) {
-
-                if (!response.ok) {
-                    throw new Error(
-                        'HTTP ' + response.status
-                    );
-                }
-
+                if (!response.ok) throw new Error('HTTP ' + response.status);
                 return response.json();
             })
             .then(function(data) {
-
                 var result = convertHolidayData(data);
                 holidayCache[year] = result;
                 return result;
             })
             .catch(function(err) {
-
-                console.warn(
-                    'CDN源 ' + baseUrl + ' 加载失败：',
-                    err.message
-                );
-
+                console.warn('CDN源 ' + baseUrl + ' 加载失败：', err.message);
                 return tryNext();
             });
     }
@@ -1415,133 +1158,86 @@ function fetchHolidayData(year) {
     return tryNext();
 }
 
-
 function convertHolidayData(rawData) {
-
     var result = {};
-
-    if (!rawData || !rawData.days) {
-        return result;
-    }
-
+    if (!rawData || !rawData.days) return result;
     rawData.days.forEach(function(day) {
-
-        result[day.date] = {
-            name: day.name,
-            isOffDay: day.isOffDay
-        };
+        result[day.date] = { name: day.name, isOffDay: day.isOffDay };
     });
-
     return result;
 }
 
-
 function ensureHolidayData(year) {
-
-    if (loadedYears[year]) {
-        return;
-    }
-
+    if (loadedYears[year]) return;
     loadedYears[year] = true;
 
     fetchHolidayData(year)
         .then(function() {
-
             updateDataSourceStatus(true);
-
             renderCalendar();
-
-            if (selectedDateStr) {
-                updateSelectedResult(selectedDateStr);
-            }
+            renderPregnancyMonthSubtitle();
+            if (selectedDateStr) updateSelectedResult(selectedDateStr);
         })
         .catch(function(err) {
-
-            console.warn(
-                '节假日数据加载失败：',
-                err
-            );
-
+            console.warn('节假日数据加载失败：', err);
             updateDataSourceStatus(false);
         });
 }
 
-
 function getHolidayInfo(dateStr) {
-
-    var year =
-        parseInt(dateStr.substring(0, 4), 10);
-
-    if (holidayCache[year]) {
-        return holidayCache[year][dateStr] || null;
-    }
-
+    var year = parseInt(dateStr.substring(0, 4), 10);
+    if (holidayCache[year]) return holidayCache[year][dateStr] || null;
     return null;
 }
 
-
-/**
- * 获取日期格子上显示的标签文字
- *
- * 规则：
- *  - 调班：显示"班"
- *  - 放假：
- *      - 假期的第一天：显示节日名称（如"中秋节"、"元旦"）
- *      - 假期后续日期：显示"休"
- */
 function getHolidayTagText(dateStr, holidayInfo) {
-
-    if (!holidayInfo) {
-        return '';
-    }
-
-    if (!holidayInfo.isOffDay) {
-        return '班';
-    }
+    if (!holidayInfo) return '';
+    if (!holidayInfo.isOffDay) return '班';
 
     var date = parseDate(dateStr);
-
-    if (!date) {
-        return holidayInfo.name;
-    }
+    if (!date) return holidayInfo.name;
 
     var prevDate = addDays(date, -1);
     var prevDateStr = formatDate(prevDate);
     var prevInfo = getHolidayInfo(prevDateStr);
 
-    if (
-        prevInfo &&
-        prevInfo.isOffDay &&
-        prevInfo.name === holidayInfo.name
-    ) {
+    if (prevInfo && prevInfo.isOffDay && prevInfo.name === holidayInfo.name) {
         return '休';
     }
-
     return holidayInfo.name;
 }
 
-
 function updateDataSourceStatus(isOnline) {
+    var el = document.getElementById('dataSourceStatus');
+    if (!el) return;
+    el.innerHTML = isOnline
+        ? '节假日数据：<span class="online">已联网加载</span>'
+        : '节假日数据：<span class="offline">联网失败，使用本地缓存</span>';
+}
 
-    var el =
-        document.getElementById('dataSourceStatus');
 
-    if (!el) {
-        return;
-    }
+/* =========================================================
+   孕月计算
+   ========================================================= */
 
-    if (isOnline) {
+function getPregnancyMonth(date, lmp) {
+    var diff = daysBetween(lmp, date);
+    if (diff < 0) return null;
+    var pm = Math.floor(diff / 28) + 1;
+    if (pm > 10) return 10;
+    return pm;
+}
 
-        el.innerHTML =
-            '节假日数据：' +
-            '<span class="online">已联网加载</span>';
+function getPregnancyMonthRange(pm, lmp) {
+    var start = addDays(lmp, (pm - 1) * 28);
+    var end = addDays(lmp, pm * 28 - 1);
+    return { start: start, end: end };
+}
 
-    } else {
-
-        el.innerHTML =
-            '节假日数据：' +
-            '<span class="offline">联网失败，使用本地缓存</span>';
-    }
+function isPregnancyMonthStart(date, lmp) {
+    var diff = daysBetween(lmp, date);
+    if (diff < 0) return false;
+    return diff % 28 === 0;
 }
 
 
@@ -1551,13 +1247,9 @@ function updateDataSourceStatus(isOnline) {
 
 let currentYear;
 let currentMonth;
-
 let selectedDateStr = null;
-
 let correctionDays = 0;
-
 let pendingCorrectionDays = null;
-
 let today = new Date();
 let todayStr = formatDate(today);
 
@@ -1579,99 +1271,51 @@ const STORAGE_KEY_CORRECTION_SOURCE = 'pregnancy_correction_source';
    ========================================================= */
 
 function parseDate(str) {
-
-    if (!str) {
-        return null;
-    }
-
+    if (!str) return null;
     const parts = str.split('-');
-
-    if (parts.length !== 3) {
-        return null;
-    }
+    if (parts.length !== 3) return null;
 
     const y = parseInt(parts[0], 10);
     const m = parseInt(parts[1], 10);
     const d = parseInt(parts[2], 10);
 
-    if (
-        !Number.isInteger(y) ||
-        !Number.isInteger(m) ||
-        !Number.isInteger(d)
-    ) {
-        return null;
-    }
-
-    if (m < 1 || m > 12 || d < 1 || d > 31) {
-        return null;
-    }
+    if (!Number.isInteger(y) || !Number.isInteger(m) || !Number.isInteger(d)) return null;
+    if (m < 1 || m > 12 || d < 1 || d > 31) return null;
 
     const date = new Date(y, m - 1, d);
-
-    if (
-        date.getFullYear() !== y ||
-        date.getMonth() !== m - 1 ||
-        date.getDate() !== d
-    ) {
-        return null;
-    }
+    if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) return null;
 
     return date;
 }
 
-
 function formatDate(date) {
-
     const y = date.getFullYear();
     const m = String(date.getMonth() + 1).padStart(2, '0');
     const d = String(date.getDate()).padStart(2, '0');
-
     return `${y}-${m}-${d}`;
 }
 
-
-function formatDateCN(date) {
-
-    return `${date.getFullYear()}年` +
-           `${date.getMonth() + 1}月` +
-           `${date.getDate()}日`;
+function formatDateShort(date) {
+    return `${date.getMonth() + 1}.${date.getDate()}`;
 }
 
+function formatDateCN(date) {
+    return `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+}
 
 function getWeekdayText(date) {
-
-    const names =
-        ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
-
+    const names = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
     return names[date.getDay()];
 }
 
-
 function daysBetween(date1, date2) {
-
-    const d1 = new Date(
-        date1.getFullYear(),
-        date1.getMonth(),
-        date1.getDate()
-    );
-
-    const d2 = new Date(
-        date2.getFullYear(),
-        date2.getMonth(),
-        date2.getDate()
-    );
-
+    const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+    const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
     return Math.round((d2 - d1) / 86400000);
 }
 
-
 function addDays(date, days) {
-
-    return new Date(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate() + days
-    );
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);
 }
 
 
@@ -1680,26 +1324,14 @@ function addDays(date, days) {
    ========================================================= */
 
 function getOriginalLmp() {
-
-    const lmpStr =
-        document.getElementById('lmp').value;
-
-    if (!lmpStr) {
-        return null;
-    }
-
+    const lmpStr = document.getElementById('lmp').value;
+    if (!lmpStr) return null;
     return parseDate(lmpStr);
 }
 
-
 function getEffectiveLmp() {
-
     const original = getOriginalLmp();
-
-    if (!original) {
-        return null;
-    }
-
+    if (!original) return null;
     return addDays(original, correctionDays);
 }
 
@@ -1709,30 +1341,15 @@ function getEffectiveLmp() {
    ========================================================= */
 
 function getWeekInfo(date, lmp) {
-
     const diff = daysBetween(lmp, date);
-
-    if (diff < 0) {
-        return null;
-    }
-
+    if (diff < 0) return null;
     const weeks = Math.floor(diff / 7);
     const days = diff % 7;
-
-    return {
-        totalDays: diff,
-        weeks: weeks,
-        days: days
-    };
+    return { totalDays: diff, weeks: weeks, days: days };
 }
 
-
 function formatWeekText(info) {
-
-    if (!info) {
-        return '';
-    }
-
+    if (!info) return '';
     return `孕${info.weeks}周+${info.days}天`;
 }
 
@@ -1742,46 +1359,26 @@ function formatWeekText(info) {
    ========================================================= */
 
 function init() {
+    const savedLmp = localStorage.getItem(STORAGE_KEY_LMP);
+    const savedCorrection = localStorage.getItem(STORAGE_KEY_CORRECTION);
 
-    const savedLmp =
-        localStorage.getItem(STORAGE_KEY_LMP);
-
-    const savedCorrection =
-        localStorage.getItem(STORAGE_KEY_CORRECTION);
-
-    if (savedLmp) {
-        document.getElementById('lmp').value = savedLmp;
-    } else {
-        document.getElementById('lmp').value = '';
-    }
+    if (savedLmp) document.getElementById('lmp').value = savedLmp;
+    else document.getElementById('lmp').value = '';
 
     if (savedCorrection !== null) {
-
         const parsed = parseInt(savedCorrection, 10);
-
-        correctionDays =
-            Number.isFinite(parsed) ? parsed : 0;
-
+        correctionDays = Number.isFinite(parsed) ? parsed : 0;
     } else {
         correctionDays = 0;
     }
 
-    const savedUSDate =
-        localStorage.getItem(STORAGE_KEY_US_DATE);
-    const savedUSWeeks =
-        localStorage.getItem(STORAGE_KEY_US_WEEKS);
-    const savedUSDays =
-        localStorage.getItem(STORAGE_KEY_US_DAYS);
+    const savedUSDate = localStorage.getItem(STORAGE_KEY_US_DATE);
+    const savedUSWeeks = localStorage.getItem(STORAGE_KEY_US_WEEKS);
+    const savedUSDays = localStorage.getItem(STORAGE_KEY_US_DAYS);
 
-    if (savedUSDate) {
-        document.getElementById('usDate').value = savedUSDate;
-    }
-    if (savedUSWeeks !== null) {
-        document.getElementById('usWeeks').value = savedUSWeeks;
-    }
-    if (savedUSDays !== null) {
-        document.getElementById('usDays').value = savedUSDays;
-    }
+    if (savedUSDate) document.getElementById('usDate').value = savedUSDate;
+    if (savedUSWeeks !== null) document.getElementById('usWeeks').value = savedUSWeeks;
+    if (savedUSDays !== null) document.getElementById('usDays').value = savedUSDays;
 
     updateTodayObject();
 
@@ -1795,25 +1392,17 @@ function init() {
     ensureHolidayData(currentYear + 1);
 }
 
-
 function updateTodayObject() {
-
     today = new Date();
     todayStr = formatDate(today);
 }
 
-
 function refreshTodayIfNeeded() {
-
     const oldTodayStr = todayStr;
-
     updateTodayObject();
-
     if (oldTodayStr !== todayStr) {
-
         currentYear = today.getFullYear();
         currentMonth = today.getMonth();
-
         renderCalendar();
         updateAll();
     }
@@ -1821,61 +1410,32 @@ function refreshTodayIfNeeded() {
 
 
 /* =========================================================
-   保存
+   保存与重置
    ========================================================= */
 
 function saveSettings() {
+    const lmpStr = document.getElementById('lmp').value;
+    if (lmpStr) localStorage.setItem(STORAGE_KEY_LMP, lmpStr);
+    else localStorage.removeItem(STORAGE_KEY_LMP);
 
-    const lmpStr =
-        document.getElementById('lmp').value;
+    localStorage.setItem(STORAGE_KEY_CORRECTION, correctionDays);
 
-    if (lmpStr) {
-        localStorage.setItem(STORAGE_KEY_LMP, lmpStr);
-    } else {
-        localStorage.removeItem(STORAGE_KEY_LMP);
-    }
+    const usDate = document.getElementById('usDate').value;
+    const usWeeks = document.getElementById('usWeeks').value;
+    const usDays = document.getElementById('usDays').value;
 
-    localStorage.setItem(
-        STORAGE_KEY_CORRECTION,
-        correctionDays
-    );
+    if (usDate) localStorage.setItem(STORAGE_KEY_US_DATE, usDate);
+    else localStorage.removeItem(STORAGE_KEY_US_DATE);
 
-    const usDate =
-        document.getElementById('usDate').value;
-    const usWeeks =
-        document.getElementById('usWeeks').value;
-    const usDays =
-        document.getElementById('usDays').value;
+    if (usWeeks !== '') localStorage.setItem(STORAGE_KEY_US_WEEKS, usWeeks);
+    else localStorage.removeItem(STORAGE_KEY_US_WEEKS);
 
-    if (usDate) {
-        localStorage.setItem(STORAGE_KEY_US_DATE, usDate);
-    } else {
-        localStorage.removeItem(STORAGE_KEY_US_DATE);
-    }
-
-    if (usWeeks !== '') {
-        localStorage.setItem(STORAGE_KEY_US_WEEKS, usWeeks);
-    } else {
-        localStorage.removeItem(STORAGE_KEY_US_WEEKS);
-    }
-
-    if (usDays !== '') {
-        localStorage.setItem(STORAGE_KEY_US_DAYS, usDays);
-    } else {
-        localStorage.removeItem(STORAGE_KEY_US_DAYS);
-    }
+    if (usDays !== '') localStorage.setItem(STORAGE_KEY_US_DAYS, usDays);
+    else localStorage.removeItem(STORAGE_KEY_US_DAYS);
 }
 
-
-/* =========================================================
-   重置
-   ========================================================= */
-
 function resetAll() {
-
-    if (!confirm('确定要清除所有保存的设置并恢复默认吗？')) {
-        return;
-    }
+    if (!confirm('确定要清除所有保存的设置并恢复默认吗？')) return;
 
     localStorage.removeItem(STORAGE_KEY_LMP);
     localStorage.removeItem(STORAGE_KEY_CORRECTION);
@@ -1893,16 +1453,14 @@ function resetAll() {
    ========================================================= */
 
 function updateAll() {
-
     refreshTodayIfNeeded();
-
+    renderCalendar();
     updateEffectiveLmpDisplay();
     updateCorrectionStatus();
     updateTodaySummary();
+    renderPregnancyMonthSubtitle();
 
-    if (selectedDateStr) {
-        updateSelectedResult(selectedDateStr);
-    }
+    if (selectedDateStr) updateSelectedResult(selectedDateStr);
 
     saveSettings();
 }
@@ -1913,39 +1471,27 @@ function updateAll() {
    ========================================================= */
 
 function updateEffectiveLmpDisplay() {
-
-    const el =
-        document.getElementById('effectiveLmpDisplay');
-
+    const el = document.getElementById('effectiveLmpDisplay');
     const original = getOriginalLmp();
 
     if (!original) {
-        el.textContent =
-            '有效末次月经：请先设置原始末次月经';
+        el.textContent = '有效末次月经：请先设置原始末次月经';
         return;
     }
 
     if (correctionDays === 0) {
-
-        el.innerHTML =
-            '有效末次月经：' +
-            `<strong>${formatDate(original)}</strong>` +
-            '（未校准）';
-
+        el.innerHTML = '有效末次月经：' +
+            `<strong>${formatDate(original)}</strong>` + '（未校准）';
         return;
     }
 
     const effective = getEffectiveLmp();
-
     const sign = correctionDays > 0 ? '+' : '';
 
     el.innerHTML =
-        '原始末次月经：' +
-        `<strong>${formatDate(original)}</strong><br>` +
-        '孕周计算基准：' +
-        `<strong>${formatDate(effective)}</strong>` +
-        `（向${correctionDays > 0 ? '后' : '前'}调整 ` +
-        `${sign}${correctionDays} 天）`;
+        '原始末次月经：' + `<strong>${formatDate(original)}</strong><br>` +
+        '孕周计算基准：' + `<strong>${formatDate(effective)}</strong>` +
+        `（向${correctionDays > 0 ? '后' : '前'}调整 ${sign}${correctionDays} 天）`;
 }
 
 
@@ -1954,32 +1500,74 @@ function updateEffectiveLmpDisplay() {
    ========================================================= */
 
 function updateCorrectionStatus() {
-
-    const el =
-        document.getElementById('correctionStatus');
+    const el = document.getElementById('correctionStatus');
 
     if (correctionDays === 0) {
-        el.innerHTML =
-            '状态：<span class="badge">未校准</span>';
+        el.innerHTML = '状态：<span class="badge">未校准</span>';
         return;
     }
 
     const sign = correctionDays > 0 ? '+' : '';
-
-    const savedSource =
-        localStorage.getItem(STORAGE_KEY_CORRECTION_SOURCE);
+    const savedSource = localStorage.getItem(STORAGE_KEY_CORRECTION_SOURCE);
 
     let sourceText = '';
+    if (savedSource === 'us') sourceText = '（B超）';
+    else if (savedSource === 'manual') sourceText = '（手动）';
 
-    if (savedSource === 'us') {
-        sourceText = '（B超）';
-    } else if (savedSource === 'manual') {
-        sourceText = '（手动）';
+    el.innerHTML = '状态：' +
+        `<span class="badge">已校准 ${sign}${correctionDays}天 ${sourceText}</span>`;
+}
+
+
+/* =========================================================
+   孕月字幕（日历标题下方）
+   ========================================================= */
+
+function renderPregnancyMonthSubtitle() {
+    const el = document.getElementById('calendarPmSubtitle');
+    const lmp = getEffectiveLmp();
+
+    if (!lmp) {
+        el.textContent = '请先设置末次月经日期';
+        return;
     }
 
-    el.innerHTML =
-        '状态：' +
-        `<span class="badge">已校准 ${sign}${correctionDays}天 ${sourceText}</span>`;
+    const monthStart = new Date(currentYear, currentMonth, 1);
+    const monthEnd = new Date(currentYear, currentMonth + 1, 0);
+
+    const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const todayDiff = daysBetween(lmp, todayMidnight);
+    let currentPm = null;
+    if (todayDiff >= 0) {
+        currentPm = Math.floor(todayDiff / 28) + 1;
+        if (currentPm > 10) currentPm = 10;
+    }
+
+    const items = [];
+
+    for (let pm = 1; pm <= 10; pm++) {
+        const range = getPregnancyMonthRange(pm, lmp);
+
+        if (range.start > monthEnd || range.end < monthStart) continue;
+
+        const isCurrent = (currentPm === pm);
+        const dateRange = `${formatDateShort(range.start)}-${formatDateShort(range.end)}`;
+        const itemClass = isCurrent ? 'current' : 'month-related';
+
+        items.push(
+            `<span class="pm-item ${itemClass}">` +
+            `<span class="pm-stage-dot pm-dot-${pm}"></span>` +
+            `孕${pm}月 (${dateRange})` +
+            `</span>`
+        );
+    }
+
+    if (items.length === 0) {
+        el.textContent = '本月无孕月信息';
+        return;
+    }
+
+    el.innerHTML = items.join('');
 }
 
 
@@ -1988,176 +1576,90 @@ function updateCorrectionStatus() {
    ========================================================= */
 
 function toggleCorrectionDetails() {
-
-    const details =
-        document.getElementById('correctionDetails');
-
+    const details = document.getElementById('correctionDetails');
     details.classList.toggle('show');
 }
 
 
 /* =========================================================
-   B超校准：计算预览
+   B超校准
    ========================================================= */
 
 function previewCorrectionFromUS() {
-
     const originalLmp = getOriginalLmp();
+    if (!originalLmp) { alert('请先设置原始末次月经日期'); return; }
 
-    if (!originalLmp) {
-        alert('请先设置原始末次月经日期');
-        return;
-    }
+    const usDateStr = document.getElementById('usDate').value;
+    const usWeeks = parseInt(document.getElementById('usWeeks').value, 10);
+    const usDays = parseInt(document.getElementById('usDays').value, 10);
 
-    const usDateStr =
-        document.getElementById('usDate').value;
-
-    const usWeeks =
-        parseInt(
-            document.getElementById('usWeeks').value,
-            10
-        );
-
-    const usDays =
-        parseInt(
-            document.getElementById('usDays').value,
-            10
-        );
-
-    if (!usDateStr) {
-        alert('请输入B超日期');
-        return;
-    }
+    if (!usDateStr) { alert('请输入B超日期'); return; }
 
     const usDate = parseDate(usDateStr);
+    if (!usDate) { alert('B超日期无效，请重新选择'); return; }
 
-    if (!usDate) {
-        alert('B超日期无效，请重新选择');
-        return;
+    if (isNaN(usWeeks) || usWeeks < 0 || !Number.isInteger(usWeeks)) {
+        alert('B超孕周数必须为非负整数'); return;
     }
-
-    if (
-        isNaN(usWeeks) ||
-        usWeeks < 0 ||
-        !Number.isInteger(usWeeks)
-    ) {
-        alert('B超孕周数必须为非负整数');
-        return;
-    }
-
-    if (
-        isNaN(usDays) ||
-        usDays < 0 ||
-        usDays > 6 ||
-        !Number.isInteger(usDays)
-    ) {
-        alert('B超天数必须在0~6之间');
-        return;
+    if (isNaN(usDays) || usDays < 0 || usDays > 6 || !Number.isInteger(usDays)) {
+        alert('B超天数必须在0~6之间'); return;
     }
 
     const diff = daysBetween(originalLmp, usDate);
-
-    if (diff < 0) {
-        alert('B超日期早于原始末次月经，请检查输入');
-        return;
-    }
+    if (diff < 0) { alert('B超日期早于原始末次月经，请检查输入'); return; }
 
     const targetTotal = usWeeks * 7 + usDays;
-
     const calculatedCorrection = diff - targetTotal;
 
     pendingCorrectionDays = calculatedCorrection;
 
-    const effectivePreview =
-        addDays(originalLmp, calculatedCorrection);
-
-    const dueDatePreview =
-        addDays(effectivePreview, 280);
-
+    const effectivePreview = addDays(originalLmp, calculatedCorrection);
+    const dueDatePreview = addDays(effectivePreview, 280);
     const sign = calculatedCorrection > 0 ? '+' : '';
 
     let adjustmentText;
-
     if (calculatedCorrection > 0) {
-        adjustmentText =
-            `末次月经基准向后调整 ${calculatedCorrection} 天`;
+        adjustmentText = `末次月经基准向后调整 ${calculatedCorrection} 天`;
     } else if (calculatedCorrection < 0) {
-        adjustmentText =
-            `末次月经基准向前调整 ${Math.abs(calculatedCorrection)} 天`;
+        adjustmentText = `末次月经基准向前调整 ${Math.abs(calculatedCorrection)} 天`;
     } else {
         adjustmentText = '无需调整';
     }
 
-    const preview =
-        document.getElementById('correctionPreview');
-
-    const previewText =
-        document.getElementById('previewText');
+    const preview = document.getElementById('correctionPreview');
+    const previewText = document.getElementById('previewText');
 
     previewText.innerHTML =
-
         `原始末次月经：${formatDateCN(originalLmp)}<br>` +
         `B超日期：${formatDateCN(usDate)}<br>` +
         `B超孕周：${usWeeks}周+${usDays}天<br>` +
-        `<span class="preview-highlight">` +
-        `计算结果：${sign}${calculatedCorrection}天` +
-        `</span><br>` +
+        `<span class="preview-highlight">计算结果：${sign}${calculatedCorrection}天</span><br>` +
         `${adjustmentText}<br>` +
-        `校准后孕周基准：` +
-        `<span class="preview-highlight">` +
-        `${formatDateCN(effectivePreview)}` +
-        `</span><br>` +
+        `校准后孕周基准：<span class="preview-highlight">${formatDateCN(effectivePreview)}</span><br>` +
         `对应预产期：${formatDateCN(dueDatePreview)}`;
 
     preview.classList.add('show');
 }
 
-
-/* =========================================================
-   应用B超校准
-   ========================================================= */
-
 function applyPreviewCorrection() {
-
-    if (pendingCorrectionDays === null) {
-        return;
-    }
+    if (pendingCorrectionDays === null) return;
 
     correctionDays = pendingCorrectionDays;
+    localStorage.setItem(STORAGE_KEY_CORRECTION_SOURCE, 'us');
 
-    localStorage.setItem(
-        STORAGE_KEY_CORRECTION_SOURCE,
-        'us'
-    );
-
-    const manualInput =
-        document.getElementById('manualCorrection');
-
+    const manualInput = document.getElementById('manualCorrection');
     manualInput.value = correctionDays;
 
     saveSettings();
     cancelCorrectionPreview();
     updateAll();
 
-    alert(
-        `B超校准已应用：` +
-        `${correctionDays > 0 ? '+' : ''}` +
-        `${correctionDays} 天`
-    );
+    alert(`B超校准已应用：${correctionDays > 0 ? '+' : ''}${correctionDays} 天`);
 }
 
-
-/* =========================================================
-   取消预览
-   ========================================================= */
-
 function cancelCorrectionPreview() {
-
     pendingCorrectionDays = null;
-
-    const preview =
-        document.getElementById('correctionPreview');
-
+    const preview = document.getElementById('correctionPreview');
     preview.classList.remove('show');
 }
 
@@ -2167,12 +1669,7 @@ function cancelCorrectionPreview() {
    ========================================================= */
 
 function applyManualCorrection() {
-
-    const val =
-        parseInt(
-            document.getElementById('manualCorrection').value,
-            10
-        );
+    const val = parseInt(document.getElementById('manualCorrection').value, 10);
 
     if (isNaN(val) || !Number.isInteger(val)) {
         alert('请输入有效的整数校准天数');
@@ -2180,45 +1677,20 @@ function applyManualCorrection() {
     }
 
     correctionDays = val;
-
-    localStorage.setItem(
-        STORAGE_KEY_CORRECTION_SOURCE,
-        'manual'
-    );
-
+    localStorage.setItem(STORAGE_KEY_CORRECTION_SOURCE, 'manual');
     updateAll();
-
-    alert(
-        `手动校准已应用：` +
-        `${val > 0 ? '+' : ''}${val} 天`
-    );
+    alert(`手动校准已应用：${val > 0 ? '+' : ''}${val} 天`);
 }
 
-
-/* =========================================================
-   清除校准
-   ========================================================= */
-
 function clearCorrection() {
-
-    if (
-        correctionDays !== 0 &&
-        !confirm('确定清除当前孕周校准吗？')
-    ) {
-        return;
-    }
+    if (correctionDays !== 0 && !confirm('确定清除当前孕周校准吗？')) return;
 
     correctionDays = 0;
     pendingCorrectionDays = null;
-
     document.getElementById('manualCorrection').value = '';
 
-    localStorage.removeItem(
-        STORAGE_KEY_CORRECTION_SOURCE
-    );
-
+    localStorage.removeItem(STORAGE_KEY_CORRECTION_SOURCE);
     updateAll();
-
     alert('已清除校准，恢复原始末次月经计算。');
 }
 
@@ -2228,10 +1700,7 @@ function clearCorrection() {
    ========================================================= */
 
 function renderCalendar() {
-
-    const grid =
-        document.getElementById('calendarGrid');
-
+    const grid = document.getElementById('calendarGrid');
     grid.innerHTML = '';
 
     document.getElementById('calendarTitle').textContent =
@@ -2239,92 +1708,80 @@ function renderCalendar() {
 
     ensureHolidayData(currentYear);
 
-    const firstDay =
-        new Date(currentYear, currentMonth, 1);
-
+    const firstDay = new Date(currentYear, currentMonth, 1);
     const startOffset = firstDay.getDay();
+    const startDate = new Date(currentYear, currentMonth, 1 - startOffset);
 
-    const startDate =
-        new Date(currentYear, currentMonth, 1 - startOffset);
+    const lmp = getEffectiveLmp();
 
     for (let i = 0; i < 42; i++) {
-
         const cellDate = new Date(startDate);
         cellDate.setDate(startDate.getDate() + i);
 
         const cellDateStr = formatDate(cellDate);
+        const isOtherMonth = cellDate.getMonth() !== currentMonth;
+        const isToday = cellDateStr === todayStr;
+        const isSelected = cellDateStr === selectedDateStr;
 
-        const isOtherMonth =
-            cellDate.getMonth() !== currentMonth;
-
-        const isToday =
-            cellDateStr === todayStr;
-
-        const isSelected =
-            cellDateStr === selectedDateStr;
-
-        const holidayInfo =
-            getHolidayInfo(cellDateStr);
+        const holidayInfo = getHolidayInfo(cellDateStr);
+        const solarTerm = getSolarTermInfo(cellDateStr);
 
         const cell = document.createElement('div');
         cell.className = 'day-cell';
 
-        if (isOtherMonth) {
-            cell.classList.add('other-month');
-        }
-        if (isToday) {
-            cell.classList.add('today');
-        }
-        if (isSelected) {
-            cell.classList.add('selected');
-        }
+        let pm = null;
+        let isPmStart = false;
 
-        if (holidayInfo) {
-            if (holidayInfo.isOffDay) {
-                cell.classList.add('is-holiday');
-            } else {
-                cell.classList.add('is-workday');
+        if (lmp) {
+            pm = getPregnancyMonth(cellDate, lmp);
+            if (pm && pm >= 1 && pm <= 10) {
+                /* 每个孕月独立类名：pm-1 ~ pm-10 */
+                cell.classList.add('pm-' + pm);
+
+                isPmStart = isPregnancyMonthStart(cellDate, lmp);
+                if (isPmStart && !isOtherMonth) {
+                    cell.classList.add('has-pm-start');
+                    cell.dataset.pmNum = pm;
+                }
             }
         }
 
-        /* 公历日期 */
+        if (isOtherMonth) cell.classList.add('other-month');
+        if (isToday) cell.classList.add('today');
+        if (isSelected) cell.classList.add('selected');
+
+        if (holidayInfo) {
+            if (holidayInfo.isOffDay) cell.classList.add('is-holiday');
+            else cell.classList.add('is-workday');
+        }
+
         const solarSpan = document.createElement('span');
         solarSpan.className = 'solar-day';
         solarSpan.textContent = cellDate.getDate();
         cell.appendChild(solarSpan);
 
-        /* 农历日期 */
         const lunarSpan = document.createElement('span');
         lunarSpan.className = 'lunar-day';
         lunarSpan.textContent = getLunarDayText(cellDate);
         cell.appendChild(lunarSpan);
 
-        /* 节假日标签 */
         if (holidayInfo) {
-
-            const tagText =
-                getHolidayTagText(cellDateStr, holidayInfo);
-
+            const tagText = getHolidayTagText(cellDateStr, holidayInfo);
             if (tagText) {
-
                 const tag = document.createElement('span');
-
-                tag.className =
-                    'holiday-tag ' +
-                    (holidayInfo.isOffDay ? 'rest' : 'work');
-
+                tag.className = 'holiday-tag ' + (holidayInfo.isOffDay ? 'rest' : 'work');
                 tag.textContent = tagText;
-
                 cell.appendChild(tag);
             }
+        } else if (solarTerm) {
+            const tag = document.createElement('span');
+            tag.className = 'solar-term-tag';
+            tag.textContent = solarTerm;
+            cell.appendChild(tag);
         }
 
         cell.dataset.date = cellDateStr;
-
-        cell.addEventListener(
-            'click',
-            () => onDateClick(cellDateStr)
-        );
+        cell.addEventListener('click', () => onDateClick(cellDateStr));
 
         grid.appendChild(cell);
     }
@@ -2336,9 +1793,7 @@ function renderCalendar() {
    ========================================================= */
 
 function changeMonth(delta) {
-
     refreshTodayIfNeeded();
-
     currentMonth += delta;
 
     if (currentMonth > 11) {
@@ -2350,17 +1805,15 @@ function changeMonth(delta) {
     }
 
     renderCalendar();
+    renderPregnancyMonthSubtitle();
 }
 
-
 function goToToday() {
-
     refreshTodayIfNeeded();
-
     currentYear = today.getFullYear();
     currentMonth = today.getMonth();
-
     renderCalendar();
+    renderPregnancyMonthSubtitle();
 }
 
 
@@ -2369,9 +1822,7 @@ function goToToday() {
    ========================================================= */
 
 function onDateClick(dateStr) {
-
     selectedDateStr = dateStr;
-
     renderCalendar();
     updateSelectedResult(dateStr);
 }
@@ -2382,95 +1833,71 @@ function onDateClick(dateStr) {
    ========================================================= */
 
 function updateSelectedResult(dateStr) {
-
-    const resultBox =
-        document.getElementById('selectedResult');
-    const title =
-        document.getElementById('selectedDateTitle');
-    const weekEl =
-        document.getElementById('selectedWeek');
-    const infoEl =
-        document.getElementById('selectedInfo');
+    const resultBox = document.getElementById('selectedResult');
+    const title = document.getElementById('selectedDateTitle');
+    const weekEl = document.getElementById('selectedWeek');
+    const infoEl = document.getElementById('selectedInfo');
 
     const lmp = getEffectiveLmp();
 
     if (!lmp) {
-
         resultBox.classList.remove('hidden');
         resultBox.classList.add('error');
-
         title.textContent = '尚未设置末次月经';
         weekEl.textContent = '请先设置末次月经日期';
         infoEl.textContent = '';
-
         return;
     }
 
     const inputDate = parseDate(dateStr);
-
-    if (!inputDate) {
-        return;
-    }
+    if (!inputDate) return;
 
     const info = getWeekInfo(inputDate, lmp);
-
     if (!info) {
-
         resultBox.classList.remove('hidden');
         resultBox.classList.add('error');
-
         title.textContent = formatDateCN(inputDate);
         weekEl.textContent = '早于有效末次月经';
         infoEl.textContent = '该日期无法计算孕周';
-
         return;
     }
 
     const dueDate = addDays(lmp, 280);
-
-    const daysRemaining =
-        daysBetween(inputDate, dueDate);
-
-    const lunarText =
-        getLunarDayText(inputDate);
-
-    const holidayInfo =
-        getHolidayInfo(dateStr);
+    const daysRemaining = daysBetween(inputDate, dueDate);
+    const lunarText = getLunarDayText(inputDate);
+    const holidayInfo = getHolidayInfo(dateStr);
+    const solarTerm = getSolarTermInfo(dateStr);
+    const pm = getPregnancyMonth(inputDate, lmp);
 
     resultBox.classList.remove('hidden', 'error');
-
-    title.textContent =
-        `${formatDateCN(inputDate)} · ${getWeekdayText(inputDate)}`;
-
+    title.textContent = `${formatDateCN(inputDate)} · ${getWeekdayText(inputDate)}`;
     weekEl.textContent = formatWeekText(info);
 
     let remainingText;
+    if (daysRemaining > 0) remainingText = `距离预产期还有 ${daysRemaining} 天`;
+    else if (daysRemaining === 0) remainingText = '今天是计算预产期';
+    else remainingText = `已超过计算预产期 ${Math.abs(daysRemaining)} 天`;
 
-    if (daysRemaining > 0) {
-        remainingText =
-            `距离预产期还有 ${daysRemaining} 天`;
-    } else if (daysRemaining === 0) {
-        remainingText = '今天是计算预产期';
-    } else {
-        remainingText =
-            `已超过计算预产期 ${Math.abs(daysRemaining)} 天`;
+    let pmText = '';
+    if (pm) {
+        const range = getPregnancyMonthRange(pm, lmp);
+        pmText = `孕月：孕${pm}月（${formatDate(range.start)} ~ ${formatDate(range.end)}）`;
     }
 
     let holidayText = '';
-
     if (holidayInfo) {
-        if (holidayInfo.isOffDay) {
-            holidayText =
-                `节假日：${holidayInfo.name}（放假）`;
-        } else {
-            holidayText =
-                `调班：${holidayInfo.name}（需上班）`;
-        }
+        if (holidayInfo.isOffDay) holidayText = `节假日：${holidayInfo.name}（放假）`;
+        else holidayText = `调班：${holidayInfo.name}（需上班）`;
     }
+
+    let solarTermText = '';
+    if (solarTerm) solarTermText = `节气：${solarTerm}`;
 
     infoEl.innerHTML =
         `农历：${lunarText || '—'}<br>` +
+        (pmText ? `${pmText}<br>` : '') +
         (holidayText ? `${holidayText}<br>` : '') +
+        (solarTermText ? `${solarTermText}<br>` : '') +
         `${remainingText}<br>` +
         `预产期：${formatDateCN(dueDate)}`;
 }
@@ -2481,42 +1908,29 @@ function updateSelectedResult(dateStr) {
    ========================================================= */
 
 function updateTodaySummary() {
-
-    const weekEl =
-        document.getElementById('todayWeek');
-    const dateEl =
-        document.getElementById('todayDate');
-    const dueEl =
-        document.getElementById('dueDateSummary');
-    const remainingEl =
-        document.getElementById('daysRemainingSummary');
+    const weekEl = document.getElementById('todayWeek');
+    const dateEl = document.getElementById('todayDate');
+    const dueEl = document.getElementById('dueDateSummary');
+    const remainingEl = document.getElementById('daysRemainingSummary');
 
     const lmp = getEffectiveLmp();
 
-    dateEl.textContent =
-        `${formatDateCN(today)} · ${getWeekdayText(today)}`;
+    dateEl.textContent = `${formatDateCN(today)} · ${getWeekdayText(today)}`;
 
     if (!lmp) {
-
         weekEl.textContent = '请先设置末次月经日期';
         weekEl.classList.add('empty');
-
         dueEl.textContent = '—';
         remainingEl.textContent = '—';
-
         return;
     }
 
     const info = getWeekInfo(today, lmp);
-
     if (!info) {
-
         weekEl.textContent = '末次月经晚于今天';
         weekEl.classList.add('empty');
-
         dueEl.textContent = '—';
         remainingEl.textContent = '请检查日期';
-
         return;
     }
 
@@ -2524,19 +1938,12 @@ function updateTodaySummary() {
     weekEl.classList.remove('empty');
 
     const dueDate = addDays(lmp, 280);
-
     dueEl.textContent = formatDateCN(dueDate);
 
     const remaining = daysBetween(today, dueDate);
-
-    if (remaining > 0) {
-        remainingEl.textContent = `${remaining} 天`;
-    } else if (remaining === 0) {
-        remainingEl.textContent = '今天';
-    } else {
-        remainingEl.textContent =
-            `已超过 ${Math.abs(remaining)} 天`;
-    }
+    if (remaining > 0) remainingEl.textContent = `${remaining} 天`;
+    else if (remaining === 0) remainingEl.textContent = '今天';
+    else remainingEl.textContent = `已超过 ${Math.abs(remaining)} 天`;
 }
 
 
@@ -2545,77 +1952,53 @@ function updateTodaySummary() {
    ========================================================= */
 
 function calcWeekToDate() {
-
     const lmp = getEffectiveLmp();
-
-    const resultBox =
-        document.getElementById('reverseResult');
+    const resultBox = document.getElementById('reverseResult');
 
     if (!lmp) {
         showError(resultBox, '请先设置末次月经日期');
         return;
     }
 
-    const weeks =
-        parseInt(
-            document.getElementById('weeksInput').value,
-            10
-        );
+    const weeks = parseInt(document.getElementById('weeksInput').value, 10);
+    const days = parseInt(document.getElementById('daysInput').value, 10);
 
-    const days =
-        parseInt(
-            document.getElementById('daysInput').value,
-            10
-        );
-
-    if (
-        isNaN(weeks) ||
-        weeks < 0 ||
-        !Number.isInteger(weeks)
-    ) {
+    if (isNaN(weeks) || weeks < 0 || !Number.isInteger(weeks)) {
         showError(resultBox, '孕周数必须为非负整数');
         return;
     }
-
-    if (
-        isNaN(days) ||
-        days < 0 ||
-        days > 6 ||
-        !Number.isInteger(days)
-    ) {
+    if (isNaN(days) || days < 0 || days > 6 || !Number.isInteger(days)) {
         showError(resultBox, '天数必须在0~6之间且为整数');
         return;
     }
 
     const totalDays = weeks * 7 + days;
-
     const targetDate = addDays(lmp, totalDays);
-
     const dueDate = addDays(lmp, 280);
+    const targetDateStr = formatDate(targetDate);
 
-    const holidayInfo =
-        getHolidayInfo(formatDate(targetDate));
+    const holidayInfo = getHolidayInfo(targetDateStr);
+    const solarTerm = getSolarTermInfo(targetDateStr);
+    const pm = getPregnancyMonth(targetDate, lmp);
 
     resultBox.className = 'result-box success';
     resultBox.classList.remove('hidden');
 
-    let holidayText = '';
-
+    let extraText = '';
+    if (pm) extraText += `<br>孕月：孕${pm}月`;
     if (holidayInfo) {
-        holidayText =
-            holidayInfo.isOffDay
-                ? `<br>节假日：${holidayInfo.name}`
-                : `<br>调班：${holidayInfo.name}`;
+        extraText += holidayInfo.isOffDay
+            ? `<br>节假日：${holidayInfo.name}`
+            : `<br>调班：${holidayInfo.name}`;
     }
+    if (solarTerm) extraText += `<br>节气：${solarTerm}`;
 
     resultBox.innerHTML =
         `<strong>${formatDateCN(targetDate)}</strong>` +
         `（${getWeekdayText(targetDate)}）<br>` +
         `孕${weeks}周+${days}天` +
-        holidayText +
-        `<div class="sub">` +
-        `预产期：${formatDateCN(dueDate)}` +
-        `</div>`;
+        extraText +
+        `<div class="sub">预产期：${formatDateCN(dueDate)}</div>`;
 }
 
 
@@ -2624,7 +2007,6 @@ function calcWeekToDate() {
    ========================================================= */
 
 function showError(el, msg) {
-
     el.className = 'result-box error';
     el.classList.remove('hidden');
     el.textContent = msg;
@@ -2635,44 +2017,19 @@ function showError(el, msg) {
    事件
    ========================================================= */
 
-document
-    .getElementById('lmp')
-    .addEventListener(
-        'change',
-        () => {
-            updateAll();
-        }
-    );
+document.getElementById('lmp').addEventListener('change', () => {
+    updateAll();
+});
 
+document.getElementById('manualCorrection').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') applyManualCorrection();
+});
 
-document
-    .getElementById('manualCorrection')
-    .addEventListener(
-        'keydown',
-        function(event) {
-            if (event.key === 'Enter') {
-                applyManualCorrection();
-            }
-        }
-    );
+document.getElementById('daysInput').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') calcWeekToDate();
+});
 
-
-document
-    .getElementById('daysInput')
-    .addEventListener(
-        'keydown',
-        function(event) {
-            if (event.key === 'Enter') {
-                calcWeekToDate();
-            }
-        }
-    );
-
-
-setInterval(
-    refreshTodayIfNeeded,
-    60000
-);
+setInterval(refreshTodayIfNeeded, 60000);
 
 
 /* =========================================================
