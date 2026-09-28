@@ -44,7 +44,6 @@
 
             --solar-term-color: #2e7d32;
 
-            /* 10 个孕月独立配色（相邻色相差异大） */
             --pm-bg-1:  #ffcdd2;
             --pm-bg-2:  #bbdefb;
             --pm-bg-3:  #fff9c4;
@@ -68,6 +67,12 @@
             --pm-dot-10: #5c6bc0;
 
             --pm-badge-bg: #2e7d32;
+
+            --tip-bg: #f3e5f5;
+            --tip-border: #ce93d8;
+            --tip-title: #6a1b9a;
+
+            --diet-accent: #1b5e20;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -152,8 +157,6 @@
         button.warning { background: #dc3545; }
         button.warning:active { background: #b02a37; }
 
-        /* ==================== 顶部孕期概览 ==================== */
-
         .pregnancy-summary { text-align: center; }
 
         .summary-title {
@@ -208,8 +211,6 @@
         .summary-value.primary { color: var(--primary); }
         .summary-value.accent { color: var(--accent); }
 
-        /* ==================== 末次月经 ==================== */
-
         .effective-lmp {
             font-size: 13px;
             color: var(--text-secondary);
@@ -217,8 +218,6 @@
         }
 
         .effective-lmp strong { color: var(--text); }
-
-        /* ==================== 日历 ==================== */
 
         .calendar-header {
             display: flex;
@@ -247,7 +246,6 @@
             background: var(--primary-light);
         }
 
-        /* 孕月内嵌字幕 */
         .calendar-pm-subtitle {
             font-size: 11px;
             color: var(--text-secondary);
@@ -332,9 +330,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        .day-cell:active {
-            transform: scale(0.96);
-        }
+        .day-cell:active { transform: scale(0.96); }
 
         .day-cell.pm-1  { background: var(--pm-bg-1);  }
         .day-cell.pm-2  { background: var(--pm-bg-2);  }
@@ -347,9 +343,7 @@
         .day-cell.pm-9  { background: var(--pm-bg-9);  }
         .day-cell.pm-10 { background: var(--pm-bg-10); }
 
-        .day-cell.other-month {
-            background: #f8f9fa !important;
-        }
+        .day-cell.other-month { background: #f8f9fa !important; }
 
         .day-cell.is-holiday {
             background: var(--holiday-bg) !important;
@@ -385,13 +379,8 @@
             font-weight: 700;
         }
 
-        .day-cell.other-month {
-            color: #adb5bd;
-        }
-
-        .day-cell.other-month .solar-day {
-            color: #adb5bd;
-        }
+        .day-cell.other-month { color: #adb5bd; }
+        .day-cell.other-month .solar-day { color: #adb5bd; }
 
         .day-cell.has-pm-start::after {
             content: attr(data-pm-num);
@@ -413,10 +402,7 @@
             box-shadow: 0 1px 2px rgba(0,0,0,0.15);
         }
 
-        .solar-day {
-            font-size: 15px;
-            line-height: 1.2;
-        }
+        .solar-day { font-size: 15px; line-height: 1.2; }
 
         .lunar-day {
             font-size: 9px;
@@ -457,8 +443,6 @@
             opacity: 0.6;
         }
 
-        /* ==================== 日期查询结果 ==================== */
-
         .selected-result { margin-top: 14px; }
 
         .selected-date-title {
@@ -480,8 +464,6 @@
             line-height: 1.7;
         }
 
-        /* ==================== 结果框 ==================== */
-
         .result-box {
             margin-top: 12px;
             padding: 12px 14px;
@@ -492,28 +474,15 @@
             word-break: break-word;
         }
 
-        .result-box.error {
-            background: var(--error-bg);
-            color: var(--error-text);
-        }
-
-        .result-box.success {
-            background: var(--success-bg);
-            color: var(--success-text);
-        }
-
-        .result-box.warning {
-            background: var(--warning-bg);
-            color: var(--warning-text);
-        }
+        .result-box.error { background: var(--error-bg); color: var(--error-text); }
+        .result-box.success { background: var(--success-bg); color: var(--success-text); }
+        .result-box.warning { background: var(--warning-bg); color: var(--warning-text); }
 
         .result-box .sub {
             font-size: 13px;
             color: #495057;
             margin-top: 4px;
         }
-
-        /* ==================== 校准 ==================== */
 
         .correction-card {
             background: var(--warning-bg);
@@ -584,8 +553,6 @@
         .button-row { display: flex; gap: 8px; margin-top: 10px; }
         .button-row button { flex: 1; }
 
-        /* ==================== 其他 ==================== */
-
         .highlight { color: var(--primary); font-weight: 700; }
 
         .divider {
@@ -612,7 +579,6 @@
 
         .hidden { display: none !important; }
 
-        /* 日历图例 */
         .calendar-legend {
             margin-top: 10px;
             font-size: 11px;
@@ -677,19 +643,507 @@
         .data-source-status .online { color: #0f5132; }
         .data-source-status .offline { color: #842029; }
 
+        .tip-card {
+            background: var(--tip-bg);
+            border: 1px solid var(--tip-border);
+            border-radius: 18px;
+            padding: 0;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(106, 27, 154, 0.08);
+            overflow: hidden;
+        }
+
+        .tip-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            transition: background 0.15s;
+        }
+
+        .tip-card-header:active {
+            background: rgba(106, 27, 154, 0.06);
+        }
+
+        .tip-card-header-left {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .tip-card-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--tip-title);
+            opacity: 0.75;
+            margin-bottom: 2px;
+        }
+
+        .tip-card-headline {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--tip-title);
+            line-height: 1.35;
+            word-break: break-word;
+        }
+
+        .tip-card-toggle {
+            flex-shrink: 0;
+            margin-left: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--tip-title);
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .tip-card-arrow {
+            display: inline-block;
+            transition: transform 0.2s;
+        }
+
+        .tip-card.expanded .tip-card-arrow {
+            transform: rotate(180deg);
+        }
+
+        .tip-card-body {
+            display: none;
+            padding: 12px 16px 16px;
+            font-size: 13px;
+            line-height: 1.65;
+            color: #212529;
+            border-top: 1px dashed var(--tip-border);
+        }
+
+        .tip-card.expanded .tip-card-body {
+            display: block;
+        }
+
+        .tip-row {
+            margin-bottom: 6px;
+        }
+
+        .tip-row-label {
+            font-weight: 700;
+            color: var(--tip-title);
+            margin-right: 4px;
+        }
+
+        .tip-section-title {
+            font-weight: 700;
+            color: var(--tip-title);
+            margin-top: 10px;
+            margin-bottom: 6px;
+            font-size: 13px;
+        }
+
+        .tip-todo-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .tip-todo-list li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 5px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .tip-todo-list li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: var(--tip-title);
+            font-weight: 700;
+        }
+
+        .tip-diet-section {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--tip-border);
+        }
+
+        .tip-diet-title {
+            font-weight: 700;
+            color: var(--diet-accent);
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .tip-diet-stage-label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            color: white;
+            background: var(--diet-accent);
+            padding: 1px 8px;
+            border-radius: 6px;
+            margin-top: 4px;
+            margin-bottom: 6px;
+            letter-spacing: 0.3px;
+        }
+
+        .tip-diet-stage-label.fixed {
+            background: #7c4dff;
+        }
+
+        .tip-diet-stage-label.eat {
+            background: #2e7d32;
+        }
+
+        .tip-diet-stage-label.reduce {
+            background: #ef6c00;
+        }
+
+        .tip-diet-stage-label.avoid {
+            background: #c62828;
+        }
+
+        .tip-diet-stage-label.note {
+            background: #1565c0;
+        }
+
+        .tip-preview-box {
+            background: #fff8e1;
+            border: 1px dashed #ffc107;
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin-top: 6px;
+            margin-bottom: 6px;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: #664d03;
+        }
+
+        .tip-preview-box .preview-label {
+            font-weight: 700;
+            margin-right: 4px;
+        }
+
+        .tip-empty {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 8px 0;
+        }
+
+        .tip-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .tip-actions button {
+            flex: 1;
+            background: white;
+            color: var(--tip-title);
+            border: 1px solid var(--tip-border);
+            padding: 10px 8px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .tip-actions button:active {
+            background: var(--tip-bg);
+        }
+
+        .tip-actions button.diet-btn {
+            color: var(--diet-accent);
+            border-color: #a5d6a7;
+        }
+
+        .tip-actions button.diet-btn:active {
+            background: #e8f5e9;
+        }
+
+        #encyclopediaView {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg);
+            z-index: 1000;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #encyclopediaView.show {
+            display: block;
+        }
+
+        .ency-inner {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 16px;
+            padding-bottom: 60px;
+        }
+
+        .ency-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+            padding: 10px 0;
+            z-index: 10;
+        }
+
+        .ency-back {
+            background: white;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 14px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+        }
+
+        .ency-back:active {
+            background: #f8f9fa;
+        }
+
+        .ency-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .ency-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            position: sticky;
+            top: 52px;
+            background: var(--bg);
+            padding: 6px 0 10px;
+            z-index: 9;
+        }
+
+        .ency-tab {
+            flex: 1;
+            padding: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            background: white;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: all 0.15s;
+        }
+
+        .ency-tab.active {
+            background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 3px 10px rgba(103, 58, 183, 0.25);
+        }
+
+        .ency-tab-content {
+            display: none;
+        }
+
+        .ency-tab-content.active {
+            display: block;
+        }
+
+        .diet-card {
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 18px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .diet-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--diet-accent);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .diet-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .diet-list li {
+            font-size: 13px;
+            line-height: 1.65;
+            padding: 5px 0 5px 26px;
+            position: relative;
+            color: #212529;
+            border-bottom: 1px dashed rgba(27, 94, 32, 0.15);
+        }
+
+        .diet-list li:last-child {
+            border-bottom: none;
+        }
+
+        .diet-list li::before {
+            content: attr(data-num);
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 18px;
+            height: 18px;
+            background: #4caf50;
+            color: white;
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .diet-attention {
+            margin-top: 12px;
+            padding: 10px 12px;
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 1.7;
+            color: #664d03;
+        }
+
+        .diet-attention-title {
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .diet-attention ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .diet-attention li {
+            padding-left: 14px;
+            position: relative;
+        }
+
+        .diet-attention li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            font-weight: 700;
+        }
+
+        .ency-week-card {
+            background: white;
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            scroll-margin-top: 110px;
+        }
+
+        .ency-week-card.current-week {
+            border: 2px solid var(--primary);
+            box-shadow: 0 4px 14px rgba(214, 51, 132, 0.18);
+        }
+
+        .ency-week-header {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed var(--border);
+        }
+
+        .ency-week-num {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .ency-week-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            flex: 1;
+            line-height: 1.35;
+        }
+
+        .ency-week-badge {
+            font-size: 10px;
+            font-weight: 700;
+            background: var(--primary);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 6px;
+            flex-shrink: 0;
+        }
+
+        .ency-fetal-row {
+            font-size: 12.5px;
+            line-height: 1.6;
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        .ency-fetal-label {
+            font-weight: 700;
+            color: var(--tip-title);
+            margin-right: 4px;
+        }
+
+        .ency-todo-section {
+            margin-top: 8px;
+        }
+
+        .ency-todo-label {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--tip-title);
+            margin-bottom: 5px;
+        }
+
+        .ency-todo-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .ency-todo-list li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 4px;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: #212529;
+        }
+
+        .ency-todo-list li::before {
+            content: "•";
+            position: absolute;
+            left: 2px;
+            color: var(--tip-title);
+            font-weight: 700;
+        }
+
         @media (max-width: 360px) {
             body { padding: 10px; }
             .card { padding: 13px; }
             .day-cell { border-radius: 9px; }
 
-            .calendar-nav button {
-                padding: 5px 8px;
-            }
+            .calendar-nav button { padding: 5px 8px; }
 
             .holiday-tag,
-            .solar-term-tag {
-                font-size: 9px;
-            }
+            .solar-term-tag { font-size: 9px; }
 
             .day-cell.has-pm-start::after {
                 width: 11px;
@@ -697,14 +1151,16 @@
                 font-size: 7px;
             }
 
-            .calendar-pm-subtitle {
-                font-size: 10px;
-            }
+            .calendar-pm-subtitle { font-size: 10px; }
+
+            .ency-inner { padding: 10px; }
         }
     </style>
 </head>
 
 <body>
+
+    <div id="mainView">
 
     <h1>📅 孕期台历</h1>
 
@@ -712,8 +1168,6 @@
         根据末次月经计算孕周，并在台历中查看任意日期
     </div>
 
-
-    <!-- ==================== 今日孕周总览 ==================== -->
 
     <div class="card pregnancy-summary">
 
@@ -739,8 +1193,6 @@
     </div>
 
 
-    <!-- ==================== 末次月经 ==================== -->
-
     <div class="card">
         <label for="lmp">原始末次月经第一天</label>
         <input type="date" id="lmp">
@@ -753,8 +1205,6 @@
     </div>
 
 
-    <!-- ==================== 台历 ==================== -->
-
     <div class="card">
 
         <div class="calendar-header">
@@ -766,7 +1216,6 @@
             </div>
         </div>
 
-        <!-- 孕月内嵌字幕 -->
         <div class="calendar-pm-subtitle" id="calendarPmSubtitle">
             请先设置末次月经日期
         </div>
@@ -783,7 +1232,6 @@
 
         <div class="calendar-grid" id="calendarGrid"></div>
 
-        <!-- 图例 -->
         <div class="calendar-legend">
             <div class="legend-row">
                 <div class="legend-item">
@@ -818,7 +1266,6 @@
             节假日数据加载中...
         </div>
 
-        <!-- 日期点击结果 -->
         <div id="selectedResult" class="result-box selected-result hidden">
             <div id="selectedDateTitle" class="selected-date-title"></div>
             <div id="selectedWeek" class="selected-week"></div>
@@ -828,7 +1275,24 @@
     </div>
 
 
-    <!-- ==================== 孕周校准 ==================== -->
+    <div class="tip-card" id="tipCard">
+        <div class="tip-card-header" onclick="toggleTipCard()">
+            <div class="tip-card-header-left">
+                <div class="tip-card-label">📖 本周孕期提示</div>
+                <div class="tip-card-headline" id="tipHeadline">
+                    请先设置末次月经日期
+                </div>
+            </div>
+            <div class="tip-card-toggle">
+                <span id="tipToggleText">展开</span>
+                <span class="tip-card-arrow">▾</span>
+            </div>
+        </div>
+        <div class="tip-card-body" id="tipBody">
+            <div class="tip-empty">暂无内容</div>
+        </div>
+    </div>
+
 
     <div class="card correction-card">
 
@@ -898,13 +1362,11 @@
     </div>
 
 
-    <!-- ==================== 反推日期 ==================== -->
-
     <div class="card">
 
         <h2 style="margin-bottom:6px;">🔍 查某孕周是哪一天</h2>
 
-        <div class="reverse-description" style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;">
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:10px;">
             输入孕周，例如“12周+3天”，查询对应的日期。
         </div>
 
@@ -926,8 +1388,6 @@
     </div>
 
 
-    <!-- ==================== 重置 ==================== -->
-
     <div class="center-text mt-8">
         <button onclick="resetAll()" class="secondary" style="width:auto;">重置所有设置</button>
     </div>
@@ -936,8 +1396,224 @@
         本工具仅用于日期与孕周计算参考，不替代医生的诊断和产检建议。
     </div>
 
+    </div>
+
+
+    <div id="encyclopediaView">
+
+        <div class="ency-inner">
+
+            <div class="ency-header">
+                <button class="ency-back" onclick="closeEncyclopedia()">
+                    ← 返回
+                </button>
+                <div class="ency-title">📚 孕期百科</div>
+            </div>
+
+            <div class="ency-tabs">
+                <button class="ency-tab active" data-tab="diet" onclick="switchEncyTab('diet')">
+                    🍎 饮食指南
+                </button>
+                <button class="ency-tab" data-tab="weeks" onclick="switchEncyTab('weeks')">
+                    📚 孕周全览
+                </button>
+            </div>
+
+            <div id="encyTabDiet" class="ency-tab-content active">
+                <div class="diet-card">
+                    <div class="diet-title">🍎 孕期饮食指南</div>
+                    <ul class="diet-list" id="dietList"></ul>
+                    <div class="diet-attention">
+                        <div class="diet-attention-title">⚠ 注意事项</div>
+                        <ul>
+                            <li>叶酸、钙、铁、DHA 等补剂一定要分时间吃</li>
+                            <li>牛奶、铁、钙不能一起吃！</li>
+                            <li>DHA、铁不能一起吃！</li>
+                            <li>牛奶、DHA 不能一起吃！</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="encyTabWeeks" class="ency-tab-content">
+                <div id="encyWeekList"></div>
+            </div>
+
+        </div>
+
+    </div>
+
 
 <script>
+
+/* =========================================================
+   孕期每周数据（孕3~40周）
+   =========================================================
+   按科学依据调整：
+   - 删除孕27周"光照胎教"（缺乏依据，强光或不利于胎儿眼部）
+   - 孕30周会阴按摩建议移至孕34周（循证指南建议孕34-35周起）
+   - 孕4周/孕14周同房建议增加"无高危因素"前提
+   ========================================================= */
+
+const pregnancyWeeklyData = {
+    3: { title: "怀上啦！生命最初的奇迹", fetalDev: "精子卵子相遇 — 受精卵形成", fetalSize: "一个小小的细胞团，正在飞速分裂中", todos: ["用验孕棒测是否怀孕（晨尿检测更准）","每天叶酸 0.4-0.8mg，吃到孕 3 月","洗澡水温不要太高，不要泡澡和桑拿，胎儿怕热","孕早期容易感冒，别乱吃药、抗生素，先咨询医生"] },
+    4: { title: "安家落户啦！", fetalDev: "受精卵着床，胎儿在妈妈子宫安家了", fetalSize: "变成胚胎，身长只有 0.2cm", todos: ["医院检查，确认怀孕","小便频繁，别憋尿","孕早期避免同房（尤其有出血、腹痛、流产史的孕妇）","不要干重活，不要搬重物（超过 10 公斤的）"] },
+    5: { title: "器官奠基期", fetalDev: "原始心脏开始跳动，神经管发育，脑、脊柱开始形成", fetalSize: "身长 0.4cm，重约 2g", todos: ["避免剧烈运动，别染发、别涂指甲油","食欲差的话，少吃多餐，适当活动","每天 2 个核桃，帮助胎宝宝大脑发育"] },
+    6: { title: "“小虾仁”上线", fetalDev: "身体弯曲如虾，眼鼻初现小黑点", fetalSize: "身长 0.6cm，重约 3g（芝麻大小）", todos: ["做早孕 B 超，看胎心胎芽，排除宫外孕","这周会出现孕反恶心，喝苏打水、柠檬水缓解","晨起先喝温水或含柠檬片，减轻晨吐"] },
+    7: { title: "手指初现，面部成型", fetalDev: "手脚雏形、面部开始发育", fetalSize: "身长大约 1cm（小松籽仁大小）", todos: ["不必“大补”，正常饮食、想吃就吃（健康前提下）","不要憋尿，多喝水，多排尿，预防尿路感染","没有食欲时，可选低糖、低热、高膳食纤维的健康零食"] },
+    8: { title: "初具人形！", fetalDev: "初具人型，头大身小，眼耳鼻口可辨认", fetalSize: "身长大约 1.6cm，重 6g（蓝莓大小）", todos: ["进行第一次正式产检","避免久坐久站，防子宫刺激收缩","化妆品换成孕妇专用（避开维 A 酸、水杨酸等）","多吃米、豆类，尤其是豆腐"] },
+    9: { title: "正式称为胎儿", fetalDev: "五官、四肢开始成型，尾巴慢慢消失", fetalSize: "身长大约 2.3cm（小粒的葡萄大小）", todos: ["子宫增大 2 倍，乳房胀大，换上哺乳内衣","早饭前先喝一大杯温开水，促进肠胃蠕动，预防便秘","准备建档材料：身份证、结婚证、医保卡、产检资料","每天保证喝水 1500ml"] },
+    10: { title: "小脸萌萌哒", fetalDev: "头圆脸萌，基本成人样", fetalSize: "身长大约 3cm（车厘子大小）", todos: ["肚子微凸，体重增长加快，合理饮食","饮食清淡少盐，防水肿加重","出门涂物理防晒霜（防色素沉着、黄褐斑）","每天一小把坚果（核桃、杏仁），补优质脂肪酸"] },
+    11: { title: "五官更清晰", fetalDev: "骨骼加速发育；肝脏开始工作；面部更清晰", fetalSize: "身长大约 4cm（西梅大小）", todos: ["最晚 12 周去医院建档，建议产检 & 分娩选同一家医院","每天喝 300ml 牛奶，补钙 + 优质蛋白","山楂少吃！可能刺激子宫收缩","孕吐减轻，心情变好"] },
+    12: { title: "四肢齐全，指甲萌芽", fetalDev: "四肢已发育完成，指、趾甲开始出现", fetalSize: "身长大约 5.5cm（柠檬大小）", todos: ["NT 彩超 + 早期建档记得带零食防低血糖","眼睛比较脆弱，容易发红、疲劳，感觉累了就休息","孕吐大多缓解，你的心情会好一点的","孕早期结束"] },
+    13: { title: "涂抹妊娠油，美美当妈", fetalDev: "胎儿骨骼变硬；可以皱眉", fetalSize: "身长约 10cm，重约 25g（桃子大小）", todos: ["肚子开始显怀，身边的人能看出你怀孕了","肚子开始出现妊娠纹，准备妊娠油，每天 1-2 次","阴道分泌物增多，建议穿全棉透气的内内，勤换洗","每周 2-3 次散步、孕妇瑜伽，有助于顺产"] },
+    14: { title: "胎儿进入安稳发育期", fetalDev: "大脑快速发育，胎宝可以做不同的面部表情", fetalSize: "身长大约 11cm（拳头大小）", todos: ["孕吐基本消失，身体进入舒适期","无出血、腹痛等高危因素时，可适度同房（14-28 周）","开始适应左侧卧，促进胎盘供血，对宝宝很好","不吃生食，提拉米苏有酒精的"] },
+    15: { title: "会吮吸手指了", fetalDev: "皮肤薄透；骨骼继续生长；会吮吸手指", fetalSize: "身长大约 12cm，重约 60g（柠檬大小）", todos: ["宝宝能感知妈妈情绪，少生气、多听音乐、看喜剧","控制体重增长，预防妊娠纹加重","睡前泡脚 + 老公按摩 → 缓解疲劳，增进感情","每周 2 次动物肝脏，睡前喝一杯温牛奶"] },
+    16: { title: "第一次胎动！感动时刻", fetalDev: "听力发育，眼睛对光有反应", fetalSize: "身长大约 16cm，重约 100g", todos: ["唐筛 / 无创 DNA 筛查","部分孕妈隐约感受到胎动，像小鱼游来游去","早孕反应逐渐消退了，基本上没有恶心呕吐","可开始温柔胎教（说话、轻拍、音乐）"] },
+    17: { title: "可以听到声音，多和 TA 说说话", fetalDev: "皮下脂肪开始少量堆积；听觉发育", fetalSize: "身长大约 18cm，重约 130g", todos: ["孕肚更明显，走路自带“孕味”","每天至少要补充 300-500mg 的钙（牛奶 / 豆腐）","宝宝听力正在发育，可以多和他唱唱歌、讲讲故事","多吃瘦肉、鱼虾、海参、贝类等海产品"] },
+    18: { title: "独一无二的指纹", fetalDev: "指纹形成，全世界独一份", fetalSize: "身长大约 19cm，重约 180g", todos: ["开始做盆底肌练习：收缩→放松肛门 / 阴道，每天 30 次，助顺产 + 防漏尿","每周吃 2-3 次深海鱼（鳕鱼）补 DHA 促脑发育","少食多餐，吃健康零食（如酸奶、水果、坚果）"] },
+    19: { title: "胎脂护身，温柔互动", fetalDev: "胎儿身上长出胎脂，用来保护自己", fetalSize: "身长大约 20cm（芒果大小）", todos: ["胎教带上爸爸，和宝宝说话、放音乐","注意乳房清洁","睡前左侧卧 + 垫高上半身 → 减轻胃酸反流","贫血的话要补铁，遵医嘱，铁和钙相隔 2 小时"] },
+    20: { title: "生殖器官发育完成", fetalDev: "喝羊水、练习“呼吸”，小循环形成", fetalSize: "身长约 25cm，体重约 320g", todos: ["别长时间弯腰 / 蹲下，减轻腰椎压力","睡前让老公按摩腿部，睡觉时把脚垫高","血糖高的妈妈，少吃多餐，主食换成糙米等粗粮","饮食少盐，预防水肿"] },
+    21: { title: "长出眉毛睫毛了", fetalDev: "消化系统发育；吞吐羊水；眉毛睫毛长出", fetalSize: "约 22cm（胡萝卜长度）", todos: ["坚持乳房按摩","多吃维生素 E 的食物，如杏仁、菠菜","子宫顶到肺 → 气短正常，避免剧烈活动","久站易水肿 → 坐下时抬高双腿，促进回流","水果不是越多越好，每天吃 1 拳头"] },
+    22: { title: "眉毛眼睑清晰可见", fetalDev: "五官清晰，B 超可初步判断像谁", fetalSize: "身长约 28cm，体重约 500g", todos: ["大排畸（系统 B 超）时间比较长，带小零食","穿舒适的平底鞋","上厕所别蹲太久，避免压迫子宫，影响供氧"] },
+    23: { title: "能感受到光源", fetalDev: "视网膜形成，皮肤薄呈红色", fetalSize: "身长约 29cm，体重约 500g", todos: ["假性宫缩：肚子发紧发硬多休息 / 改变姿势可缓解","尽量穿一脚蹬，防绊倒，孕晚期弯腰困难","多喝水防浮肿（白天喝够，睡前少喝）","现在开始准备婴儿用品了"] },
+    24: { title: "大排畸关键期！", fetalDev: "肺部继续发育，形成睡眠-觉醒周期", fetalSize: "身长约 30cm，体重约 630g", todos: ["糖耐量筛查，前三天正常饮食，避免结果不准","起身 / 弯腰吃力 → 动作放缓，用手支撑","每日饮水 2000ml → 促进代谢，防便秘水肿"] },
+    25: { title: "补铁黄金期，长胎不长肉", fetalDev: "视网膜发育完全，小眼睛开始睁开闭上", fetalSize: "身长约 31cm，体重约 750g", todos: ["产检时关注血红蛋白、铁蛋白指标，贫血遵医嘱补充","长胎不长肉吃法：一天一斤青菜，一斤奶，六两谷薯半斤，水果四两，瘦肉类半两，2-3 天一次鱼","肚子明显增大 → 避免长途旅行 / 自驾，减少意外风险"] },
+    26: { title: "商量坐月子，胎宝拳打脚踢", fetalDev: "胎儿可以睁眼；胎动幅度大", fetalSize: "身长约 33cm，体重约 900g", todos: ["和老公商量坐月子方案，建议优先月嫂 / 月子中心","走路时挺直背部，双眼平视前方，能缓解腰酸背痛","避免大的噪音，会使胎儿躁动不安","开始了解产后护理、新生儿喂养知识"] },
+    27: { title: "光照胎教？（已调整）", fetalDev: "胎儿会品尝你吃下去的东西，并作出反应", fetalSize: "身长约 33cm，体重约 900g", todos: ["孕妈妈有时会感觉喘不上气，多陪老婆呼吸新鲜空气","温柔的胎教：多和宝宝说话、唱歌、读故事，或播放轻柔音乐（避免用手电筒直射腹部）","按时产检；学习数胎动方法"] },
+    28: { title: "进入孕晚期，数胎动 + 假宫缩", fetalDev: "胎儿练习呼吸，为出来做准备", fetalSize: "身长约 35cm，体重约 1000g", todos: ["肚子偶尔出现一阵发硬发紧，是假宫缩，不用紧张","产检 28 周后每两周检查一次","减少同房，预产期的前 6 周应完全停止","每天早、中、晚饭后半时数胎动，每小时 3-5 次、12 小时不低于 30 次是正常，否则要警惕胎儿缺氧"] },
+    29: { title: "拍孕妇照 + 加餐 150 大卡", fetalDev: "胎动越来越明显，肌肉也在慢慢发育", fetalSize: "身长约 36cm，体重约 1100g", todos: ["经常会感觉吃不饱，每天要增加 150 热量：相当于 2 片面包，或 2 个小苹果，或 1 斤菠菜，或 100g 瘦猪肉","避免提拉重物或过度伸展，预防诱发宫缩","腹部隆起惊人，特别适合拍孕妇照，提前约好"] },
+    30: { title: "注意补钙", fetalDev: "胎儿头部继续增大；胎毛慢慢脱落", fetalSize: "身长约 37cm，体重约 1500g", todos: ["增加蛋白质摄入，如鱼类、豆类","每天散步 20-30 分钟，为分娩积蓄体力","身体越发沉重，起身先侧过来再起身，不要猛地起来"] },
+    31: { title: "拉玛泽呼吸法启动！", fetalDev: "肾脏完全成熟；肝脏可以代谢废物", fetalSize: "身长约 39cm，体重约 1700g", todos: ["打算顺产妈妈，练习拉玛泽呼吸法，分娩更顺利","每天散步 30 分钟，有助于宝宝胎位头朝下，顺利入盆","控制体重增长，避免胎儿过大，增加分娩难度"] },
+    32: { title: "整理待产包", fetalDev: "胎儿储备脂肪，骨骼也发育良好", fetalSize: "身长约 40cm，体重约 1800g", todos: ["注意每天数胎动，防止胎儿缺氧没发现","睡觉选择左侧卧睡姿，可以减少子宫压迫下腔静脉","与老公一起整理待产包，让他熟悉每一件物品的名称、用途和摆放位置"] },
+    33: { title: "规划产假 + 预估体重", fetalDev: "宝宝已经和出生时很接近了，免疫系统形成", fetalSize: "身长约 41cm，体重约 2200g", todos: ["可以开始规划产假了，预产期前 2 周可以休假了","B 超预估胎儿体重 → 判断是否需调整饮食或分娩方式","便秘多吃粗杂粮，膳食纤维丰富的蔬菜，如西蓝花"] },
+    34: { title: "胎儿入盆 + 会阴按摩 + 禁远行", fetalDev: "胎儿开始入盆了", fetalSize: "身长约 42cm，体重约 2400g", todos: ["大多数宝宝的胎位已经是头位，即头在下、臀在上，头部进入骨盆","可以开始会阴按摩（请咨询医生），有助于降低撕裂概率","如果胎位不正，要在医生指导下矫正，别自己来","最后 1 个多月暂时不要离开本地，宝宝随时可能出生"] },
+    35: { title: "确定分娩方式", fetalDev: "胎位开始固定，已经很像一个“小人儿”", fetalSize: "身长约 43cm，体重约 2500g", todos: ["跟医生确定分娩方式，顺产 or 剖","提前了解医院分娩流程，减少不必要的焦虑","身体水肿，多喝水有助于消肿，睡前用热水泡泡脚"] },
+    36: { title: "胎心监护启动 + 老公熟悉医院路线", fetalDev: "具备基本呼吸功能，胎动减少但更有规律", fetalSize: "身长约 45cm，体重约 2700g", todos: ["本周起，每周都要去医院进行胎心监护","肚子已相当沉重，上下楼梯和洗澡时一定要注意安全","让老公提前熟悉夜间和高峰期到达医院的路线，了解急诊科室、产房和住院部的位置"] },
+    37: { title: "宝宝足月啦！临产征兆要牢记", fetalDev: "各器官进一步成熟，肺部和大脑发育更完善", fetalSize: "身长约 46cm，体重约 3000g", todos: ["足月后，出门必须有人陪同","提前了解临产 3 大征兆：① 宫缩：规律宫缩每隔 5-6 分钟一次，每次 1 分钟，持续 1 小时，就要准备去医院 ② 破水：不要走路，平躺、垫高屁股 ③ 见红：少量淡淡血丝，可先在家观察，血多立即去医院"] },
+    38: { title: "剖宫产预约 + 呼吸法巩固", fetalDev: "肺和大脑进一步完善，但仍会继续发育", fetalSize: "身长约 52cm，体重约 3300g", todos: ["计划剖宫产？与医生确认手术日（通常 39 周）","顺产妈妈巩固拉玛泽呼吸 → 宫缩时用得上！","老公不要离家太远，保持手机畅通，随时待命","充分休息，适当活动，密切注意自己身体的变化"] },
+    39: { title: "随时迎接宝宝！", fetalDev: "身体各器官发育成熟，随时准备出生", fetalSize: "身长约 52-55cm，体重约 3400g", todos: ["出现少量见红，赶紧在家洗澡、洗头、吃点东西，准备好待产包在家观察，出现规律宫缩后随时准备去医院","预产期 ≠ 分娩日 → 仅 5% 准点生，提前或推后 1-2 周都正常","建议穿长裙去医院，做检查方便，别带金属首饰","头胎产程会比较长，可带点零食进待产房里补充体力"] },
+    40: { title: "随时迎接宝宝！", fetalDev: "身体各器官发育成熟，随时准备出生", fetalSize: "身长约 52-55cm，体重约 3400g", todos: ["出现少量见红，赶紧在家洗澡、洗头、吃点东西，准备好待产包在家观察，出现规律宫缩后随时准备去医院","预产期 ≠ 分娩日 → 仅 5% 准点生，提前或推后 1-2 周都正常","建议穿长裙去医院，做检查方便，别带金属首饰","头胎产程比较长，可带点零食进待产房里补充体力"] }
+};
+
+
+/* =========================================================
+   孕期饮食数据
+   ========================================================= */
+
+const pregnancyDiet = [
+    "叶酸：怀孕前 3 个月吃到怀孕后 3 月，代谢异常的选择活性叶酸，代谢正常选择普通叶酸",
+    "钙片：怀孕第 4 个月开始吃，搭配维 D 一起吃",
+    "DHA：怀孕第 4 个月开始吃，每天 1 片",
+    "铁剂：怀孕第 6 个月开始吃，和钙片间隔 2 小时",
+    "锌剂：孕早期检查后，遵医嘱吃",
+    "鸡蛋：怀孕开始吃，每天 1 个",
+    "牛奶：怀孕开始喝，每天 500ml",
+    "牛肉 / 虾：每周 1-2 次，长胎不长肉",
+    "骨头炖汤：每周 1 次，高脂易长肉",
+    "动物内脏：猪肝、猪红、鸡肝等，每周 1 次",
+    "鱼肉：每周吃 2 次，高蛋白长胎还不易长胖",
+    "蔬菜：每天 300-500g，多吃绿叶菜，补充维生素与膳食纤维",
+    "海藻类：蔬菜每周吃 1 次，补充多种微量元素",
+    "坚果：瓜子、松子、核桃等，加餐时吃 1 小把",
+    "零食：酸奶、葡萄干、坚果、海苔等",
+    "饮料：少喝茶、咖啡、奶茶，用新鲜椰汁代替",
+    "高糖水果：榴莲、冬枣、甘蔗、龙眼，少吃",
+    "禁吃：生腌、半熟肉类、含酒精的食物",
+    "椰子水：适量饮用，帮助补充水分与维持羊水"
+];
+
+
+/* =========================================================
+   饮食阶段要点（含下一阶段预告）
+   ========================================================= */
+
+const dietStageTips = {
+    early: {
+        label: "孕早期重点（孕0-11周）",
+        items: [
+            "叶酸 0.4-0.8mg/天，孕前 3 月吃到孕 3 月末"
+        ],
+        nextStageAtWeek: 12,
+        nextStageName: "钙片 + DHA",
+        nextStageDetail: "从孕 4 月（约孕12周）起，每天补充（搭配维 D 效果更好）"
+    },
+    mid: {
+        label: "孕中期重点（孕12-19周）",
+        items: [
+            "钙片 + DHA 从孕 4 月（约孕12周）起，每天补充"
+        ],
+        nextStageAtWeek: 20,
+        nextStageName: "铁剂",
+        nextStageDetail: "从孕 6 月（约孕20周）起补充，和钙片间隔 2 小时"
+    },
+    late: {
+        label: "孕中晚期重点（孕20周起）",
+        items: [
+            "铁剂从孕 6 月（约孕20周）起补充，和钙片间隔 2 小时",
+            "钙片 + DHA 继续每天补充"
+        ],
+        nextStageAtWeek: null
+    }
+};
+
+const PREVIEW_WEEKS = 2;
+
+function getDietStageByWeek(week) {
+    if (week < 12) return dietStageTips.early;
+    if (week < 20) return dietStageTips.mid;
+    return dietStageTips.late;
+}
+
+
+/* =========================================================
+   全程注意（按科学依据调整）
+   ---------------------------------------------------------
+   新增：
+   - 咖啡因每日限量 200mg
+   - 高汞鱼类禁吃
+   - 孕期体重增长范围
+   ========================================================= */
+
+const dietFixedGroups = {
+    eat: {
+        label: "🍽️ 宜吃",
+        className: "eat",
+        items: [
+            "鸡蛋：每天 1 个；牛奶：每天 500ml",
+            "牛肉 / 虾：每周 1-2 次；鱼肉：每周 2 次",
+            "蔬菜：每天 300-500g；海藻类：每周 1 次",
+            "坚果：加餐一小把；椰子水：适量喝，补水分"
+        ]
+    },
+    reduce: {
+        label: "⚠️ 少吃",
+        className: "reduce",
+        items: [
+            "骨头炖汤、动物内脏：每周 1 次，不宜多",
+            "咖啡因：每天不超 200mg（约 1-2 杯咖啡 / 浓茶）",
+            "高糖水果：榴莲、冬枣、甘蔗、龙眼少吃"
+        ]
+    },
+    avoid: {
+        label: "🚫 禁吃",
+        className: "avoid",
+        items: [
+            "生腌、半熟肉类、含酒精的食物",
+            "高汞鱼类：金枪鱼、剑鱼、鲨鱼、旗鱼"
+        ]
+    },
+    note: {
+        label: "💡 注意",
+        className: "note",
+        items: [
+            "牛奶 · 铁 · 钙 · DHA 不能同服，间隔 2 小时",
+            "锌剂：孕早期检查后，遵医嘱吃",
+            "体重管理：BMI 正常者总增重 8-14kg，孕中晚期每周约 0.4kg"
+        ]
+    }
+};
+
 
 /* =========================================================
    农历数据
@@ -1377,6 +2053,8 @@ function init() {
 
     renderCalendar();
     updateAll();
+    renderDiet();
+    renderEncyclopediaWeeks();
 
     ensureHolidayData(currentYear);
     ensureHolidayData(currentYear + 1);
@@ -1449,6 +2127,7 @@ function updateAll() {
     updateCorrectionStatus();
     updateTodaySummary();
     renderPregnancyMonthSubtitle();
+    updateTipCard();
 
     if (selectedDateStr) updateSelectedResult(selectedDateStr);
 
@@ -1510,7 +2189,7 @@ function updateCorrectionStatus() {
 
 
 /* =========================================================
-   孕月字幕（日历标题下方）
+   孕月字幕
    ========================================================= */
 
 function renderPregnancyMonthSubtitle() {
@@ -1557,6 +2236,263 @@ function renderPregnancyMonthSubtitle() {
     }
 
     el.innerHTML = items.join('');
+}
+
+
+/* =========================================================
+   孕期提示卡片
+   ========================================================= */
+
+function getCurrentTipWeek() {
+    const lmp = getEffectiveLmp();
+    if (!lmp) return null;
+
+    let targetDateStr = selectedDateStr || todayStr;
+    const targetDate = parseDate(targetDateStr);
+    if (!targetDate) return null;
+
+    const diff = daysBetween(lmp, targetDate);
+    if (diff < 0) return null;
+
+    const week = Math.floor(diff / 7);
+    return week;
+}
+
+function updateTipCard() {
+    const headlineEl = document.getElementById('tipHeadline');
+    const bodyEl = document.getElementById('tipBody');
+
+    const lmp = getEffectiveLmp();
+    if (!lmp) {
+        headlineEl.textContent = '请先设置末次月经日期';
+        bodyEl.innerHTML = '<div class="tip-empty">请先设置末次月经日期</div>';
+        return;
+    }
+
+    const week = getCurrentTipWeek();
+
+    if (week === null) {
+        headlineEl.textContent = '所选日期早于孕周范围';
+        bodyEl.innerHTML = '<div class="tip-empty">该日期早于末次月经，无法显示孕期提示</div>';
+        return;
+    }
+
+    if (week < 3) {
+        headlineEl.textContent = `孕${week}周 · 早期阶段`;
+        bodyEl.innerHTML = '<div class="tip-empty">孕3周之前的提示暂未收录，请继续保持良好生活习惯</div>';
+        return;
+    }
+
+    if (week > 40) {
+        headlineEl.textContent = '已超过孕40周';
+        bodyEl.innerHTML = '<div class="tip-empty">已超过预产期，请遵医嘱</div>';
+        return;
+    }
+
+    let dataWeek = week;
+    if (!pregnancyWeeklyData[dataWeek] && week === 40) {
+        dataWeek = 39;
+    }
+
+    const data = pregnancyWeeklyData[dataWeek];
+    if (!data) {
+        headlineEl.textContent = `孕${week}周`;
+        bodyEl.innerHTML = '<div class="tip-empty">暂无该孕周提示</div>';
+        return;
+    }
+
+    headlineEl.textContent = `孕${week}周 · ${data.title}`;
+
+    let html = '';
+    html += `<div class="tip-row"><span class="tip-row-label">胎儿发育：</span>${data.fetalDev}</div>`;
+    html += `<div class="tip-row"><span class="tip-row-label">胎儿大小：</span>${data.fetalSize}</div>`;
+
+    if (data.todos && data.todos.length) {
+        html += '<div class="tip-section-title">孕妈要做的事：</div>';
+        html += '<ul class="tip-todo-list">';
+        data.todos.forEach(function(todo) {
+            html += `<li>${todo}</li>`;
+        });
+        html += '</ul>';
+    }
+
+    html += '<div class="tip-diet-section">';
+    html += '<div class="tip-diet-title">🍎 孕期饮食核心要点</div>';
+
+    const stageData = getDietStageByWeek(week);
+    html += `<div class="tip-diet-stage-label">${stageData.label}</div>`;
+    html += '<ul class="tip-todo-list tip-diet-list">';
+    stageData.items.forEach(function(item) {
+        html += `<li>${item}</li>`;
+    });
+    html += '</ul>';
+
+    if (stageData.nextStageAtWeek !== null) {
+        const weeksUntilNext = stageData.nextStageAtWeek - week;
+        if (weeksUntilNext > 0 && weeksUntilNext <= PREVIEW_WEEKS) {
+            html += `<div class="tip-preview-box">`;
+            html += `<span class="preview-label">📅 提前预告（再过约 ${weeksUntilNext} 周）：</span>`;
+            html += `要开始补充 <strong>${stageData.nextStageName}</strong>。`;
+            html += `${stageData.nextStageDetail}`;
+            html += `</div>`;
+        }
+    }
+
+    const groups = dietFixedGroups;
+    const groupKeys = ['eat', 'reduce', 'avoid', 'note'];
+
+    groupKeys.forEach(function(key) {
+        const group = groups[key];
+        if (!group || !group.items || !group.items.length) return;
+
+        html += `<div class="tip-diet-stage-label ${group.className}">${group.label}</div>`;
+        html += '<ul class="tip-todo-list tip-diet-list">';
+        group.items.forEach(function(item) {
+            html += `<li>${item}</li>`;
+        });
+        html += '</ul>';
+    });
+
+    html += '</div>';
+
+    html += '<div class="tip-actions">';
+    html += `<button class="diet-btn" onclick="openEncyclopedia('diet')">🍎 完整饮食指南</button>`;
+    html += `<button onclick="openEncyclopedia('weeks')">📚 孕3~40周全览</button>`;
+    html += '</div>';
+
+    bodyEl.innerHTML = html;
+}
+
+function toggleTipCard() {
+    const card = document.getElementById('tipCard');
+    const toggleText = document.getElementById('tipToggleText');
+
+    card.classList.toggle('expanded');
+
+    if (card.classList.contains('expanded')) {
+        toggleText.textContent = '收起';
+    } else {
+        toggleText.textContent = '展开';
+    }
+}
+
+
+/* =========================================================
+   百科浮层
+   ========================================================= */
+
+function openEncyclopedia(tab) {
+    const view = document.getElementById('encyclopediaView');
+    view.classList.add('show');
+    document.body.style.overflow = 'hidden';
+
+    if (tab === 'diet' || tab === 'weeks') {
+        switchEncyTab(tab);
+    }
+
+    if (tab === 'weeks') {
+        const week = getCurrentTipWeek();
+        if (week !== null && week >= 3 && week <= 40) {
+            let dataWeek = week;
+            if (!pregnancyWeeklyData[dataWeek] && week === 40) dataWeek = 39;
+
+            setTimeout(function() {
+                const target = document.getElementById('ency-week-' + dataWeek);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 100);
+        } else {
+            view.scrollTop = 0;
+        }
+    } else {
+        view.scrollTop = 0;
+    }
+}
+
+function closeEncyclopedia() {
+    const view = document.getElementById('encyclopediaView');
+    view.classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+function switchEncyTab(tab) {
+    document.querySelectorAll('.ency-tab').forEach(function(btn) {
+        if (btn.dataset.tab === tab) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+
+    document.getElementById('encyTabDiet').classList.toggle('active', tab === 'diet');
+    document.getElementById('encyTabWeeks').classList.toggle('active', tab === 'weeks');
+}
+
+function renderDiet() {
+    const list = document.getElementById('dietList');
+    let html = '';
+    pregnancyDiet.forEach(function(item, index) {
+        html += `<li data-num="${index + 1}">${item}</li>`;
+    });
+    list.innerHTML = html;
+}
+
+function renderEncyclopediaWeeks() {
+    const container = document.getElementById('encyWeekList');
+    const lmp = getEffectiveLmp();
+
+    let currentWeek = null;
+    if (lmp) {
+        const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const diff = daysBetween(lmp, todayMidnight);
+        if (diff >= 0) {
+            currentWeek = Math.floor(diff / 7);
+        }
+    }
+
+    let html = '';
+
+    for (let w = 3; w <= 40; w++) {
+        let dataWeek = w;
+        if (!pregnancyWeeklyData[dataWeek] && w === 40) dataWeek = 39;
+
+        const data = pregnancyWeeklyData[dataWeek];
+        if (!data) continue;
+
+        const isCurrent = (currentWeek === w) ||
+                          (w === 40 && currentWeek === 39 && !pregnancyWeeklyData[40]);
+
+        let cardClass = 'ency-week-card';
+        if (isCurrent) cardClass += ' current-week';
+
+        html += `<div class="${cardClass}" id="ency-week-${dataWeek}">`;
+        html += `<div class="ency-week-header">`;
+        html += `<span class="ency-week-num">孕${w}周</span>`;
+        html += `<span class="ency-week-title">${data.title}</span>`;
+        if (isCurrent) {
+            html += `<span class="ency-week-badge">当前</span>`;
+        }
+        html += `</div>`;
+
+        html += `<div class="ency-fetal-row"><span class="ency-fetal-label">胎儿发育：</span>${data.fetalDev}</div>`;
+        html += `<div class="ency-fetal-row"><span class="ency-fetal-label">胎儿大小：</span>${data.fetalSize}</div>`;
+
+        if (data.todos && data.todos.length) {
+            html += `<div class="ency-todo-section">`;
+            html += `<div class="ency-todo-label">孕妈要做的事：</div>`;
+            html += `<ul class="ency-todo-list">`;
+            data.todos.forEach(function(todo) {
+                html += `<li>${todo}</li>`;
+            });
+            html += `</ul>`;
+            html += `</div>`;
+        }
+
+        html += `</div>`;
+    }
+
+    container.innerHTML = html;
 }
 
 
@@ -1642,6 +2578,7 @@ function applyPreviewCorrection() {
     saveSettings();
     cancelCorrectionPreview();
     updateAll();
+    renderEncyclopediaWeeks();
 
     alert(`B超校准已应用：${correctionDays > 0 ? '+' : ''}${correctionDays} 天`);
 }
@@ -1668,6 +2605,7 @@ function applyManualCorrection() {
     correctionDays = val;
     localStorage.setItem(STORAGE_KEY_CORRECTION_SOURCE, 'manual');
     updateAll();
+    renderEncyclopediaWeeks();
     alert(`手动校准已应用：${val > 0 ? '+' : ''}${val} 天`);
 }
 
@@ -1680,6 +2618,7 @@ function clearCorrection() {
 
     localStorage.removeItem(STORAGE_KEY_CORRECTION_SOURCE);
     updateAll();
+    renderEncyclopediaWeeks();
     alert('已清除校准，恢复原始末次月经计算。');
 }
 
@@ -1798,7 +2737,7 @@ function changeMonth(delta) {
 
 
 /* =========================================================
-   跳转到今天（并收起详情）
+   跳转到今天
    ========================================================= */
 
 function goToToday() {
@@ -1807,7 +2746,6 @@ function goToToday() {
     currentYear = today.getFullYear();
     currentMonth = today.getMonth();
 
-    /* 新增：点击"今天"时收起日期详情 */
     selectedDateStr = null;
     const resultBox = document.getElementById('selectedResult');
     if (resultBox) {
@@ -1817,6 +2755,8 @@ function goToToday() {
 
     renderCalendar();
     renderPregnancyMonthSubtitle();
+
+    updateTipCard();
 }
 
 
@@ -1828,6 +2768,7 @@ function onDateClick(dateStr) {
     selectedDateStr = dateStr;
     renderCalendar();
     updateSelectedResult(dateStr);
+    updateTipCard();
 }
 
 
@@ -2026,6 +2967,7 @@ function showError(el, msg) {
 
 document.getElementById('lmp').addEventListener('change', () => {
     updateAll();
+    renderEncyclopediaWeeks();
 });
 
 document.getElementById('manualCorrection').addEventListener('keydown', function(event) {
