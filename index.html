@@ -1173,6 +1173,9 @@
     </div>
 
 
+    <!-- ============================================
+         1. 今日孕周（最顶部，一眼可见）
+         ============================================ -->
     <div class="card pregnancy-summary">
 
         <div class="summary-title">今日孕周</div>
@@ -1197,18 +1200,9 @@
     </div>
 
 
-    <div class="card">
-        <label for="lmp">原始末次月经第一天</label>
-        <input type="date" id="lmp">
-        <div class="text-secondary">按孕0周+0天计算</div>
-        <div id="effectiveLmpDisplay"
-             class="effective-lmp"
-             style="margin-top:6px;">
-            请先设置末次月经日期
-        </div>
-    </div>
-
-
+    <!-- ============================================
+         2. 台历（核心交互）
+         ============================================ -->
     <div class="card">
 
         <div class="calendar-header">
@@ -1279,6 +1273,9 @@
     </div>
 
 
+    <!-- ============================================
+         3. 本周孕期提示（常用）
+         ============================================ -->
     <div class="tip-card" id="tipCard">
         <div class="tip-card-header" onclick="toggleTipCard()">
             <div class="tip-card-header-left">
@@ -1298,6 +1295,24 @@
     </div>
 
 
+    <!-- ============================================
+         4. 原始末次月经（设置项）
+         ============================================ -->
+    <div class="card">
+        <label for="lmp">原始末次月经第一天</label>
+        <input type="date" id="lmp">
+        <div class="text-secondary">按孕0周+0天计算</div>
+        <div id="effectiveLmpDisplay"
+             class="effective-lmp"
+             style="margin-top:6px;">
+            请先设置末次月经日期
+        </div>
+    </div>
+
+
+    <!-- ============================================
+         5. 孕周校准（设置项，与 LMP 相邻）
+         ============================================ -->
     <div class="card correction-card">
 
         <div class="correction-header">
@@ -1366,6 +1381,9 @@
     </div>
 
 
+    <!-- ============================================
+         6. 反推日期（独立工具）
+         ============================================ -->
     <div class="card">
 
         <h2 style="margin-bottom:6px;">🔍 查某孕周是哪一天</h2>
@@ -1392,6 +1410,9 @@
     </div>
 
 
+    <!-- ============================================
+         7. 重置
+         ============================================ -->
     <div class="center-text mt-8">
         <button onclick="resetAll()" class="secondary" style="width:auto;">重置所有设置</button>
     </div>
@@ -3089,7 +3110,6 @@ function runSelfTests() {
     return { passed, failed, results };
 }
 
-// 暴露到全局
 window.runSelfTests = runSelfTests;
 
 
@@ -3119,8 +3139,6 @@ setInterval(refreshTodayIfNeeded, 60000);
 
 init();
 
-// URL 参数触发自检（可选）
-// 在网址后加 ?selftest=1，页面加载后自动运行测试
 if (location.search.indexOf('selftest') !== -1) {
     setTimeout(runSelfTests, 500);
 }
