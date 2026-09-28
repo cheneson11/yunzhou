@@ -796,8 +796,12 @@
             background: #2e7d32;
         }
 
+        .tip-diet-stage-label.moderate {
+            background: #00838f;
+        }
+
         .tip-diet-stage-label.reduce {
-            background: #ef6c00;
+            background: #d97706;
         }
 
         .tip-diet-stage-label.avoid {
@@ -1448,11 +1452,6 @@
 
 /* =========================================================
    孕期每周数据（孕3~40周）
-   =========================================================
-   按科学依据调整：
-   - 删除孕27周"光照胎教"（缺乏依据，强光或不利于胎儿眼部）
-   - 孕30周会阴按摩建议移至孕34周（循证指南建议孕34-35周起）
-   - 孕4周/孕14周同房建议增加"无高危因素"前提
    ========================================================= */
 
 const pregnancyWeeklyData = {
@@ -1525,7 +1524,7 @@ const pregnancyDiet = [
 
 
 /* =========================================================
-   饮食阶段要点（含下一阶段预告）
+   饮食阶段要点
    ========================================================= */
 
 const dietStageTips = {
@@ -1567,12 +1566,7 @@ function getDietStageByWeek(week) {
 
 
 /* =========================================================
-   全程注意（按科学依据调整）
-   ---------------------------------------------------------
-   新增：
-   - 咖啡因每日限量 200mg
-   - 高汞鱼类禁吃
-   - 孕期体重增长范围
+   全程注意（5 组分类）
    ========================================================= */
 
 const dietFixedGroups = {
@@ -1583,20 +1577,28 @@ const dietFixedGroups = {
             "鸡蛋：每天 1 个；牛奶：每天 500ml",
             "牛肉 / 虾：每周 1-2 次；鱼肉：每周 2 次",
             "蔬菜：每天 300-500g；海藻类：每周 1 次",
-            "坚果：加餐一小把；椰子水：适量喝，补水分"
+            "坚果：加餐一小把"
+        ]
+    },
+    moderate: {
+        label: "⚖️ 适量",
+        className: "moderate",
+        items: [
+            "骨头炖汤：高脂，每周 1 次即可，喝汤建议撇去浮油",
+            "动物内脏（猪肝等）：补铁佳品，每周 1 次，不宜多",
+            "椰子水：适量喝，帮助补充水分与维持羊水"
         ]
     },
     reduce: {
-        label: "⚠️ 少吃",
+        label: "⚠️ 避免",
         className: "reduce",
         items: [
-            "骨头炖汤、动物内脏：每周 1 次，不宜多",
-            "咖啡因：每天不超 200mg（约 1-2 杯咖啡 / 浓茶）",
-            "高糖水果：榴莲、冬枣、甘蔗、龙眼少吃"
+            "高糖水果：榴莲、冬枣、甘蔗、龙眼，尽量少吃",
+            "茶 / 咖啡 / 奶茶：少喝，咖啡因每天 ≤ 200mg，越少越好"
         ]
     },
     avoid: {
-        label: "🚫 禁吃",
+        label: "⛔ 禁吃",
         className: "avoid",
         items: [
             "生腌、半熟肉类、含酒精的食物",
@@ -2339,7 +2341,7 @@ function updateTipCard() {
     }
 
     const groups = dietFixedGroups;
-    const groupKeys = ['eat', 'reduce', 'avoid', 'note'];
+    const groupKeys = ['eat', 'moderate', 'reduce', 'avoid', 'note'];
 
     groupKeys.forEach(function(key) {
         const group = groups[key];
@@ -2962,6 +2964,136 @@ function showError(el, msg) {
 
 
 /* =========================================================
+   计算自检（开发用，正常使用不受影响）
+   ---------------------------------------------------------
+   使用方式：
+   - 电脑：F12 打开控制台，输入 runSelfTests() 回车
+   - 手机：网址后加 ?selftest=1，页面加载后自动运行
+   ========================================================= */
+
+function runSelfTests() {
+    const results = [];
+    let passed = 0;
+    let failed = 0;
+
+    function test(name, actual, expected) {
+        const ok = (actual === expected);
+        if (ok) {
+            passed++;
+            results.push('✅ ' + name + ' → ' + actual);
+        } else {
+            failed++;
+            results.push('❌ ' + name + '\n   期望：' + expected + '\n   实际：' + actual);
+        }
+    }
+
+    console.log('%c孕周计算自检开始', 'font-size:14px;font-weight:bold;color:#d63384');
+
+    /* -----------------------------
+       1. 日期 → 孕周（正常）
+       ----------------------------- */
+    const lmp1 = parseDate('2026-01-01');
+
+    test('2026-01-01 距 LMP 天数', daysBetween(lmp1, parseDate('2026-01-01')), 0);
+    test('2026-01-08 距 LMP 天数', daysBetween(lmp1, parseDate('2026-01-08')), 7);
+    test('2026-03-26 距 LMP 天数（孕12周）', daysBetween(lmp1, parseDate('2026-03-26')), 84);
+    test('2026-03-29 距 LMP 天数（孕12周+3天）', daysBetween(lmp1, parseDate('2026-03-29')), 87);
+    test('2026-10-08 距 LMP 天数（预产期）', daysBetween(lmp1, parseDate('2026-10-08')), 280);
+    test('2026-10-09 距 LMP 天数（超预产期）', daysBetween(lmp1, parseDate('2026-10-09')), 281);
+    test('2025-12-31 距 LMP 天数（负数）', daysBetween(lmp1, parseDate('2025-12-31')), -1);
+
+    /* -----------------------------
+       2. 孕月边界（应严格 1~10）
+       ----------------------------- */
+    test('孕月: diff=0 → 1', getPregnancyMonth(parseDate('2026-01-01'), lmp1), 1);
+    test('孕月: diff=27 → 1', getPregnancyMonth(parseDate('2026-01-28'), lmp1), 1);
+    test('孕月: diff=28 → 2', getPregnancyMonth(parseDate('2026-01-29'), lmp1), 2);
+    test('孕月: diff=252 → 10', getPregnancyMonth(parseDate('2026-09-10'), lmp1), 10);
+    test('孕月: diff=279 → 10', getPregnancyMonth(parseDate('2026-10-07'), lmp1), 10);
+    test('孕月: diff=280 → null', getPregnancyMonth(parseDate('2026-10-08'), lmp1), null);
+    test('孕月: diff=281 → null', getPregnancyMonth(parseDate('2026-10-09'), lmp1), null);
+
+    /* -----------------------------
+       3. 孕周 → 日期（反推）
+       ----------------------------- */
+    function dateFromWeeks(w, d) {
+        return addDays(lmp1, w * 7 + d);
+    }
+    test('孕0周+0天 → 2026-01-01', formatDate(dateFromWeeks(0, 0)), '2026-01-01');
+    test('孕12周+0天 → 2026-03-26', formatDate(dateFromWeeks(12, 0)), '2026-03-26');
+    test('孕12周+3天 → 2026-03-29', formatDate(dateFromWeeks(12, 3)), '2026-03-29');
+    test('孕40周+0天 → 2026-10-08', formatDate(dateFromWeeks(40, 0)), '2026-10-08');
+
+    /* -----------------------------
+       4. 跨闰年 / 平年
+       ----------------------------- */
+    const lmpLeap = parseDate('2024-01-01');
+    test('闰年: 2024-01-01 → 2024-02-29 天数', daysBetween(lmpLeap, parseDate('2024-02-29')), 59);
+    test('闰年: 2024-01-01 → 2024-03-01 天数', daysBetween(lmpLeap, parseDate('2024-03-01')), 60);
+
+    const lmpNotLeap = parseDate('2025-01-01');
+    test('平年: 2025-01-01 → 2025-03-01 天数', daysBetween(lmpNotLeap, parseDate('2025-03-01')), 59);
+
+    /* -----------------------------
+       5. 跨月、跨年末
+       ----------------------------- */
+    test('跨月: 2026-01-31 → 2026-03-01 天数', daysBetween(parseDate('2026-01-31'), parseDate('2026-03-01')), 29);
+    test('跨年: 2026-12-31 → 2027-01-01 天数', daysBetween(parseDate('2026-12-31'), parseDate('2027-01-01')), 1);
+
+    /* -----------------------------
+       6. 校准
+       ----------------------------- */
+    const effUp = addDays(lmp1, 5);
+    test('校准 +5: 有效 LMP 应为 2026-01-06', formatDate(effUp), '2026-01-06');
+    test('校准 +5: 2026-03-26 距新 LMP', daysBetween(effUp, parseDate('2026-03-26')), 79);
+    test('校准 +5: 2026-03-26 应为孕11周+2天',
+        Math.floor(79 / 7) + '周+' + (79 % 7) + '天', '11周+2天');
+
+    const effDown = addDays(lmp1, -3);
+    test('校准 -3: 有效 LMP 应为 2025-12-29', formatDate(effDown), '2025-12-29');
+    test('校准 -3: 2026-03-26 距新 LMP', daysBetween(effDown, parseDate('2026-03-26')), 87);
+    test('校准 -3: 2026-03-26 应为孕12周+3天',
+        Math.floor(87 / 7) + '周+' + (87 % 7) + '天', '12周+3天');
+
+    /* -----------------------------
+       7. 预产期
+       ----------------------------- */
+    test('预产期 (LMP+280)', formatDate(addDays(lmp1, 280)), '2026-10-08');
+
+    /* -----------------------------
+       8. parseDate 严格校验
+       ----------------------------- */
+    test('parseDate 无效：2026-02-30 → null', parseDate('2026-02-30'), null);
+    test('parseDate 无效：2026-13-01 → null', parseDate('2026-13-01'), null);
+    test('parseDate 无效：空字符串 → null', parseDate(''), null);
+    test('parseDate 无效：2025-02-29 → null', parseDate('2025-02-29'), null);
+    test('parseDate 有效：2026-02-28', formatDate(parseDate('2026-02-28')), '2026-02-28');
+    test('parseDate 有效（闰年）：2024-02-29', formatDate(parseDate('2024-02-29')), '2024-02-29');
+
+    /* -----------------------------
+       汇总
+       ----------------------------- */
+    console.log(results.join('\n'));
+    console.log(
+        '%c结果：通过 ' + passed + ' / 共 ' + (passed + failed),
+        failed === 0
+            ? 'font-size:14px;font-weight:bold;color:#2e7d32'
+            : 'font-size:14px;font-weight:bold;color:#c62828'
+    );
+    if (failed > 0) {
+        console.warn('有 ' + failed + ' 项测试失败，请检查上方的 ❌ 项');
+    } else {
+        console.log('%c✅ 全部通过，核心计算逻辑正常', 'font-weight:bold;color:#2e7d32');
+    }
+
+    return { passed, failed, results };
+}
+
+// 暴露到全局
+window.runSelfTests = runSelfTests;
+
+
+/* =========================================================
    事件
    ========================================================= */
 
@@ -2986,6 +3118,12 @@ setInterval(refreshTodayIfNeeded, 60000);
    ========================================================= */
 
 init();
+
+// URL 参数触发自检（可选）
+// 在网址后加 ?selftest=1，页面加载后自动运行测试
+if (location.search.indexOf('selftest') !== -1) {
+    setTimeout(runSelfTests, 500);
+}
 
 </script>
 
