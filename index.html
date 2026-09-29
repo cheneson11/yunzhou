@@ -73,6 +73,8 @@
             --tip-title: #6a1b9a;
 
             --diet-accent: #1b5e20;
+
+            --checkup-accent: #00695c;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -812,6 +814,89 @@
             background: #1565c0;
         }
 
+        /* ==================== 产检提醒区块样式 ==================== */
+
+        .tip-checkup-section {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--tip-border);
+        }
+
+        .tip-checkup-title {
+            font-weight: 700;
+            color: var(--checkup-accent);
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .tip-checkup-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .tip-checkup-list li {
+            padding: 8px 10px;
+            margin-bottom: 6px;
+            background: #e0f2f1;
+            border-left: 3px solid #00897b;
+            border-radius: 6px;
+            font-size: 12.5px;
+            line-height: 1.55;
+            color: #212529;
+        }
+
+        .tip-checkup-list li.urgent {
+            background: #fff3e0;
+            border-left-color: #ef6c00;
+        }
+
+        .checkup-status {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin-right: 6px;
+            vertical-align: middle;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+
+        .checkup-status.upcoming {
+            background: #b2dfdb;
+            color: #004d40;
+        }
+
+        .checkup-status.active {
+            background: #00897b;
+            color: white;
+        }
+
+        .checkup-status.urgent {
+            background: #ffb74d;
+            color: #663c00;
+        }
+
+        .checkup-name {
+            font-weight: 700;
+            color: var(--checkup-accent);
+        }
+
+        .checkup-window {
+            color: #00695c;
+            font-size: 11.5px;
+            font-weight: 600;
+            margin-left: 4px;
+        }
+
+        .checkup-detail {
+            color: #455a64;
+            font-size: 12px;
+            margin-top: 3px;
+            line-height: 1.5;
+        }
+
         .tip-preview-box {
             background: #fff8e1;
             border: 1px dashed #ffc107;
@@ -1173,9 +1258,6 @@
     </div>
 
 
-    <!-- ============================================
-         1. 今日孕周（最顶部，一眼可见）
-         ============================================ -->
     <div class="card pregnancy-summary">
 
         <div class="summary-title">今日孕周</div>
@@ -1200,9 +1282,6 @@
     </div>
 
 
-    <!-- ============================================
-         2. 台历（核心交互）
-         ============================================ -->
     <div class="card">
 
         <div class="calendar-header">
@@ -1273,9 +1352,6 @@
     </div>
 
 
-    <!-- ============================================
-         3. 本周孕期提示（常用）
-         ============================================ -->
     <div class="tip-card" id="tipCard">
         <div class="tip-card-header" onclick="toggleTipCard()">
             <div class="tip-card-header-left">
@@ -1295,9 +1371,6 @@
     </div>
 
 
-    <!-- ============================================
-         4. 原始末次月经（设置项）
-         ============================================ -->
     <div class="card">
         <label for="lmp">原始末次月经第一天</label>
         <input type="date" id="lmp">
@@ -1310,9 +1383,6 @@
     </div>
 
 
-    <!-- ============================================
-         5. 孕周校准（设置项，与 LMP 相邻）
-         ============================================ -->
     <div class="card correction-card">
 
         <div class="correction-header">
@@ -1381,9 +1451,6 @@
     </div>
 
 
-    <!-- ============================================
-         6. 反推日期（独立工具）
-         ============================================ -->
     <div class="card">
 
         <h2 style="margin-bottom:6px;">🔍 查某孕周是哪一天</h2>
@@ -1410,9 +1477,6 @@
     </div>
 
 
-    <!-- ============================================
-         7. 重置
-         ============================================ -->
     <div class="center-text mt-8">
         <button onclick="resetAll()" class="secondary" style="width:auto;">重置所有设置</button>
     </div>
@@ -1474,8 +1538,7 @@
 /* =========================================================
    孕期每周数据（孕3~40周）
    ---------------------------------------------------------
-   本次调整：
-   - 胎心监护从孕36周移到孕32周（参考主流指南孕32-34周起）
+   注意：📅 产检提醒已移出 todos，改由 prenatalCheckups 独立管理
    ========================================================= */
 
 const pregnancyWeeklyData = {
@@ -1492,7 +1555,7 @@ const pregnancyWeeklyData = {
     13: { title: "涂抹妊娠油，美美当妈", fetalDev: "胎儿骨骼变硬；可以皱眉", fetalSize: "身长约 10cm，重约 25g（桃子大小）", todos: ["肚子开始显怀，身边的人能看出你怀孕了","肚子开始出现妊娠纹，准备妊娠油，每天 1-2 次","阴道分泌物增多，建议穿全棉透气的内内，勤换洗","每周 2-3 次散步、孕妇瑜伽，有助于顺产"] },
     14: { title: "胎儿进入安稳发育期", fetalDev: "大脑快速发育，胎宝可以做不同的面部表情", fetalSize: "身长大约 11cm（拳头大小）", todos: ["孕吐基本消失，身体进入舒适期","无出血、腹痛等高危因素时，可适度同房（14-28 周）","开始适应左侧卧，促进胎盘供血，对宝宝很好","不吃生食，提拉米苏有酒精的"] },
     15: { title: "会吮吸手指了", fetalDev: "皮肤薄透；骨骼继续生长；会吮吸手指", fetalSize: "身长大约 12cm，重约 60g（柠檬大小）", todos: ["宝宝能感知妈妈情绪，少生气、多听音乐、看喜剧","控制体重增长，预防妊娠纹加重","睡前泡脚 + 老公按摩 → 缓解疲劳，增进感情","每周 2 次动物肝脏，睡前喝一杯温牛奶"] },
-    16: { title: "第一次胎动！感动时刻", fetalDev: "听力发育，眼睛对光有反应", fetalSize: "身长大约 16cm，重约 100g", todos: ["唐筛 / 无创 DNA 筛查","部分孕妈隐约感受到胎动，像小鱼游来游去","早孕反应逐渐消退了，基本上没有恶心呕吐","可开始温柔胎教（说话、轻拍、音乐）"] },
+    16: { title: "第一次胎动！感动时刻", fetalDev: "听力发育，眼睛对光有反应", fetalSize: "身长大约 16cm，重约 100g", todos: ["部分孕妈隐约感受到胎动，像小鱼游来游去","早孕反应逐渐消退了，基本上没有恶心呕吐","可开始温柔胎教（说话、轻拍、音乐）"] },
     17: { title: "可以听到声音，多和 TA 说说话", fetalDev: "皮下脂肪开始少量堆积；听觉发育", fetalSize: "身长大约 18cm，重约 130g", todos: ["孕肚更明显，走路自带“孕味”","每天至少要补充 300-500mg 的钙（牛奶 / 豆腐）","宝宝听力正在发育，可以多和他唱唱歌、讲讲故事","多吃瘦肉、鱼虾、海参、贝类等海产品"] },
     18: { title: "独一无二的指纹", fetalDev: "指纹形成，全世界独一份", fetalSize: "身长大约 19cm，重约 180g", todos: ["开始做盆底肌练习：收缩→放松肛门 / 阴道，每天 30 次，助顺产 + 防漏尿","每周吃 2-3 次深海鱼（鳕鱼）补 DHA 促脑发育","少食多餐，吃健康零食（如酸奶、水果、坚果）"] },
     19: { title: "胎脂护身，温柔互动", fetalDev: "胎儿身上长出胎脂，用来保护自己", fetalSize: "身长大约 20cm（芒果大小）", todos: ["胎教带上爸爸，和宝宝说话、放音乐","注意乳房清洁","睡前左侧卧 + 垫高上半身 → 减轻胃酸反流","贫血的话要补铁，遵医嘱，铁和钙相隔 2 小时"] },
@@ -1508,16 +1571,133 @@ const pregnancyWeeklyData = {
     29: { title: "拍孕妇照 + 加餐 150 大卡", fetalDev: "胎动越来越明显，肌肉也在慢慢发育", fetalSize: "身长约 36cm，体重约 1100g", todos: ["经常会感觉吃不饱，每天要增加 150 热量：相当于 2 片面包，或 2 个小苹果，或 1 斤菠菜，或 100g 瘦猪肉","避免提拉重物或过度伸展，预防诱发宫缩","腹部隆起惊人，特别适合拍孕妇照，提前约好"] },
     30: { title: "注意补钙", fetalDev: "胎儿头部继续增大；胎毛慢慢脱落", fetalSize: "身长约 37cm，体重约 1500g", todos: ["增加蛋白质摄入，如鱼类、豆类","每天散步 20-30 分钟，为分娩积蓄体力","身体越发沉重，起身先侧过来再起身，不要猛地起来"] },
     31: { title: "拉玛泽呼吸法启动！", fetalDev: "肾脏完全成熟；肝脏可以代谢废物", fetalSize: "身长约 39cm，体重约 1700g", todos: ["打算顺产妈妈，练习拉玛泽呼吸法，分娩更顺利","每天散步 30 分钟，有助于宝宝胎位头朝下，顺利入盆","控制体重增长，避免胎儿过大，增加分娩难度"] },
-    32: { title: "整理待产包 + 胎心监护启动", fetalDev: "胎儿储备脂肪，骨骼也发育良好", fetalSize: "身长约 40cm，体重约 1800g", todos: ["从本周起可以开始胎心监护（一般孕32-34周起，具体听医生安排）","注意每天数胎动，防止胎儿缺氧没发现","睡觉选择左侧卧睡姿，可以减少子宫压迫下腔静脉","与老公一起整理待产包，让他熟悉每一件物品的名称、用途和摆放位置"] },
+    32: { title: "整理待产包 + 胎心监护启动", fetalDev: "胎儿储备脂肪，骨骼也发育良好", fetalSize: "身长约 40cm，体重约 1800g", todos: ["注意每天数胎动，防止胎儿缺氧没发现","睡觉选择左侧卧睡姿，可以减少子宫压迫下腔静脉","与老公一起整理待产包，让他熟悉每一件物品的名称、用途和摆放位置"] },
     33: { title: "规划产假 + 预估体重", fetalDev: "宝宝已经和出生时很接近了，免疫系统形成", fetalSize: "身长约 41cm，体重约 2200g", todos: ["可以开始规划产假了，预产期前 2 周可以休假了","B 超预估胎儿体重 → 判断是否需调整饮食或分娩方式","便秘多吃粗杂粮，膳食纤维丰富的蔬菜，如西蓝花"] },
     34: { title: "胎儿入盆 + 会阴按摩 + 禁远行", fetalDev: "胎儿开始入盆了", fetalSize: "身长约 42cm，体重约 2400g", todos: ["大多数宝宝的胎位已经是头位，即头在下、臀在上，头部进入骨盆","可以开始会阴按摩（请咨询医生），有助于降低撕裂概率","如果胎位不正，要在医生指导下矫正，别自己来","最后 1 个多月暂时不要离开本地，宝宝随时可能出生"] },
     35: { title: "确定分娩方式", fetalDev: "胎位开始固定，已经很像一个“小人儿”", fetalSize: "身长约 43cm，体重约 2500g", todos: ["跟医生确定分娩方式，顺产 or 剖","提前了解医院分娩流程，减少不必要的焦虑","身体水肿，多喝水有助于消肿，睡前用热水泡泡脚"] },
-    36: { title: "胎动规律 + 老公熟悉医院路线", fetalDev: "具备基本呼吸功能，胎动减少但更有规律", fetalSize: "身长约 45cm，体重约 2700g", todos: ["产检时继续做胎心监护（如医生已安排）","肚子已相当沉重，上下楼梯和洗澡时一定要注意安全","让老公提前熟悉夜间和高峰期到达医院的路线，了解急诊科室、产房和住院部的位置"] },
+    36: { title: "胎动规律 + 老公熟悉医院路线", fetalDev: "具备基本呼吸功能，胎动减少但更有规律", fetalSize: "身长约 45cm，体重约 2700g", todos: ["肚子已相当沉重，上下楼梯和洗澡时一定要注意安全","让老公提前熟悉夜间和高峰期到达医院的路线，了解急诊科室、产房和住院部的位置"] },
     37: { title: "宝宝足月啦！临产征兆要牢记", fetalDev: "各器官进一步成熟，肺部和大脑发育更完善", fetalSize: "身长约 46cm，体重约 3000g", todos: ["足月后，出门必须有人陪同","提前了解临产 3 大征兆：① 宫缩：规律宫缩每隔 5-6 分钟一次，每次 1 分钟，持续 1 小时，就要准备去医院 ② 破水：不要走路，平躺、垫高屁股 ③ 见红：少量淡淡血丝，可先在家观察，血多立即去医院"] },
     38: { title: "剖宫产预约 + 呼吸法巩固", fetalDev: "肺和大脑进一步完善，但仍会继续发育", fetalSize: "身长约 52cm，体重约 3300g", todos: ["计划剖宫产？与医生确认手术日（通常 39 周）","顺产妈妈巩固拉玛泽呼吸 → 宫缩时用得上！","老公不要离家太远，保持手机畅通，随时待命","充分休息，适当活动，密切注意自己身体的变化"] },
     39: { title: "随时迎接宝宝！", fetalDev: "身体各器官发育成熟，随时准备出生", fetalSize: "身长约 52-55cm，体重约 3400g", todos: ["出现少量见红，赶紧在家洗澡、洗头、吃点东西，准备好待产包在家观察，出现规律宫缩后随时准备去医院","预产期 ≠ 分娩日 → 仅 5% 准点生，提前或推后 1-2 周都正常","建议穿长裙去医院，做检查方便，别带金属首饰","头胎产程会比较长，可带点零食进待产房里补充体力"] },
-    40: { title: "随时迎接宝宝！", fetalDev: "身体各器官发育成熟，随时准备出生", fetalSize: "身长约 52-55cm，体重约 3400g", todos: ["出现少量见红，赶紧在家洗澡、洗头、吃点东西，准备好待产包在家观察，出现规律宫缩后随时准备去医院","预产期 ≠ 分娩日 → 仅 5% 准点生，提前或推后 1-2 周都正常","建议穿长裙去医院，做检查方便，别带金属首饰","头胎产程比较长，可带点零食进待产房里补充体力"] }
+    40: { title: "随时迎接宝宝！", fetalDev: "身体各器官发育成熟，随时准备出生", fetalSize: "身长约 52-55cm，体重约 3400g", todos: ["出现少量见红，赶紧在家洗澡、洗头、吃点东西，准备好待产包在家观察，出现规律宫缩后随时准备去医院","预产期 ≠ 分娩日 → 仅 5% 准点生，提前或推后 1-2 周都正常","建议穿长裙去医院，做检查方便，别带金属首饰","头胎产程会比较长，可带点零食进待产房里补充体力"] }
 };
+
+
+/* =========================================================
+   产检项目数据表
+   ---------------------------------------------------------
+   - windowStart / windowEnd：产检时间窗（孕周）
+   - remindFrom：从哪周开始提醒
+   - detail：简要说明
+   ========================================================= */
+
+const prenatalCheckups = [
+    {
+        key: 'first-visit',
+        name: '首次产检建档',
+        windowStart: 6,
+        windowEnd: 12,
+        remindFrom: 4,
+        detail: 'B 超确认宫内妊娠 + 抽血（血常规、肝肾功能、传染病等），建议 6-8 周完成'
+    },
+    {
+        key: 'nt',
+        name: 'NT 检查',
+        windowStart: 11,
+        windowEnd: 13,
+        remindFrom: 8,
+        detail: 'B 超测颈项透明层厚度，筛查染色体异常。时间窗严格，需提前预约'
+    },
+    {
+        key: 'nipt',
+        name: '唐筛 / 无创 DNA',
+        windowStart: 15,
+        windowEnd: 20,
+        remindFrom: 13,
+        detail: '唐筛需空腹，无创 DNA 无需空腹；二选一或遵医嘱'
+    },
+    {
+        key: 'anomaly',
+        name: '大排畸（系统 B 超）',
+        windowStart: 20,
+        windowEnd: 24,
+        remindFrom: 17,
+        detail: '筛查胎儿结构畸形，检查时间较长（约 30 分钟），需提前 2-4 周预约'
+    },
+    {
+        key: 'ogtt',
+        name: '糖耐量筛查（OGTT）',
+        windowStart: 24,
+        windowEnd: 28,
+        remindFrom: 22,
+        detail: '需空腹 8-10 小时，当天抽血 3 次，建议早上前往'
+    },
+    {
+        key: 'nst',
+        name: '胎心监护（NST）',
+        windowStart: 32,
+        windowEnd: 36,
+        remindFrom: 31,
+        detail: '一般孕 32-34 周开始，每周 1 次，具体听医生安排'
+    },
+    {
+        key: 'gbs',
+        name: 'B 族链球菌（GBS）筛查',
+        windowStart: 35,
+        windowEnd: 37,
+        remindFrom: 33,
+        detail: '阴道-直肠拭子，阳性者分娩时需抗生素预防新生儿感染'
+    },
+    {
+        key: 'weekly',
+        name: '每周产检',
+        windowStart: 36,
+        windowEnd: 40,
+        remindFrom: 36,
+        detail: '每周胎心监护 + 产科彩超，评估分娩方式'
+    }
+];
+
+
+/**
+ * 根据当前孕周返回所有处于提醒范围内的产检项目
+ * - 提前预约：week < windowStart
+ * - 时间窗内：windowStart ≤ week < windowEnd
+ * - 最后机会：week === windowEnd
+ */
+function getActiveCheckupReminders(week) {
+    const result = [];
+
+    prenatalCheckups.forEach(function(item) {
+
+        /* 不在提醒范围内，跳过 */
+        if (week < item.remindFrom) return;
+        if (week > item.windowEnd) return;
+
+        let status, statusClass;
+
+        if (week < item.windowStart) {
+            status = '提前预约';
+            statusClass = 'upcoming';
+        } else if (week < item.windowEnd) {
+            status = '时间窗内';
+            statusClass = 'active';
+        } else {
+            status = '最后机会';
+            statusClass = 'urgent';
+        }
+
+        result.push({
+            name: item.name,
+            window: '孕' + item.windowStart + '-' + item.windowEnd + '周',
+            detail: item.detail,
+            status: status,
+            statusClass: statusClass
+        });
+    });
+
+    return result;
+}
 
 
 /* =========================================================
@@ -2342,6 +2522,33 @@ function updateTipCard() {
         html += '</ul>';
     }
 
+    /* ============================================
+       📅 产检提醒（新增区块，按孕周动态显示）
+       ============================================ */
+    const checkups = getActiveCheckupReminders(week);
+
+    if (checkups.length > 0) {
+        html += '<div class="tip-checkup-section">';
+        html += '<div class="tip-checkup-title">📅 产检提醒</div>';
+        html += '<ul class="tip-checkup-list">';
+
+        checkups.forEach(function(item) {
+            html += '<li class="' +
+                    (item.statusClass === 'urgent' ? 'urgent' : '') + '">';
+            html += `<span class="checkup-status ${item.statusClass}">${item.status}</span>`;
+            html += `<span class="checkup-name">${item.name}</span>`;
+            html += `<span class="checkup-window">（${item.window}）</span>`;
+            html += `<div class="checkup-detail">${item.detail}</div>`;
+            html += '</li>';
+        });
+
+        html += '</ul>';
+        html += '</div>';
+    }
+
+    /* ============================================
+       饮食核心要点
+       ============================================ */
     html += '<div class="tip-diet-section">';
     html += '<div class="tip-diet-title">🍎 孕期饮食核心要点</div>';
 
@@ -3065,6 +3272,25 @@ function runSelfTests() {
     test('parseDate 无效：2025-02-29 → null', parseDate('2025-02-29'), null);
     test('parseDate 有效：2026-02-28', formatDate(parseDate('2026-02-28')), '2026-02-28');
     test('parseDate 有效（闰年）：2024-02-29', formatDate(parseDate('2024-02-29')), '2024-02-29');
+
+    /* 产检提醒测试 */
+    const checks8 = getActiveCheckupReminders(8);
+    test('孕8周：产检提醒应有首次建档 + NT（2条）', checks8.length, 2);
+
+    const checks12 = getActiveCheckupReminders(12);
+    test('孕12周：产检提醒应有首次建档 + NT（2条）', checks12.length, 2);
+
+    const checks16 = getActiveCheckupReminders(16);
+    test('孕16周：产检提醒应有唐筛/无创（1条）', checks16.length, 1);
+
+    const checks22 = getActiveCheckupReminders(22);
+    test('孕22周：应含唐筛 + 大排畸 + 糖耐（3条）', checks22.length, 3);
+
+    const checks36 = getActiveCheckupReminders(36);
+    test('孕36周：应含 NST + GBS + 每周产检（3条）', checks36.length, 3);
+
+    const checks42 = getActiveCheckupReminders(42);
+    test('孕42周：无任何产检提醒', checks42.length, 0);
 
     console.log(results.join('\n'));
     console.log(
