@@ -2514,7 +2514,7 @@ function updateTipCard() {
     html += `<div class="tip-row"><span class="tip-row-label">胎儿大小：</span>${data.fetalSize}</div>`;
 
     if (data.todos && data.todos.length) {
-        html += '<div class="tip-section-title">孕妈要做的事：</div>';
+        html += '<div class="tip-section-title">孕妈Tips：</div>';
         html += '<ul class="tip-todo-list">';
         data.todos.forEach(function(todo) {
             html += `<li>${todo}</li>`;
