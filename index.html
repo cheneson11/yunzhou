@@ -925,10 +925,12 @@
             display: flex;
             gap: 8px;
             margin-top: 14px;
+            flex-wrap: wrap;
         }
 
         .tip-actions button {
             flex: 1;
+            min-width: calc(33.33% - 6px);
             background: white;
             color: var(--tip-title);
             border: 1px solid var(--tip-border);
@@ -948,6 +950,15 @@
 
         .tip-actions button.diet-btn:active {
             background: #e8f5e9;
+        }
+
+        .tip-actions button.checkup-btn {
+            color: var(--checkup-accent);
+            border-color: #80cbc4;
+        }
+
+        .tip-actions button.checkup-btn:active {
+            background: #e0f2f1;
         }
 
         #encyclopediaView {
@@ -1007,7 +1018,7 @@
 
         .ency-tabs {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             margin-bottom: 14px;
             position: sticky;
             top: 52px;
@@ -1018,8 +1029,8 @@
 
         .ency-tab {
             flex: 1;
-            padding: 10px;
-            font-size: 14px;
+            padding: 10px 6px;
+            font-size: 13px;
             font-weight: 600;
             background: white;
             color: var(--text-secondary);
@@ -1224,6 +1235,136 @@
             font-weight: 700;
         }
 
+        /* ==================== 产检时间线样式 ==================== */
+
+        .checkup-timeline {
+            position: relative;
+        }
+
+        .checkup-timeline-item {
+            position: relative;
+            padding-left: 28px;
+            padding-bottom: 16px;
+        }
+
+        .checkup-timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .checkup-timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 7px;
+            top: 6px;
+            bottom: 0;
+            width: 2px;
+            background: #b2dfdb;
+        }
+
+        .checkup-timeline-item:last-child::before {
+            display: none;
+        }
+
+        .checkup-timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 2px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid #00897b;
+            z-index: 2;
+            box-sizing: border-box;
+        }
+
+        .checkup-timeline-dot.done {
+            background: #00897b;
+            border-color: #00897b;
+        }
+
+        .checkup-timeline-dot.upcoming {
+            background: white;
+            border-color: #b2dfdb;
+        }
+
+        .checkup-timeline-dot.active {
+            background: #ff7043;
+            border-color: #ff7043;
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 112, 67, 0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(255, 112, 67, 0); }
+        }
+
+        .checkup-timeline-card {
+            background: white;
+            border-radius: 14px;
+            padding: 12px 14px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            scroll-margin-top: 120px;
+        }
+
+        .checkup-timeline-card.current {
+            border: 2px solid #ff7043;
+            box-shadow: 0 4px 14px rgba(255, 112, 67, 0.2);
+        }
+
+        .checkup-timeline-card.done {
+            opacity: 0.7;
+        }
+
+        .checkup-timeline-header {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+
+        .checkup-timeline-name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--checkup-accent);
+        }
+
+        .checkup-timeline-window {
+            font-size: 12px;
+            color: #00695c;
+            font-weight: 600;
+        }
+
+        .checkup-timeline-badge {
+            font-size: 10px;
+            font-weight: 700;
+            padding: 1px 6px;
+            border-radius: 4px;
+            margin-left: auto;
+        }
+
+        .checkup-timeline-badge.done {
+            background: #c8e6c9;
+            color: #2e7d32;
+        }
+
+        .checkup-timeline-badge.active {
+            background: #ffe0b2;
+            color: #e65100;
+        }
+
+        .checkup-timeline-badge.upcoming {
+            background: #e0f2f1;
+            color: #00695c;
+        }
+
+        .checkup-timeline-desc {
+            font-size: 12.5px;
+            color: #455a64;
+            line-height: 1.55;
+        }
+
         @media (max-width: 360px) {
             body { padding: 10px; }
             .card { padding: 13px; }
@@ -1243,6 +1384,24 @@
             .calendar-pm-subtitle { font-size: 10px; }
 
             .ency-inner { padding: 10px; }
+
+            .ency-tab {
+                font-size: 11px;
+                padding: 8px 4px;
+            }
+
+            .checkup-timeline-item {
+                padding-left: 24px;
+            }
+
+            .checkup-timeline-dot {
+                width: 14px;
+                height: 14px;
+            }
+
+            .checkup-timeline-item::before {
+                left: 6px;
+            }
         }
     </style>
 </head>
@@ -1506,6 +1665,9 @@
                 <button class="ency-tab" data-tab="weeks" onclick="switchEncyTab('weeks')">
                     📚 孕周全览
                 </button>
+                <button class="ency-tab" data-tab="checkups" onclick="switchEncyTab('checkups')">
+                    📅 产检时间线
+                </button>
             </div>
 
             <div id="encyTabDiet" class="ency-tab-content active">
@@ -1528,6 +1690,10 @@
                 <div id="encyWeekList"></div>
             </div>
 
+            <div id="encyTabCheckups" class="ency-tab-content">
+                <div id="checkupTimelineList"></div>
+            </div>
+
         </div>
 
     </div>
@@ -1537,8 +1703,6 @@
 
 /* =========================================================
    孕期每周数据（孕3~40周）
-   ---------------------------------------------------------
-   注意：📅 产检提醒已移出 todos，改由 prenatalCheckups 独立管理
    ========================================================= */
 
 const pregnancyWeeklyData = {
@@ -1584,11 +1748,7 @@ const pregnancyWeeklyData = {
 
 
 /* =========================================================
-   产检项目数据表
-   ---------------------------------------------------------
-   - windowStart / windowEnd：产检时间窗（孕周）
-   - remindFrom：从哪周开始提醒
-   - detail：简要说明
+   产检时间线数据（按孕周顺序排列）
    ========================================================= */
 
 const prenatalCheckups = [
@@ -1596,81 +1756,85 @@ const prenatalCheckups = [
         key: 'first-visit',
         name: '首次产检建档',
         windowStart: 6,
-        windowEnd: 12,
+        windowEnd: 13,
+        windowLabel: '孕6-13+6周',
         remindFrom: 4,
-        detail: 'B 超确认宫内妊娠 + 抽血（血常规、肝肾功能、传染病等），建议 6-8 周完成'
+        detail: 'B超确认宫内妊娠、胎心胎芽 + 抽血（血常规、肝肾功能、传染病等）+ 建立孕期保健手册。建议6-8周完成首次B超。'
     },
     {
         key: 'nt',
         name: 'NT 检查',
         windowStart: 11,
         windowEnd: 13,
+        windowLabel: '孕11-13+6周',
         remindFrom: 8,
-        detail: 'B 超测颈项透明层厚度，筛查染色体异常。时间窗严格，需提前预约'
+        detail: 'B超测颈项透明层厚度，筛查染色体异常。时间窗严格，需满足头臀长45-84mm。需提前预约。'
     },
     {
         key: 'nipt',
         name: '唐筛 / 无创 DNA',
         windowStart: 15,
         windowEnd: 20,
+        windowLabel: '孕15-20+6周',
         remindFrom: 13,
-        detail: '唐筛需空腹，无创 DNA 无需空腹；二选一或遵医嘱'
+        detail: '唐筛（15-20+6周，需空腹）或无创DNA（12-22+6周，无需空腹），二选一或遵医嘱。'
     },
     {
         key: 'anomaly',
         name: '大排畸（系统 B 超）',
         windowStart: 20,
         windowEnd: 24,
+        windowLabel: '孕20-24+6周',
         remindFrom: 17,
-        detail: '筛查胎儿结构畸形，检查时间较长（约 30 分钟），需提前 2-4 周预约'
+        detail: '筛查胎儿结构畸形，检查时间较长（约30分钟）。需提前2-4周预约。最佳筛查时间22-24周。'
     },
     {
         key: 'ogtt',
         name: '糖耐量筛查（OGTT）',
         windowStart: 24,
         windowEnd: 28,
+        windowLabel: '孕24-28周',
         remindFrom: 22,
-        detail: '需空腹 8-10 小时，当天抽血 3 次，建议早上前往'
+        detail: '需空腹8-10小时，当天抽血3次。建议早上前往。筛查妊娠期糖尿病。'
     },
     {
         key: 'nst',
         name: '胎心监护（NST）',
         windowStart: 32,
         windowEnd: 36,
+        windowLabel: '孕32-34周起',
         remindFrom: 31,
-        detail: '一般孕 32-34 周开始，每周 1 次，具体听医生安排'
+        detail: '低危孕妇32-34周起备查，高危孕妇32周起必查。每周1次，具体听医生安排。'
     },
     {
         key: 'gbs',
         name: 'B 族链球菌（GBS）筛查',
         windowStart: 35,
         windowEnd: 37,
+        windowLabel: '孕35-37周',
         remindFrom: 33,
-        detail: '阴道-直肠拭子，阳性者分娩时需抗生素预防新生儿感染'
+        detail: '阴道-直肠拭子，阳性者分娩时需抗生素预防新生儿感染。超过5周未分娩需复查。'
     },
     {
         key: 'weekly',
         name: '每周产检',
         windowStart: 36,
         windowEnd: 40,
+        windowLabel: '孕36-40周',
         remindFrom: 36,
-        detail: '每周胎心监护 + 产科彩超，评估分娩方式'
+        detail: '每周胎心监护 + 产科彩超，评估分娩方式。37周后胎心监护为必查项目。'
     }
 ];
 
 
 /**
  * 根据当前孕周返回所有处于提醒范围内的产检项目
- * - 提前预约：week < windowStart
- * - 时间窗内：windowStart ≤ week < windowEnd
- * - 最后机会：week === windowEnd
  */
 function getActiveCheckupReminders(week) {
     const result = [];
 
     prenatalCheckups.forEach(function(item) {
 
-        /* 不在提醒范围内，跳过 */
         if (week < item.remindFrom) return;
         if (week > item.windowEnd) return;
 
@@ -1689,7 +1853,7 @@ function getActiveCheckupReminders(week) {
 
         result.push({
             name: item.name,
-            window: '孕' + item.windowStart + '-' + item.windowEnd + '周',
+            window: item.windowLabel || ('孕' + item.windowStart + '-' + item.windowEnd + '周'),
             detail: item.detail,
             status: status,
             statusClass: statusClass
@@ -2261,6 +2425,7 @@ function init() {
     updateAll();
     renderDiet();
     renderEncyclopediaWeeks();
+    renderCheckupTimeline();
 
     ensureHolidayData(currentYear);
     ensureHolidayData(currentYear + 1);
@@ -2522,9 +2687,6 @@ function updateTipCard() {
         html += '</ul>';
     }
 
-    /* ============================================
-       📅 产检提醒（新增区块，按孕周动态显示）
-       ============================================ */
     const checkups = getActiveCheckupReminders(week);
 
     if (checkups.length > 0) {
@@ -2546,9 +2708,6 @@ function updateTipCard() {
         html += '</div>';
     }
 
-    /* ============================================
-       饮食核心要点
-       ============================================ */
     html += '<div class="tip-diet-section">';
     html += '<div class="tip-diet-title">🍎 孕期饮食核心要点</div>';
 
@@ -2589,8 +2748,9 @@ function updateTipCard() {
     html += '</div>';
 
     html += '<div class="tip-actions">';
-    html += `<button class="diet-btn" onclick="openEncyclopedia('diet')">🍎 完整饮食指南</button>`;
-    html += `<button onclick="openEncyclopedia('weeks')">📚 孕3~40周全览</button>`;
+    html += `<button class="diet-btn" onclick="openEncyclopedia('diet')">🍎 饮食指南</button>`;
+    html += `<button onclick="openEncyclopedia('weeks')">📚 孕周全览</button>`;
+    html += `<button class="checkup-btn" onclick="openEncyclopedia('checkups')">📅 产检时间线</button>`;
     html += '</div>';
 
     bodyEl.innerHTML = html;
@@ -2619,7 +2779,7 @@ function openEncyclopedia(tab) {
     view.classList.add('show');
     document.body.style.overflow = 'hidden';
 
-    if (tab === 'diet' || tab === 'weeks') {
+    if (tab === 'diet' || tab === 'weeks' || tab === 'checkups') {
         switchEncyTab(tab);
     }
 
@@ -2635,6 +2795,18 @@ function openEncyclopedia(tab) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             }, 100);
+        } else {
+            view.scrollTop = 0;
+        }
+    } else if (tab === 'checkups') {
+        const week = getCurrentTipWeek();
+        if (week !== null) {
+            setTimeout(function() {
+                const target = document.getElementById('checkup-node-' + week);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 150);
         } else {
             view.scrollTop = 0;
         }
@@ -2660,6 +2832,19 @@ function switchEncyTab(tab) {
 
     document.getElementById('encyTabDiet').classList.toggle('active', tab === 'diet');
     document.getElementById('encyTabWeeks').classList.toggle('active', tab === 'weeks');
+    document.getElementById('encyTabCheckups').classList.toggle('active', tab === 'checkups');
+
+    if (tab === 'checkups') {
+        const week = getCurrentTipWeek();
+        if (week !== null) {
+            setTimeout(function() {
+                const target = document.getElementById('checkup-node-' + week);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 150);
+        }
+    }
 }
 
 function renderDiet() {
@@ -2726,6 +2911,109 @@ function renderEncyclopediaWeeks() {
     }
 
     container.innerHTML = html;
+}
+
+
+/* =========================================================
+   产检时间线渲染
+   ========================================================= */
+
+function renderCheckupTimeline() {
+    const container = document.getElementById('checkupTimelineList');
+    if (!container) return;
+
+    const lmp = getEffectiveLmp();
+    let currentWeek = null;
+
+    if (lmp) {
+        const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        const diff = daysBetween(lmp, todayMidnight);
+        if (diff >= 0) {
+            currentWeek = Math.floor(diff / 7);
+        }
+    }
+
+    let html = '';
+
+    html += '<div style="font-size:12px;color:#6c757d;line-height:1.6;margin-bottom:14px;">';
+    html += '依据《孕前和孕期保健指南》整理，不同医院可能有调整，具体以产检医生安排为准。';
+    html += '</div>';
+
+    html += '<div class="checkup-timeline">';
+
+    prenatalCheckups.forEach(function(item, index) {
+
+        let status = 'upcoming';
+        if (currentWeek !== null) {
+            if (currentWeek > item.windowEnd) {
+                status = 'done';
+            } else if (currentWeek >= item.windowStart) {
+                status = 'active';
+            } else if (currentWeek >= item.remindFrom) {
+                status = 'upcoming';
+            } else {
+                status = 'upcoming';
+            }
+        }
+
+        let badgeText, badgeClass;
+        if (status === 'done') {
+            badgeText = '已完成';
+            badgeClass = 'done';
+        } else if (status === 'active') {
+            badgeText = '进行中';
+            badgeClass = 'active';
+        } else {
+            badgeText = '待开始';
+            badgeClass = 'upcoming';
+        }
+
+        let dotClass = '';
+        if (status === 'done') dotClass = 'done';
+        else if (status === 'active') dotClass = 'active';
+        else dotClass = 'upcoming';
+
+        let cardClass = 'checkup-timeline-card';
+        if (status === 'active') cardClass += ' current';
+        if (status === 'done') cardClass += ' done';
+
+        let anchorId = '';
+        if (currentWeek !== null &&
+            currentWeek >= item.windowStart &&
+            currentWeek <= item.windowEnd) {
+            anchorId = 'checkup-node-' + currentWeek;
+        } else if (currentWeek !== null &&
+                   currentWeek >= item.remindFrom &&
+                   currentWeek < item.windowStart &&
+                   index === 0) {
+            anchorId = 'checkup-node-' + currentWeek;
+        }
+
+        html += `<div class="checkup-timeline-item">`;
+        html += `<div class="checkup-timeline-dot ${dotClass}"></div>`;
+        html += `<div class="${cardClass}"${anchorId ? ' id="' + anchorId + '"' : ''}>`;
+        html += `<div class="checkup-timeline-header">`;
+        html += `<span class="checkup-timeline-name">${item.name}</span>`;
+        html += `<span class="checkup-timeline-window">${item.windowLabel || ('孕' + item.windowStart + '-' + item.windowEnd + '周')}</span>`;
+        html += `<span class="checkup-timeline-badge ${badgeClass}">${badgeText}</span>`;
+        html += `</div>`;
+        html += `<div class="checkup-timeline-desc">${item.detail}</div>`;
+        html += `</div>`;
+        html += `</div>`;
+    });
+
+    html += '</div>';
+
+    container.innerHTML = html;
+
+    if (currentWeek !== null) {
+        const target = document.getElementById('checkup-node-' + currentWeek);
+        if (target) {
+            setTimeout(function() {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 200);
+        }
+    }
 }
 
 
@@ -2812,6 +3100,7 @@ function applyPreviewCorrection() {
     cancelCorrectionPreview();
     updateAll();
     renderEncyclopediaWeeks();
+    renderCheckupTimeline();
 
     alert(`B超校准已应用：${correctionDays > 0 ? '+' : ''}${correctionDays} 天`);
 }
@@ -2839,6 +3128,7 @@ function applyManualCorrection() {
     localStorage.setItem(STORAGE_KEY_CORRECTION_SOURCE, 'manual');
     updateAll();
     renderEncyclopediaWeeks();
+    renderCheckupTimeline();
     alert(`手动校准已应用：${val > 0 ? '+' : ''}${val} 天`);
 }
 
@@ -2852,6 +3142,7 @@ function clearCorrection() {
     localStorage.removeItem(STORAGE_KEY_CORRECTION_SOURCE);
     updateAll();
     renderEncyclopediaWeeks();
+    renderCheckupTimeline();
     alert('已清除校准，恢复原始末次月经计算。');
 }
 
@@ -3283,8 +3574,9 @@ function runSelfTests() {
     const checks16 = getActiveCheckupReminders(16);
     test('孕16周：产检提醒应有唐筛/无创（1条）', checks16.length, 1);
 
+    /* 孕22周：唐筛已过期（15-20周），只剩大排畸 + 糖耐（共2条） */
     const checks22 = getActiveCheckupReminders(22);
-    test('孕22周：应含唐筛 + 大排畸 + 糖耐（3条）', checks22.length, 3);
+    test('孕22周：应含大排畸 + 糖耐（2条）', checks22.length, 2);
 
     const checks36 = getActiveCheckupReminders(36);
     test('孕36周：应含 NST + GBS + 每周产检（3条）', checks36.length, 3);
@@ -3318,6 +3610,7 @@ window.runSelfTests = runSelfTests;
 document.getElementById('lmp').addEventListener('change', () => {
     updateAll();
     renderEncyclopediaWeeks();
+    renderCheckupTimeline();
 });
 
 document.getElementById('manualCorrection').addEventListener('keydown', function(event) {
