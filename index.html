@@ -468,6 +468,7 @@
             line-height: 1.7;
         }
 
+        /* ============ 详情左右布局 ============ */
         .selected-info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -483,22 +484,12 @@
         }
 
         .selected-info-right {
-            font-size: 12.5px;
+            font-size: 13px;
             color: var(--text-secondary);
-            line-height: 1.65;
+            line-height: 1.7;
             border-left: 1px dashed var(--border);
             padding-left: 12px;
             min-width: 0;
-        }
-
-        .fetal-status-title {
-            font-size: 12.5px;
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-bottom: 6px;
-            padding-bottom: 4px;
-            border-bottom: 1px dashed var(--border);
-            word-break: break-word;
         }
 
         .fetal-status-item {
@@ -511,16 +502,13 @@
         }
 
         .fetal-status-label {
-            font-weight: 700;
-            color: var(--primary-dark);
-            margin-right: 3px;
+            font-weight: 600;
+            color: var(--text);
+            margin-right: 2px;
         }
 
-        .fetal-status-label.mom { color: #6a1b9a; }
-        .fetal-status-label.baby { color: #00695c; }
-
         .fetal-status-empty {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
             text-align: center;
             padding: 8px 0;
@@ -3529,12 +3517,11 @@ function updateSelectedResult(dateStr) {
     let rightHtml = '';
     if (weeklyData) {
         rightHtml =
-            `<div class="fetal-status-title">孕${info.weeks}周 · 孕妈 & 胎儿</div>` +
             `<div class="fetal-status-item">` +
-                `<span class="fetal-status-label mom">孕妈：</span>${weeklyData.mom}` +
+                `<span class="fetal-status-label">孕妈：</span>${weeklyData.mom}` +
             `</div>` +
             `<div class="fetal-status-item">` +
-                `<span class="fetal-status-label baby">胎儿：</span>${weeklyData.baby}` +
+                `<span class="fetal-status-label">胎儿：</span>${weeklyData.baby}` +
             `</div>`;
     } else {
         rightHtml = '<div class="fetal-status-empty">暂无该孕周对照</div>';
