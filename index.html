@@ -468,7 +468,6 @@
             line-height: 1.7;
         }
 
-        /* ============ 详情左右布局 ============ */
         .selected-info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1399,17 +1398,27 @@
             color: var(--text-secondary);
             margin-top: 20px;
             padding: 8px 0;
-            line-height: 1.8;
+            line-height: 2;
         }
 
         .beian-footer a {
             color: var(--text-secondary);
             text-decoration: none;
             transition: color 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
         }
 
         .beian-footer a:hover {
             color: var(--accent);
+        }
+
+        .beian-footer img {
+            width: 14px;
+            height: 14px;
+            vertical-align: middle;
+            flex-shrink: 0;
         }
 
         @media (max-width: 360px) {
@@ -1663,7 +1672,14 @@
     </div>
 
     <div class="beian-footer">
-        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">苏ICP备2026076011号-1</a>
+        <div>
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">苏ICP备2026076011号-1</a>
+        </div>
+        <div>
+            <a href="https://beian.mps.gov.cn/#/query/webSearch?code=32050602014752" target="_blank" rel="noreferrer">
+                <img src="./beian.png" alt="公安备案">苏公网安备32050602014752号
+            </a>
+        </div>
     </div>
 
     </div>
