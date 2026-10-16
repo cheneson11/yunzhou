@@ -1673,7 +1673,7 @@
 
     <div class="beian-footer">
         <div>
-            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">苏ICP备2026076011号-1</a>
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">苏ICP备2026076011号-2</a>
         </div>
         <div>
             <a href="https://beian.mps.gov.cn/#/query/webSearch?code=32050602014752" target="_blank" rel="noreferrer">
@@ -3588,7 +3588,7 @@ async function loadWeather(dateStr) {
     weatherEl.textContent = '加载中...';
 
     try {
-        const response = await fetch('https://weather.chenesonha.cloud/weather', {
+        const response = await fetch('https://weather.jonchen.cn/weather', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ date: dateStr })
