@@ -480,6 +480,20 @@
             margin-bottom: 8px;
         }
 
+        .selected-week-main,
+        .selected-week-month {
+            display: inline-block;
+            font-size: 21px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.25;
+            vertical-align: baseline;
+        }
+
+        .selected-week-month {
+            margin-left: 10px;
+        }
+
         .selected-info {
             font-size: 13px;
             color: var(--text-secondary);
@@ -3546,7 +3560,9 @@ function updateSelectedResult(dateStr) {
     weatherSpan.style.cssText = 'margin-left:8px; font-size:14px; color:#6c757d; font-weight:normal;';
     title.appendChild(weatherSpan);
 
-    weekEl.textContent = formatWeekText(info);
+    weekEl.innerHTML =
+        `<span class="selected-week-main">${formatWeekText(info)}</span>` +
+        `<span class="selected-week-month">${naturalMonth.months}个月${naturalMonth.days}天</span>`;
 
     let remainingText;
     if (daysRemaining > 0) remainingText = `距离预产期还有 ${daysRemaining} 天`;
