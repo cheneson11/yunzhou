@@ -195,6 +195,7 @@
             border-radius: 999px;
             font-size: 13px;
             font-weight: 700;
+            letter-spacing: 0.4px;
             line-height: 1.4;
             background: var(--primary-light);
             color: var(--primary-dark);
@@ -2371,6 +2372,10 @@ function getPregnancyMonth(date, lmp) {
     return Math.floor(diff / 28) + 1;
 }
 
+function getNaturalMonthDay(totalDays) {
+    return { months: Math.floor(totalDays / 28), days: totalDays % 28 };
+}
+
 function getPregnancyMonthRange(pm, lmp) {
     var start = addDays(lmp, (pm - 1) * 28);
     var end = addDays(lmp, pm * 28 - 1);
@@ -2379,8 +2384,7 @@ function getPregnancyMonthRange(pm, lmp) {
 
 function isPregnancyMonthStart(date, lmp) {
     var diff = daysBetween(lmp, date);
-    if (diff < 0) return false;
-    if (diff >= 280) return false;
+    if (diff <= 0) return false;
     return diff % 28 === 0;
 }
 
@@ -2705,7 +2709,7 @@ function renderPregnancyMonthSubtitle() {
         items.push(
             `<span class="pm-item ${itemClass}">` +
             `<span class="pm-stage-dot pm-dot-${pm}"></span>` +
-            `孕${pm}月 (${dateRange})` +
+            `孕${pm - 1}月 (${dateRange})` +
             `</span>`
         );
     }
@@ -3378,6 +3382,7 @@ function renderCalendar() {
         let isPmStart = false;
 
         if (lmp) {
+            const diff = daysBetween(lmp, cellDate);
             pm = getPregnancyMonth(cellDate, lmp);
             if (pm && pm >= 1 && pm <= 10) {
                 cell.classList.add('pm-' + pm);
@@ -3385,7 +3390,7 @@ function renderCalendar() {
                 isPmStart = isPregnancyMonthStart(cellDate, lmp);
                 if (isPmStart && !isOtherMonth) {
                     cell.classList.add('has-pm-start');
-                    cell.dataset.pmNum = pm;
+                    cell.dataset.pmNum = diff / 28;
                 }
             }
         }
@@ -3528,7 +3533,7 @@ function updateSelectedResult(dateStr) {
     const lunarText = getLunarDayText(inputDate);
     const holidayInfo = getHolidayInfo(dateStr);
     const solarTerm = getSolarTermInfo(dateStr);
-    const pm = getPregnancyMonth(inputDate, lmp);
+    const naturalMonth = getNaturalMonthDay(info.totalDays);
 
     resultBox.classList.remove('hidden', 'error');
 
@@ -3548,12 +3553,7 @@ function updateSelectedResult(dateStr) {
     else if (daysRemaining === 0) remainingText = '今天是计算预产期';
     else remainingText = `已超过计算预产期 ${Math.abs(daysRemaining)} 天`;
 
-    let pmText = '';
-    if (pm) {
-        pmText = `孕月：孕${pm}月`;
-    } else if (info.totalDays >= 280) {
-        pmText = '孕月：已超出孕期（>孕10月）';
-    }
+    const pmText = `孕月：孕${naturalMonth.months}个月${naturalMonth.days}天`;
 
     let holidayText = '';
     if (holidayInfo) {
@@ -3649,7 +3649,6 @@ function updateTodaySummary() {
         remainingEl.textContent = '—';
         monthDayEl.textContent = '';
         monthDayEl.classList.add('hidden');
-        monthDayEl.classList.remove('overdue');
         return;
     }
 
@@ -3661,7 +3660,6 @@ function updateTodaySummary() {
         remainingEl.textContent = '请检查日期';
         monthDayEl.textContent = '';
         monthDayEl.classList.add('hidden');
-        monthDayEl.classList.remove('overdue');
         return;
     }
 
@@ -3669,18 +3667,10 @@ function updateTodaySummary() {
     weekEl.classList.remove('empty');
 
     const totalDays = info.totalDays;
+    const months = Math.floor(totalDays / 28);
+    const days = totalDays % 28;
+    monthDayEl.textContent = `孕${months}个月${days}天`;
     monthDayEl.classList.remove('hidden');
-    monthDayEl.classList.remove('overdue');
-    if (totalDays < 280) {
-        const month = Math.floor(totalDays / 28) + 1;
-        const dayInMonth = (totalDays % 28) + 1;
-        monthDayEl.textContent = `孕${month}月${dayInMonth}天`;
-    } else if (totalDays === 280) {
-        monthDayEl.textContent = '已到预产期';
-    } else {
-        monthDayEl.textContent = `已超预产期 ${totalDays - 280} 天`;
-        monthDayEl.classList.add('overdue');
-    }
 
     const dueDate = addDays(lmp, 280);
     dueEl.textContent = formatDateCN(dueDate);
@@ -3724,14 +3714,13 @@ function calcWeekToDate() {
 
     const holidayInfo = getHolidayInfo(targetDateStr);
     const solarTerm = getSolarTermInfo(targetDateStr);
-    const pm = getPregnancyMonth(targetDate, lmp);
+    const naturalMonth = getNaturalMonthDay(totalDays);
 
     resultBox.className = 'result-box success';
     resultBox.classList.remove('hidden');
 
     let extraText = '';
-    if (pm) extraText += `<br>孕月：孕${pm}月`;
-    else if (totalDays >= 280) extraText += `<br>孕月：已超出孕期（>孕10月）`;
+    extraText += `<br>孕月：孕${naturalMonth.months}个月${naturalMonth.days}天`;
 
     if (holidayInfo) {
         extraText += holidayInfo.isOffDay
