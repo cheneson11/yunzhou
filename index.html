@@ -2295,7 +2295,7 @@ function fetchHolidayData(year) {
             return Promise.reject(new Error('所有CDN源均不可用'));
         }
         var baseUrl = HOLIDAY_CDN_URLS[urlIndex];
-        var url = baseUrl + year + '.json';
+        var url = baseUrl + year + '.json?t=' + Date.now();
         urlIndex++;
 
         return fetch(url)
@@ -2305,6 +2305,9 @@ function fetchHolidayData(year) {
             })
             .then(function(data) {
                 var result = convertHolidayData(data);
+                if (Object.keys(result).length === 0) {
+                    throw new Error('返回了空数据');
+                }
                 holidayCache[year] = result;
                 return result;
             })
@@ -2327,18 +2330,23 @@ function convertHolidayData(rawData) {
 }
 
 function ensureHolidayData(year) {
-    if (loadedYears[year]) return;
-    loadedYears[year] = true;
+    // 只有真正拿到了非空数据，才跳过
+    if (holidayCache[year] && Object.keys(holidayCache[year]).length > 0) {
+        return;
+    }
 
     fetchHolidayData(year)
         .then(function() {
+            loadedYears[year] = true; // 成功拿到真实数据后才标记
             updateDataSourceStatus(true);
             renderCalendar();
             renderPregnancyMonthSubtitle();
             if (selectedDateStr) updateSelectedResult(selectedDateStr);
         })
         .catch(function(err) {
-            console.warn('节假日数据加载失败：', err);
+            console.warn('节假日数据获取失败/为空：', err);
+            // ⚠️ 失败时绝不能标记 loadedYears，允许下次切月份或刷新时重试
+            loadedYears[year] = false;
             updateDataSourceStatus(false);
         });
 }
