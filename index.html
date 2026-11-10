@@ -237,19 +237,20 @@
             display: flex;
             align-items: baseline;
             justify-content: center;
-            gap: 4px;
-            margin-bottom: 8px;
-            white-space: nowrap; /* 防止换行 */
+            gap: 8px; /* 增加间距，让文字透气 */
+            margin-bottom: 12px; /* 增加与进度条的垂直距离 */
+            white-space: nowrap;
         }
 
         .progress-bar-bg {
-            width: 90%;
+            width: 85%; /* 稍微收窄，留出两侧空间 */
             height: 6px;
-            background-color: #e9ecef;
+            background-color: #f1f3f5;
             border-radius: 3px;
             margin: 0 auto;
-            overflow: hidden;
-            display: none; /* 默认隐藏，有进度时再显示 */
+            position: relative;
+            display: none; /* 默认隐藏 */
+            /* 移除 overflow: hidden，防止爱心超出轨道时被切掉 */
         }
 
         .progress-bar-bg.show {
@@ -258,13 +259,35 @@
 
         .progress-bar-fill {
             height: 100%;
-            background-color: var(--accent);
+            /* 粉色渐变，贴合孕期主题 */
+            background: linear-gradient(90deg, #f8bbd0 0%, var(--primary) 100%);
             width: 0%;
             border-radius: 3px;
             transition: width 0.3s ease;
         }
 
-        /* 保证进度条区域和左侧卡片高度一致，垂直居中 */
+        .progress-heart {
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%); /* 让爱心中心对准进度点 */
+            width: 18px;
+            height: 18px;
+            /* 使用 SVG 绘制主题粉色的心形，确保高清且颜色统一 */
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23d63384'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            left: 0%;
+            transition: left 0.3s ease;
+            z-index: 2;
+            display: none;
+        }
+
+        .progress-bar-bg.show .progress-heart {
+            display: block;
+        }
+
+        /* 保留原有的垂直居中 */
         .summary-grid .summary-item {
             display: flex;
             flex-direction: column;
@@ -1565,10 +1588,11 @@
                 <div class="remaining-text-row">
                     <span class="summary-label" style="margin-bottom: 0;">距预产期</span>
                     <span id="daysRemainingSummary" class="summary-value accent">—</span>
-                    <span id="progressPercent" class="summary-value accent" style="font-size: 13px; margin-left: 2px;">(0%)</span>
+                    <span id="progressPercent" class="summary-value" style="font-size: 12px; color: var(--text-secondary); font-weight: 600;">0%</span>
                 </div>
                 <div class="progress-bar-bg">
                     <div id="pregnancyProgress" class="progress-bar-fill"></div>
+                    <div id="heartIndicator" class="progress-heart"></div>
                 </div>
             </div>
         </div>
@@ -3708,6 +3732,7 @@ function updateTodaySummary() {
     const progressBgEl = document.querySelector('.progress-bar-bg');
     const progressFillEl = document.getElementById('pregnancyProgress');
     const progressPercentEl = document.getElementById('progressPercent');
+    const heartIndicatorEl = document.getElementById('heartIndicator');
 
     const lmp = getEffectiveLmp();
 
@@ -3722,7 +3747,8 @@ function updateTodaySummary() {
         monthDayEl.classList.add('hidden');
         progressBgEl.classList.remove('show');
         progressFillEl.style.width = '0%';
-        if (progressPercentEl) progressPercentEl.textContent = '(0%)';
+        if (progressPercentEl) progressPercentEl.textContent = '0%';
+        if (heartIndicatorEl) heartIndicatorEl.style.left = '0%';
         return;
     }
 
@@ -3736,7 +3762,8 @@ function updateTodaySummary() {
         monthDayEl.classList.add('hidden');
         progressBgEl.classList.remove('show');
         progressFillEl.style.width = '0%';
-        if (progressPercentEl) progressPercentEl.textContent = '(0%)';
+        if (progressPercentEl) progressPercentEl.textContent = '0%';
+        if (heartIndicatorEl) heartIndicatorEl.style.left = '0%';
         return;
     }
 
@@ -3772,13 +3799,18 @@ function updateTodaySummary() {
         progressPercent = 0;
     }
 
-    // 保留整数用于显示百分比文字，保留一位小数用于进度条宽度
-    const displayPercent = Math.round(progressPercent);
     progressFillEl.style.width = progressPercent.toFixed(1) + '%';
 
-    // 更新百分比文字
+    if (heartIndicatorEl) {
+        // 限制在 0~100 之间，防止爱心滑动出轨道
+        let heartLeft = progressPercent;
+        if (heartLeft < 0) heartLeft = 0;
+        if (heartLeft > 100) heartLeft = 100;
+        heartIndicatorEl.style.left = heartLeft + '%';
+    }
+
     if (progressPercentEl) {
-        progressPercentEl.textContent = `(${displayPercent}%)`;
+        progressPercentEl.textContent = `${Math.round(progressPercent)}%`; // 去掉了括号
     }
 }
 
