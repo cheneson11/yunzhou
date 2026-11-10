@@ -239,6 +239,7 @@
             justify-content: center;
             gap: 4px;
             margin-bottom: 8px;
+            white-space: nowrap; /* 防止换行 */
         }
 
         .progress-bar-bg {
@@ -1564,6 +1565,7 @@
                 <div class="remaining-text-row">
                     <span class="summary-label" style="margin-bottom: 0;">距预产期</span>
                     <span id="daysRemainingSummary" class="summary-value accent">—</span>
+                    <span id="progressPercent" class="summary-value accent" style="font-size: 13px; margin-left: 2px;">(0%)</span>
                 </div>
                 <div class="progress-bar-bg">
                     <div id="pregnancyProgress" class="progress-bar-fill"></div>
@@ -3705,6 +3707,7 @@ function updateTodaySummary() {
     const monthDayEl = document.getElementById('todayMonthDay');
     const progressBgEl = document.querySelector('.progress-bar-bg');
     const progressFillEl = document.getElementById('pregnancyProgress');
+    const progressPercentEl = document.getElementById('progressPercent');
 
     const lmp = getEffectiveLmp();
 
@@ -3719,6 +3722,7 @@ function updateTodaySummary() {
         monthDayEl.classList.add('hidden');
         progressBgEl.classList.remove('show');
         progressFillEl.style.width = '0%';
+        if (progressPercentEl) progressPercentEl.textContent = '(0%)';
         return;
     }
 
@@ -3732,6 +3736,7 @@ function updateTodaySummary() {
         monthDayEl.classList.add('hidden');
         progressBgEl.classList.remove('show');
         progressFillEl.style.width = '0%';
+        if (progressPercentEl) progressPercentEl.textContent = '(0%)';
         return;
     }
 
@@ -3763,12 +3768,18 @@ function updateTodaySummary() {
         const passedDays = 280 - remaining;
         progressPercent = (passedDays / 280) * 100;
     } else {
-        // 还没开始（理论上不会走到这里，因为上面 info 为 null 已经拦截了）
+        // 还没开始
         progressPercent = 0;
     }
 
-    // 保留一位小数，防止宽度跳动
+    // 保留整数用于显示百分比文字，保留一位小数用于进度条宽度
+    const displayPercent = Math.round(progressPercent);
     progressFillEl.style.width = progressPercent.toFixed(1) + '%';
+
+    // 更新百分比文字
+    if (progressPercentEl) {
+        progressPercentEl.textContent = `(${displayPercent}%)`;
+    }
 }
 
 
